@@ -41,8 +41,6 @@ final class PostRepo: ObservableObject {
     // MARK: - Internal Methods
 
     func loadImages() async throws {
-        print("🔴 start loading posts")
-
         let postsResponse = try await self.api.getPosts()
 
         let tokens: [PostToken] = postsResponse.data.compactMap { post -> PostToken? in
@@ -52,8 +50,6 @@ final class PostRepo: ObservableObject {
 
             return PostToken(id: post.id, url: url)
         }
-
-        print("🔴 got \(tokens.count) post tokens")
 
         await MainActor.run {
             postOrder = tokens
@@ -76,8 +72,6 @@ final class PostRepo: ObservableObject {
                     }
                 }
                 catch {
-                    print(error)
-
                     await MainActor.run {
                         postStates[token] = .failed
                     }
