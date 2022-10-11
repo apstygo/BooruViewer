@@ -1,4 +1,6 @@
 import SwiftUI
+import Kingfisher
+import SankakuAPI
 
 struct ContentView: View {
 
@@ -7,15 +9,14 @@ struct ContentView: View {
     @State var numberOfColumns = 3
 
     var columns: [GridItem] {
-        Array(repeating: GridItem(spacing: 0), count: numberOfColumns)
+        Array(repeating: GridItem(spacing: 2), count: numberOfColumns)
     }
 
     var body: some View {
         ScrollView {
-            LazyVGrid(columns: columns, spacing: 0) {
-                ForEach(postRepo.posts, id: \.id) { postViewModel in
-                    PostPreview(postState: postViewModel.state)
-                        .aspectRatio(1, contentMode: .fill)
+            LazyVGrid(columns: columns, spacing: 2) {
+                ForEach(postRepo.posts, id: \.id) { post in
+                    PostPreview(post: post)
                 }
             }
             .animation(.interactiveSpring(), value: columns.count)
@@ -53,24 +54,27 @@ struct ContentView: View {
 
 private struct PostPreview: View {
 
-    let postState: PostRepo.PostState
+    let post: Post
 
     var body: some View {
-        switch postState {
-        case .loading:
-            Color.gray
+        GeometryReader { gr in
+            content
+                .frame(width: gr.size.width, height: gr.size.height)
+                .clipped()
+        }
+        .aspectRatio(1, contentMode: .fill)
+    }
 
-        case let .ready(image):
-            GeometryReader { gr in
-                Image(uiImage: image)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: gr.size.width, height: gr.size.height)
-                    .clipped()
-            }
-
-        case .failed:
-            Color.red
+    @ViewBuilder
+    var content: some View {
+        if let previewURL = post.previewURL {
+            KFImage(previewURL)
+                .resizable()
+                .fade(duration: 0.3)
+                .scaledToFill()
+        }
+        else {
+            Image(systemName: "eye.slash")
         }
     }
 
