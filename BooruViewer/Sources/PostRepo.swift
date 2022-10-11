@@ -1,4 +1,5 @@
 import Foundation
+import Combine
 import UIKit
 import RegexBuilder
 import SankakuAPI
@@ -30,6 +31,8 @@ final class PostRepo: ObservableObject {
     private var isLoading = false
     private var searchQuery: String?
 
+    private var disposeBag: [AnyCancellable] = []
+
     private var tags: [String] {
         guard let searchQuery else {
             return []
@@ -42,11 +45,11 @@ final class PostRepo: ObservableObject {
 
     // MARK: - Internal Methods
 
-    func loadImages() async throws {
-        try await loadMore()
+    func loadImages() {
+        loadMore()
     }
 
-    func loadMorePosts(for index: Int) async throws {
+    func loadMorePosts(for index: Int) {
         guard
             !isLoading,
             canLoadMore,
@@ -56,45 +59,53 @@ final class PostRepo: ObservableObject {
         }
 
         isLoading = true
-
-        try await loadMore()
-
-        isLoading = false
+        loadMore()
     }
 
-    func setSearchQuery(_ query: String) async throws {
+    func setSearchQuery(_ query: String) {
         searchQuery = query
-        try await reload()
+        reload()
     }
 
     // MARK: - Private Methods
 
-    private func reload() async throws {
+    private func reload() {
+        // Cancel all running operations
+
+        disposeBag.removeAll()
+
+        // Reset State
+
         postPreviews = []
         nextPageId = nil
         canLoadMore = true
         isLoading = false
 
-        try await loadMore()
+        // Reload
+
+        loadMore()
     }
 
-    private func loadMore() async throws {
-        let postsResponse = try await self.api.getPosts(
-            tags: tags,
-            limit: Constant.limit,
-            next: nextPageId
-        )
+    private func loadMore() {
+        api.getPosts(tags: tags,
+                     limit: Constant.limit,
+                     next: nextPageId)
+            .receive(on: RunLoop.main)
+            .sink { completion in
+                // do nothing
+            } receiveValue: { [self] response in
+                nextPageId = response.meta.next
+                canLoadMore = response.data.count >= Constant.limit
 
-        nextPageId = postsResponse.meta.next
-        canLoadMore = postsResponse.data.count >= Constant.limit
+                let newPreviews = response.data.enumerated().map { index, post in
+                    PostPreviewViewModel(index: postPreviews.count + index, post: post)
+                }
 
-        let newPreviews = postsResponse.data.enumerated().map { index, post in
-            PostPreviewViewModel(index: postPreviews.count + index, post: post)
-        }
+                postPreviews.append(contentsOf: newPreviews)
 
-        await MainActor.run {
-            postPreviews.append(contentsOf: newPreviews)
-        }
+                isLoading = false
+            }
+            .store(in: &disposeBag)
     }
 
 }

@@ -27,9 +27,7 @@ struct ContentView: View {
                     NavigationLink(value: post.post) {
                         PostPreview(post: post)
                             .onAppear {
-                                Task {
-                                    try await postRepo.loadMorePosts(for: post.index)
-                                }
+                                postRepo.loadMorePosts(for: post.index)
                             }
                     }
                 }
@@ -41,15 +39,11 @@ struct ContentView: View {
         }
         .gesture(pinch)
         .onAppear {
-            Task {
-                try await postRepo.loadImages()
-            }
+            postRepo.loadImages()
         }
         .searchable(text: $searchQuery, prompt: Text("Enter tags here"))
         .onSubmit(of: .search) {
-            Task {
-                try await postRepo.setSearchQuery(searchQuery)
-            }
+            postRepo.setSearchQuery(searchQuery)
         }
     }
 

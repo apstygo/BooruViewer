@@ -1,4 +1,5 @@
 import Foundation
+import Combine
 import SwiftJWT
 
 public final class SankakuAPI {
@@ -36,7 +37,7 @@ public final class SankakuAPI {
                          ratingThreshold: Float = 0,
                          limit: Int = 40,
                          next: String? = nil,
-                         prev: String? = nil) async throws -> PostsResponse {
+                         prev: String? = nil) -> AnyPublisher<PostsResponse, Error> {
         var request = Request(
             url: URL(string: "https://capi-v2.sankakucomplex.com/posts/keyset")!,
             method: .get
@@ -89,10 +90,10 @@ public final class SankakuAPI {
             "accept": "application/vnd.sankaku.api+json;v=2"
         ]
 
-        return try await urlSession.executeRequest(
+        return urlSession.executeRequest(
             request,
             ofType: PostsResponse.self
-        ).0
+        )
     }
 
 //    public func login(username: String, password: String) async throws {

@@ -1,8 +1,9 @@
 import Foundation
+import Combine
 
 extension URLSession {
 
-    func executeRequest(_ request: Request) async throws -> (Data, HTTPURLResponse) {
+    func executeRequest(_ request: Request) -> URLSession.DataTaskPublisher {
         var headers = request.headers
 
         var urlRequest = URLRequest(url: request.url.addingQueryParameters(request.params))
@@ -21,16 +22,14 @@ extension URLSession {
             urlRequest.setValue(value, forHTTPHeaderField: key)
         }
 
-        let (data, urlResponse) = try await data(for: urlRequest)
-        return (data, urlResponse as! HTTPURLResponse)
+        return dataTaskPublisher(for: urlRequest)
     }
 
-    func executeRequest<D: Decodable>(_ request: Request,
-                                      ofType decodable: D.Type,
-                                      decoder: JSONDecoder = JSONDecoder()) async throws -> (D, HTTPURLResponse) {
-        let (data, response) = try await executeRequest(request)
-        let decodable = try JSONDecoder().decode(decodable, from: data)
-        return (decodable, response)
+    func executeRequest<D: Decodable>(_ request: Request, ofType decodable: D.Type) -> AnyPublisher<D, Error> {
+        executeRequest(request)
+            .map(\.data)
+            .decode(type: decodable, decoder: JSONDecoder())
+            .eraseToAnyPublisher()
     }
 
 }
