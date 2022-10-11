@@ -1,26 +1,26 @@
-//
-//  ContentView.swift
-//  BooruViewer
-//
-//  Created by Artem Pstygo on 11.10.2022.
-//
-
 import SwiftUI
 
 struct ContentView: View {
+
+    let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        ScrollView {
+            LazyVGrid(columns: columns) {
+                ForEach(0..<100, id: \.self) { _ in
+                    Color.red
+                        .aspectRatio(1, contentMode: .fill)
+                }
+            }
         }
-        .padding()
     }
+
 }
 
 struct ContentView_Previews: PreviewProvider {
+
     static var previews: some View {
         ContentView()
     }
+
 }
