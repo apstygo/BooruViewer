@@ -26,11 +26,68 @@ public final class SankakuAPI {
 
     // MARK: - Public Methods
 
-    public func getPosts() async throws -> PostsResponse {
-        let request = Request(
+    // TODO: Implement date filter
+    public func getPosts(order: SortOrder = .date,
+                         ratings: Set<Rating> = [.g],
+                         hidePostsInBooks: HidePostsInBooks = .never,
+                         mediaType: MediaType = .any,
+                         mediaSize: MediaSize = .any,
+                         tags: [String] = [],
+                         ratingThreshold: Float = 0,
+                         limit: Int = 40,
+                         next: String? = nil,
+                         prev: String? = nil) async throws -> PostsResponse {
+        var request = Request(
             url: URL(string: "https://capi-v2.sankakucomplex.com/posts/keyset")!,
             method: .get
         )
+
+        // Tags
+
+        var additionalTags = [
+            "order:\(order.rawValue)"
+        ]
+
+        for rating in ratings {
+            additionalTags.append("rating:\(rating.rawValue)")
+        }
+
+        if mediaType != .any {
+            additionalTags.append("file_type:\(mediaType.rawValue)")
+        }
+
+        if mediaSize != .any {
+            additionalTags.append("+\(mediaSize.rawValue)")
+        }
+
+        let allTags = tags + additionalTags
+
+        // Params
+
+        request.params = [
+            "lang": "en",
+            "limit": "\(limit)",
+            "hide_posts_in_books": hidePostsInBooks.rawValue,
+            "default_threshold": "\(ratingThreshold)",
+            "tags": allTags.joined(separator: " ")
+        ]
+
+        if let next {
+            request.params["next"] = next
+        }
+
+        if let prev {
+            request.params["prev"] = prev
+        }
+
+        // Headers
+
+        request.headers = [
+            "dnd": "1",
+            "origin": "https://beta.sankakucomplex.com",
+            "referer": "https://beta.sankakucomplex.com/",
+            "accept": "application/vnd.sankaku.api+json;v=2"
+        ]
 
         return try await urlSession.executeRequest(
             request,
