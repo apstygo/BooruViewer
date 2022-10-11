@@ -15,8 +15,13 @@ struct ContentView: View {
     var body: some View {
         ScrollView {
             LazyVGrid(columns: columns, spacing: 2) {
-                ForEach(postRepo.posts, id: \.id) { post in
+                ForEach(postRepo.postPreviews, id: \.id) { post in
                     PostPreview(post: post)
+                        .onAppear {
+                            Task {
+                                try await postRepo.loadMorePosts(for: post.index)
+                            }
+                        }
                 }
             }
             .animation(.interactiveSpring(), value: columns.count)
@@ -54,7 +59,7 @@ struct ContentView: View {
 
 private struct PostPreview: View {
 
-    let post: Post
+    let post: PostPreviewViewModel
 
     var body: some View {
         GeometryReader { gr in
