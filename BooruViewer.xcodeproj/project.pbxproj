@@ -11,6 +11,7 @@
 		2E34452928F6025C004C4188 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = 2E34452828F6025C004C4188 /* Collections */; };
 		2E6A430F28F604CB00F89556 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 2E6A430E28F604CB00F89556 /* ComposableArchitecture */; };
 		2E6A431228F6052700F89556 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 2E6A431128F6052700F89556 /* Kingfisher */; };
+		2E6A431428F61B3800F89556 /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6A431328F61B3800F89556 /* PostDetailView.swift */; };
 		2ED2CD9328F56C36001CA186 /* BooruViewerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED2CD9228F56C36001CA186 /* BooruViewerApp.swift */; };
 		2ED2CD9528F56C36001CA186 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED2CD9428F56C36001CA186 /* ContentView.swift */; };
 		2ED2CD9728F56C36001CA186 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2ED2CD9628F56C36001CA186 /* Assets.xcassets */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2E6A431328F61B3800F89556 /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
 		2ED2CD8F28F56C36001CA186 /* BooruViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BooruViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2ED2CD9228F56C36001CA186 /* BooruViewerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooruViewerApp.swift; sourceTree = "<group>"; };
 		2ED2CD9428F56C36001CA186 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 				2ED2CD9228F56C36001CA186 /* BooruViewerApp.swift */,
 				2ED2CD9428F56C36001CA186 /* ContentView.swift */,
 				2ED2CDA328F576DB001CA186 /* PostRepo.swift */,
+				2E6A431328F61B3800F89556 /* PostDetailView.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -188,6 +191,7 @@
 				2ED2CD9528F56C36001CA186 /* ContentView.swift in Sources */,
 				2ED2CD9328F56C36001CA186 /* BooruViewerApp.swift in Sources */,
 				2ED2CDA428F576DB001CA186 /* PostRepo.swift in Sources */,
+				2E6A431428F61B3800F89556 /* PostDetailView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

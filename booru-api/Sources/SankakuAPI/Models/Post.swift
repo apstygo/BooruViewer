@@ -1,6 +1,6 @@
 import Foundation
 
-public struct Post: Decodable {
+public struct Post: Decodable, Hashable {
     public enum CodingKeys: String, CodingKey {
         case id
         case previewURL = "preview_url"

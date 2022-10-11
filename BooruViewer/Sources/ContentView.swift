@@ -13,16 +13,28 @@ struct ContentView: View {
     }
 
     var body: some View {
+        NavigationStack {
+            feed
+        }
+    }
+
+    @ViewBuilder
+    var feed: some View {
         ScrollView {
             LazyVGrid(columns: columns, spacing: 2) {
-                ForEach(postRepo.postPreviews, id: \.id) { post in
-                    PostPreview(post: post)
-                        .onAppear {
-                            Task {
-                                try await postRepo.loadMorePosts(for: post.index)
+                ForEach(postRepo.postPreviews, id: \.post.id) { post in
+                    NavigationLink(value: post.post) {
+                        PostPreview(post: post)
+                            .onAppear {
+                                Task {
+                                    try await postRepo.loadMorePosts(for: post.index)
+                                }
                             }
-                        }
+                    }
                 }
+            }
+            .navigationDestination(for: Post.self) { post in
+                PostDetailView(post: post)
             }
             .animation(.interactiveSpring(), value: columns.count)
         }
@@ -72,7 +84,7 @@ private struct PostPreview: View {
 
     @ViewBuilder
     var content: some View {
-        if let previewURL = post.previewURL {
+        if let previewURL = post.post.previewURL {
             KFImage(previewURL)
                 .resizable()
                 .fade(duration: 0.3)

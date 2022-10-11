@@ -3,9 +3,8 @@ import UIKit
 import SankakuAPI
 
 struct PostPreviewViewModel {
-    let id: Int
     let index: Int
-    let previewURL: URL?
+    let post: Post
 }
 
 final class PostRepo: ObservableObject {
@@ -60,11 +59,7 @@ final class PostRepo: ObservableObject {
         canLoadMore = postsResponse.data.count >= Constant.limit
 
         let newPreviews = postsResponse.data.enumerated().map { index, post in
-            PostPreviewViewModel(
-                id: post.id,
-                index: postPreviews.count + index,
-                previewURL: post.previewURL
-            )
+            PostPreviewViewModel(index: postPreviews.count + index, post: post)
         }
 
         await MainActor.run {
