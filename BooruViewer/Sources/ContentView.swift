@@ -7,6 +7,7 @@ struct ContentView: View {
     @ObservedObject var postRepo = PostRepo()
     @GestureState var columnDifference = 0
     @State var numberOfColumns = 3
+    @State var searchQuery = ""
 
     var columns: [GridItem] {
         Array(repeating: GridItem(spacing: 2), count: numberOfColumns)
@@ -42,6 +43,12 @@ struct ContentView: View {
         .onAppear {
             Task {
                 try await postRepo.loadImages()
+            }
+        }
+        .searchable(text: $searchQuery, prompt: Text("Enter tags here"))
+        .onSubmit(of: .search) {
+            Task {
+                try await postRepo.setSearchQuery(searchQuery)
             }
         }
     }

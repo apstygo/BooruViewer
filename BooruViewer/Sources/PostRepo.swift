@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import RegexBuilder
 import SankakuAPI
 
 struct PostPreviewViewModel {
@@ -27,6 +28,17 @@ final class PostRepo: ObservableObject {
     private var nextPageId: String?
     private var canLoadMore = true
     private var isLoading = false
+    private var searchQuery: String?
+
+    private var tags: [String] {
+        guard let searchQuery else {
+            return []
+        }
+
+        return searchQuery
+            .split(separator: CharacterClass.whitespace)
+            .map { String($0) }
+    }
 
     // MARK: - Internal Methods
 
@@ -50,10 +62,28 @@ final class PostRepo: ObservableObject {
         isLoading = false
     }
 
+    func setSearchQuery(_ query: String) async throws {
+        searchQuery = query
+        try await reload()
+    }
+
     // MARK: - Private Methods
 
+    private func reload() async throws {
+        postPreviews = []
+        nextPageId = nil
+        canLoadMore = true
+        isLoading = false
+
+        try await loadMore()
+    }
+
     private func loadMore() async throws {
-        let postsResponse = try await self.api.getPosts(limit: Constant.limit, next: nextPageId)
+        let postsResponse = try await self.api.getPosts(
+            tags: tags,
+            limit: Constant.limit,
+            next: nextPageId
+        )
 
         nextPageId = postsResponse.meta.next
         canLoadMore = postsResponse.data.count >= Constant.limit
