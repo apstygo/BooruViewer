@@ -277,10 +277,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = BooruViewer/BooruViewer.entitlements;
+				CODE_SIGN_ENTITLEMENTS = BooruViewer/Resources/BooruViewer.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"BooruViewer/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"BooruViewer/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = 6KF38574XS;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -315,10 +315,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = BooruViewer/BooruViewer.entitlements;
+				CODE_SIGN_ENTITLEMENTS = BooruViewer/Resources/BooruViewer.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"BooruViewer/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"BooruViewer/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = 6KF38574XS;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
