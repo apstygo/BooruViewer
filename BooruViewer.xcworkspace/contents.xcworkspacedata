@@ -5,6 +5,6 @@
       location = "container:BooruViewer.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:../booru-api">
+      location = "group:booru-api">
    </FileRef>
 </Workspace>
