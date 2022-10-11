@@ -20,6 +20,10 @@ public final class SankakuAPI {
         }
     }
 
+    // MARK: - Init
+
+    public init() { /* Do nothing */ }
+
     // MARK: - Public Methods
 
     public func getPosts() async throws -> PostsResponse {
@@ -28,7 +32,10 @@ public final class SankakuAPI {
             method: .get
         )
 
-        return try await urlSession.executeRequest(request, ofType: PostsResponse.self).0
+        return try await urlSession.executeRequest(
+            request,
+            ofType: PostsResponse.self
+        ).0
     }
 
 //    public func login(username: String, password: String) async throws {

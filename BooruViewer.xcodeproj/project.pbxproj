@@ -7,10 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E02815028F57883001A2ED4 /* SankakuAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 2E02814F28F57883001A2ED4 /* SankakuAPI */; };
 		2ED2CD9328F56C36001CA186 /* BooruViewerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED2CD9228F56C36001CA186 /* BooruViewerApp.swift */; };
 		2ED2CD9528F56C36001CA186 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED2CD9428F56C36001CA186 /* ContentView.swift */; };
 		2ED2CD9728F56C36001CA186 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2ED2CD9628F56C36001CA186 /* Assets.xcassets */; };
 		2ED2CD9B28F56C36001CA186 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2ED2CD9A28F56C36001CA186 /* Preview Assets.xcassets */; };
+		2ED2CDA428F576DB001CA186 /* PostRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED2CDA328F576DB001CA186 /* PostRepo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +22,7 @@
 		2ED2CD9628F56C36001CA186 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2ED2CD9828F56C36001CA186 /* BooruViewer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BooruViewer.entitlements; sourceTree = "<group>"; };
 		2ED2CD9A28F56C36001CA186 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		2ED2CDA328F576DB001CA186 /* PostRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRepo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -27,17 +30,26 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E02815028F57883001A2ED4 /* SankakuAPI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2E02814E28F57883001A2ED4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		2ED2CD8628F56C36001CA186 = {
 			isa = PBXGroup;
 			children = (
 				2ED2CD9128F56C36001CA186 /* BooruViewer */,
 				2ED2CD9028F56C36001CA186 /* Products */,
+				2E02814E28F57883001A2ED4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -71,6 +83,7 @@
 			children = (
 				2ED2CD9228F56C36001CA186 /* BooruViewerApp.swift */,
 				2ED2CD9428F56C36001CA186 /* ContentView.swift */,
+				2ED2CDA328F576DB001CA186 /* PostRepo.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -101,6 +114,9 @@
 			dependencies = (
 			);
 			name = BooruViewer;
+			packageProductDependencies = (
+				2E02814F28F57883001A2ED4 /* SankakuAPI */,
+			);
 			productName = BooruViewer;
 			productReference = 2ED2CD8F28F56C36001CA186 /* BooruViewer.app */;
 			productType = "com.apple.product-type.application";
@@ -157,6 +173,7 @@
 			files = (
 				2ED2CD9528F56C36001CA186 /* ContentView.swift in Sources */,
 				2ED2CD9328F56C36001CA186 /* BooruViewerApp.swift in Sources */,
+				2ED2CDA428F576DB001CA186 /* PostRepo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,6 +387,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2E02814F28F57883001A2ED4 /* SankakuAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SankakuAPI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 2ED2CD8728F56C36001CA186 /* Project object */;
 }

@@ -25,7 +25,9 @@ extension URLSession {
         return (data, urlResponse as! HTTPURLResponse)
     }
 
-    func executeRequest<D: Decodable>(_ request: Request, ofType decodable: D.Type) async throws -> (D, HTTPURLResponse) {
+    func executeRequest<D: Decodable>(_ request: Request,
+                                      ofType decodable: D.Type,
+                                      decoder: JSONDecoder = JSONDecoder()) async throws -> (D, HTTPURLResponse) {
         let (data, response) = try await executeRequest(request)
         let decodable = try JSONDecoder().decode(decodable, from: data)
         return (decodable, response)
