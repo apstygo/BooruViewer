@@ -1,8 +1,8 @@
 import Foundation
 
 // TODO: Add missing fields
-public struct Tag: Decodable, Hashable, Identifiable {
-    public enum TagType: Int, Decodable {
+public struct Tag: Decodable, Hashable, Identifiable, Equatable {
+    public enum TagType: Int, Decodable, Equatable {
         case general = 0
         case artist = 1
         case studio = 2
@@ -10,6 +10,7 @@ public struct Tag: Decodable, Hashable, Identifiable {
         case character = 4
         case genre = 5
         case medium = 8
+        case meta = 9
     }
 
     public enum CodingKeys: String, CodingKey {

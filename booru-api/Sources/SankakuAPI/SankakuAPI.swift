@@ -37,7 +37,7 @@ public final class SankakuAPI {
                          ratingThreshold: Float = 0,
                          limit: Int = 40,
                          next: String? = nil,
-                         prev: String? = nil) -> AnyPublisher<PostsResponse, Error> {
+                         prev: String? = nil) async throws -> PostsResponse {
         var request = Request(
             url: URL(string: "https://capi-v2.sankakucomplex.com/posts/keyset")!,
             method: .get
@@ -90,13 +90,10 @@ public final class SankakuAPI {
             "accept": "application/vnd.sankaku.api+json;v=2"
         ]
 
-        return urlSession.executeRequest(
-            request,
-            ofType: PostsResponse.self
-        )
+        return try await urlSession.executeRequest(request)
     }
 
-    public func autoSuggestTags(for query: String) -> AnyPublisher<[Tag], Error> {
+    public func autoSuggestTags(for query: String) async throws -> [Tag] {
         var request = Request(
             url: URL(string: "https://capi-v2.sankakucomplex.com/tags/autosuggestCreating")!,
             method: .get
@@ -106,24 +103,7 @@ public final class SankakuAPI {
             "tag": query
         ]
 
-        return urlSession.executeRequest(request, ofType: [Tag].self)
+        return try await urlSession.executeRequest(request)
     }
-
-//    public func login(username: String, password: String) async throws {
-//        var urlRequest = URLRequest(url: URL(string: "https://capi-v2.sankakucomplex.com/auth/token")!)
-//        urlRequest.httpMethod = "POST"
-//
-//        let bodyString = "{ login: \(username), password: \(password) }"
-//
-//        urlRequest.httpBody = Data(bodyString.utf8)
-//
-//        let (data, response) = try await urlSession.data(for: urlRequest)
-//    }
-
-    // MARK: - Private Methods
-
-//    private func processRequest() async throws -> (Data, URLResponse) {
-//
-//    }
 
 }

@@ -1,6 +1,7 @@
 import SwiftUI
 import ComposableArchitecture
 import Kingfisher
+import SankakuAPI
 
 struct MainFeedView: View {
 
@@ -21,6 +22,13 @@ struct MainFeedView: View {
 
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
+            content(for: viewStore)
+        }
+    }
+
+    @ViewBuilder
+    func content(for viewStore: VStore) -> some View {
+        NavigationStack {
             feed(for: viewStore)
         }
     }
@@ -39,7 +47,48 @@ struct MainFeedView: View {
                 }
             }
         }
+        .overlay() {
+            ProgressView()
+                .opacity(viewStore.posts.isEmpty ? 1 : 0)
+                .animation(.default, value: viewStore.posts.isEmpty)
+        }
         .onAppear { viewStore.send(.appear) }
+        .searchable(
+            text: searchQueryBinding(for: viewStore),
+            tokens: searchTagsBinding(for: viewStore),
+            prompt: Text("Search using tags")
+        ) { tag in
+            TagView(tag: tag)
+        }
+        .searchSuggestions {
+            ForEach(viewStore.tagSuggestions) { tag in
+                TagView(tag: tag)
+                    .searchCompletion(tag)
+            }
+        }
+        .refreshable {
+            viewStore.send(.reload)
+        }
+        .textInputAutocapitalization(.never)
+        .scrollDismissesKeyboard(.immediately)
+    }
+
+    // MARK: - Methods
+
+    func searchQueryBinding(for viewStore: VStore) -> Binding<String> {
+        viewStore.binding { state in
+            state.searchQuery
+        } send: { searchQuery in
+            .setSearchQuery(searchQuery)
+        }
+    }
+
+    func searchTagsBinding(for viewStore: VStore) -> Binding<[Tag]> {
+        viewStore.binding { state in
+            state.searchTags
+        } send: { tags in
+            .setSearchTags(tags)
+        }
     }
 
 }
@@ -63,6 +112,7 @@ private struct PostPreview: View {
             KFImage(previewURL)
                 .resizable()
                 .fade(duration: 0.3)
+                .onFailureImage(KFCrossPlatformImage(systemName: "exclamationmark.triangle"))
                 .scaledToFill()
         }
         else {

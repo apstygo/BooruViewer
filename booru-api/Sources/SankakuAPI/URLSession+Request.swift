@@ -3,10 +3,15 @@ import Combine
 
 extension URLSession {
 
-    func executeRequest(_ request: Request) -> URLSession.DataTaskPublisher {
+    enum RequestError: Error {
+        case badResponseCode(Int)
+    }
+
+    func executeRequest(_ request: Request) async throws -> Data {
         var headers = request.headers
 
-        var urlRequest = URLRequest(url: request.url.addingQueryParameters(request.params))
+        let url = request.url.addingQueryParameters(request.params)
+        var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = request.method.rawValue
 
         // Body
@@ -22,14 +27,21 @@ extension URLSession {
             urlRequest.setValue(value, forHTTPHeaderField: key)
         }
 
-        return dataTaskPublisher(for: urlRequest)
+        // Process the response
+
+        let (data, urlResponse) = try await data(for: urlRequest)
+
+        if let httpResponse = urlResponse as? HTTPURLResponse,
+           !(200..<300).contains(httpResponse.statusCode) {
+            throw RequestError.badResponseCode(httpResponse.statusCode)
+        }
+
+        return data
     }
 
-    func executeRequest<D: Decodable>(_ request: Request, ofType decodable: D.Type) -> AnyPublisher<D, Error> {
-        executeRequest(request)
-            .map(\.data)
-            .decode(type: decodable, decoder: JSONDecoder())
-            .eraseToAnyPublisher()
+    func executeRequest<D: Decodable>(_ request: Request) async throws -> D {
+        let data = try await executeRequest(request)
+        return try JSONDecoder().decode(D.self, from: data)
     }
 
 }

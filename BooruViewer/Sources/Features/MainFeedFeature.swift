@@ -18,6 +18,10 @@ struct MainFeedFeature: ReducerProtocol {
 
     struct State: Equatable {
         var posts: [IndexedPost] = []
+        var searchQuery = ""
+        var searchTags: [Tag] = []
+        var tagSuggestions: [Tag] = []
+
         var canLoadMore = true
         var isLoading = false
         var nextPageId: String?
@@ -26,10 +30,16 @@ struct MainFeedFeature: ReducerProtocol {
     enum Action: Equatable {
         case appear
         case loadMorePosts(index: Int)
+        case reload
+        case setSearchQuery(String)
+        case setSearchTags([Tag])
 
-        case postsError
         case postsResponse(PostsResponse)
+        case suggestTagsResponse([Tag])
     }
+
+    struct LoadPostsID { }
+    struct SuggestTagsID { }
 
     func reduce(into state: inout State, action: Action) -> Effect<Action, Never> {
         switch action {
@@ -49,6 +59,34 @@ struct MainFeedFeature: ReducerProtocol {
 
             return loadMore(state: state)
 
+        case .reload:
+            state.posts = []
+            state.nextPageId = nil
+            state.isLoading = false
+            state.canLoadMore = true
+
+            return loadMore(state: state)
+
+        case let .setSearchQuery(query):
+            state.searchQuery = query
+
+            if query.isEmpty {
+                state.tagSuggestions = []
+                return .cancel(id: SuggestTagsID.self)
+            }
+            else {
+                return suggestTags(state: state)
+            }
+
+        case let .setSearchTags(tags):
+            guard tags != state.searchTags else {
+                return .none
+            }
+
+            state.searchTags = tags
+
+            return .task { .reload }
+
         case let .postsResponse(response):
             state.nextPageId = response.meta.next
             state.canLoadMore = response.data.count >= Constant.limit
@@ -62,7 +100,9 @@ struct MainFeedFeature: ReducerProtocol {
 
             return .none
 
-        case .postsError:
+        case let .suggestTagsResponse(tagSuggestions):
+            state.tagSuggestions = tagSuggestions.filter { !state.searchTags.contains($0) }
+
             return .none
         }
     }
@@ -70,11 +110,24 @@ struct MainFeedFeature: ReducerProtocol {
     // MARK: - Private Methods
 
     private func loadMore(state: State) -> Effect<Action, Never> {
-        sankakuAPI.getPosts(limit: Constant.limit, next: state.nextPageId)
-            .map { Action.postsResponse($0) }
-            .replaceError(with: .postsError)
-            .receive(on: RunLoop.main)
-            .eraseToEffect()
+        .task {
+            let response = try await sankakuAPI.getPosts(
+                tags: state.searchTags.map(\.name),
+                limit: Constant.limit,
+                next: state.nextPageId
+            )
+
+            return .postsResponse(response)
+        }
+        .cancellable(id: LoadPostsID.self, cancelInFlight: true)
+    }
+
+    private func suggestTags(state: State) -> Effect<Action, Never> {
+        .task {
+            let tags = try await sankakuAPI.autoSuggestTags(for: state.searchQuery)
+            return .suggestTagsResponse(tags)
+        }
+        .cancellable(id: SuggestTagsID.self, cancelInFlight: true)
     }
 
 }
