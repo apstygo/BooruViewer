@@ -7,7 +7,6 @@ struct ContentView: View {
     @ObservedObject var postRepo = PostRepo()
     @GestureState var columnDifference = 0
     @State var numberOfColumns = 3
-    @State var searchQuery = ""
 
     var columns: [GridItem] {
         Array(repeating: GridItem(spacing: 2), count: numberOfColumns)
@@ -41,9 +40,24 @@ struct ContentView: View {
         .onAppear {
             postRepo.loadImages()
         }
-        .searchable(text: $searchQuery, prompt: Text("Enter tags here"))
+        .searchable(
+            text: postRepo.searchQuery,
+            tokens: postRepo.tags,
+            prompt: Text("Enter tags here")
+        ) { tag in
+            TagToken(tag: tag)
+        }
+        .searchSuggestions {
+            ForEach(postRepo.tagSuggestions) {
+                TagToken(tag: $0)
+                    .searchCompletion($0)
+            }
+        }
         .onSubmit(of: .search) {
-            postRepo.setSearchQuery(searchQuery)
+            postRepo.reload()
+        }
+        .refreshable {
+            postRepo.reload()
         }
     }
 
@@ -94,6 +108,16 @@ private struct PostPreview: View {
         else {
             Image(systemName: "eye.slash")
         }
+    }
+
+}
+
+private struct TagToken: View {
+
+    let tag: Tag
+
+    var body: some View {
+        Text(tag.name)
     }
 
 }

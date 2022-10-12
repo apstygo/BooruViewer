@@ -96,6 +96,19 @@ public final class SankakuAPI {
         )
     }
 
+    public func autoSuggestTags(for query: String) -> AnyPublisher<[Tag], Error> {
+        var request = Request(
+            url: URL(string: "https://capi-v2.sankakucomplex.com/tags/autosuggestCreating")!,
+            method: .get
+        )
+
+        request.params = [
+            "tag": query
+        ]
+
+        return urlSession.executeRequest(request, ofType: [Tag].self)
+    }
+
 //    public func login(username: String, password: String) async throws {
 //        var urlRequest = URLRequest(url: URL(string: "https://capi-v2.sankakucomplex.com/auth/token")!)
 //        urlRequest.httpMethod = "POST"
