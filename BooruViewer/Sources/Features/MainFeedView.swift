@@ -53,6 +53,7 @@ struct MainFeedView: View {
                 .animation(.default, value: viewStore.posts.isEmpty)
         }
         .onAppear { viewStore.send(.appear) }
+        .animation(.default, value: viewStore.posts)
         .searchable(
             text: searchQueryBinding(for: viewStore),
             tokens: searchTagsBinding(for: viewStore),
