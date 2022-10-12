@@ -11,6 +11,7 @@ struct MainFeedFeature: ReducerProtocol {
 
     private enum Constant {
         static let limit = 50
+        static let nextPageLoadRange = 25
     }
 
     @Dependency(\.sankakuAPI) var sankakuAPI
@@ -33,14 +34,20 @@ struct MainFeedFeature: ReducerProtocol {
     func reduce(into state: inout State, action: Action) -> Effect<Action, Never> {
         switch action {
         case .appear:
-            return sankakuAPI.getPosts(limit: Constant.limit, next: state.nextPageId)
-                .map { Action.postsResponse($0) }
-                .replaceError(with: .postsError)
-                .receive(on: RunLoop.main)
-                .eraseToEffect()
+            return loadMore(state: state)
 
         case let .loadMorePosts(index):
-            return .none
+            guard
+                !state.isLoading,
+                state.canLoadMore,
+                state.posts.count - index <= Constant.nextPageLoadRange
+            else {
+                return .none
+            }
+
+            state.isLoading = true
+
+            return loadMore(state: state)
 
         case let .postsResponse(response):
             state.nextPageId = response.meta.next
@@ -58,6 +65,16 @@ struct MainFeedFeature: ReducerProtocol {
         case .postsError:
             return .none
         }
+    }
+
+    // MARK: - Private Methods
+
+    private func loadMore(state: State) -> Effect<Action, Never> {
+        sankakuAPI.getPosts(limit: Constant.limit, next: state.nextPageId)
+            .map { Action.postsResponse($0) }
+            .replaceError(with: .postsError)
+            .receive(on: RunLoop.main)
+            .eraseToEffect()
     }
 
 }
