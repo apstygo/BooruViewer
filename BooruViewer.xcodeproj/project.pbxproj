@@ -13,6 +13,9 @@
 		2E6A431228F6052700F89556 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 2E6A431128F6052700F89556 /* Kingfisher */; };
 		2E6A431428F61B3800F89556 /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6A431328F61B3800F89556 /* PostDetailView.swift */; };
 		2E6A431728F6289200F89556 /* CombineExt in Frameworks */ = {isa = PBXBuildFile; productRef = 2E6A431628F6289200F89556 /* CombineExt */; };
+		2E6A431A28F6E8B600F89556 /* MainFeedFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6A431928F6E8B500F89556 /* MainFeedFeature.swift */; };
+		2E6A431C28F6F06900F89556 /* MainFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6A431B28F6F06900F89556 /* MainFeedView.swift */; };
+		2E6A431F28F6F4A700F89556 /* SankakuAPIDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6A431E28F6F4A700F89556 /* SankakuAPIDependency.swift */; };
 		2ED2CD9328F56C36001CA186 /* BooruViewerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED2CD9228F56C36001CA186 /* BooruViewerApp.swift */; };
 		2ED2CD9528F56C36001CA186 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED2CD9428F56C36001CA186 /* ContentView.swift */; };
 		2ED2CD9728F56C36001CA186 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2ED2CD9628F56C36001CA186 /* Assets.xcassets */; };
@@ -22,6 +25,9 @@
 
 /* Begin PBXFileReference section */
 		2E6A431328F61B3800F89556 /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
+		2E6A431928F6E8B500F89556 /* MainFeedFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeedFeature.swift; sourceTree = "<group>"; };
+		2E6A431B28F6F06900F89556 /* MainFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeedView.swift; sourceTree = "<group>"; };
+		2E6A431E28F6F4A700F89556 /* SankakuAPIDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SankakuAPIDependency.swift; sourceTree = "<group>"; };
 		2ED2CD8F28F56C36001CA186 /* BooruViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BooruViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2ED2CD9228F56C36001CA186 /* BooruViewerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooruViewerApp.swift; sourceTree = "<group>"; };
 		2ED2CD9428F56C36001CA186 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -52,6 +58,23 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2E6A431828F6E84600F89556 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				2E6A431928F6E8B500F89556 /* MainFeedFeature.swift */,
+				2E6A431B28F6F06900F89556 /* MainFeedView.swift */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		2E6A431D28F6F48700F89556 /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				2E6A431E28F6F4A700F89556 /* SankakuAPIDependency.swift */,
+			);
+			path = Dependencies;
 			sourceTree = "<group>";
 		};
 		2ED2CD8628F56C36001CA186 = {
@@ -91,6 +114,8 @@
 		2ED2CDA128F570A0001CA186 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				2E6A431D28F6F48700F89556 /* Dependencies */,
+				2E6A431828F6E84600F89556 /* Features */,
 				2ED2CD9228F56C36001CA186 /* BooruViewerApp.swift */,
 				2ED2CD9428F56C36001CA186 /* ContentView.swift */,
 				2ED2CDA328F576DB001CA186 /* PostRepo.swift */,
@@ -193,7 +218,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				2ED2CD9528F56C36001CA186 /* ContentView.swift in Sources */,
+				2E6A431A28F6E8B600F89556 /* MainFeedFeature.swift in Sources */,
+				2E6A431F28F6F4A700F89556 /* SankakuAPIDependency.swift in Sources */,
 				2ED2CD9328F56C36001CA186 /* BooruViewerApp.swift in Sources */,
+				2E6A431C28F6F06900F89556 /* MainFeedView.swift in Sources */,
 				2ED2CDA428F576DB001CA186 /* PostRepo.swift in Sources */,
 				2E6A431428F61B3800F89556 /* PostDetailView.swift in Sources */,
 			);
