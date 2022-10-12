@@ -39,6 +39,7 @@ struct MainFeedView: View {
                 }
             }
         }
+        .onAppear { viewStore.send(.appear) }
     }
 
 }
