@@ -38,12 +38,23 @@ struct MainFeedView: View {
         ScrollView {
             LazyVGrid(columns: columns, spacing: 2) {
                 ForEach(viewStore.posts, id: \.post.id) { post in
-                    NavigationLink(value: post.post) {
-                        PostPreview(post: post)
-                            .onAppear {
-                                viewStore.send(.loadMorePosts(index: post.index))
-                            }
-                    }
+                    PostPreview(post: post)
+                        .onAppear {
+                            viewStore.send(.loadMorePosts(index: post.index))
+                        }
+                        .onTapGesture {
+                            viewStore.send(.presentDetailFeed(post.post))
+                        }
+                }
+            }
+            .navigationDestination(
+                isPresented: viewStore.binding(
+                    get: { $0.detailFeedState != nil },
+                    send: .dismissDetailFeed
+                )
+            ) {
+                IfLetStore(store.scope(state: \.detailFeedState, action: { .detailFeedAction($0) })) {
+                    DetailFeedView(store: $0)
                 }
             }
         }

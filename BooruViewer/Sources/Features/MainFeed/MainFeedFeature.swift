@@ -25,6 +25,8 @@ struct MainFeedFeature: ReducerProtocol {
         var canLoadMore = true
         var isLoading = false
         var nextPageId: String?
+
+        var detailFeedState: DetailFeedFeature.State?
     }
 
     enum Action: Equatable {
@@ -33,15 +35,26 @@ struct MainFeedFeature: ReducerProtocol {
         case reload
         case setSearchQuery(String)
         case setSearchTags([Tag])
+        case presentDetailFeed(Post)
+        case dismissDetailFeed
 
         case postsResponse(PostsResponse)
         case suggestTagsResponse([Tag])
+
+        case detailFeedAction(DetailFeedFeature.Action)
     }
 
     struct LoadPostsID { }
     struct SuggestTagsID { }
 
-    func reduce(into state: inout State, action: Action) -> Effect<Action, Never> {
+    var body: some ReducerProtocol<State, Action> {
+        Reduce(self.coreReduce)
+            .ifLet(\.detailFeedState, action: /Action.detailFeedAction) {
+                DetailFeedFeature()
+            }
+    }
+
+    func coreReduce(into state: inout State, action: Action) -> Effect<Action, Never> {
         switch action {
         case .appear:
             return loadMore(state: state)
@@ -88,6 +101,16 @@ struct MainFeedFeature: ReducerProtocol {
 
             return .task { .reload }
 
+        case let .presentDetailFeed(post):
+            state.detailFeedState = .init(post: post)
+
+            return .none
+
+        case .dismissDetailFeed:
+            state.detailFeedState = nil
+
+            return .none
+
         case let .postsResponse(response):
             state.nextPageId = response.meta.next
             state.canLoadMore = response.data.count >= Constant.limit
@@ -104,6 +127,10 @@ struct MainFeedFeature: ReducerProtocol {
         case let .suggestTagsResponse(tagSuggestions):
             state.tagSuggestions = tagSuggestions.filter { !state.searchTags.contains($0) }
 
+            return .none
+
+        case .detailFeedAction:
+            // Do nothing
             return .none
         }
     }
