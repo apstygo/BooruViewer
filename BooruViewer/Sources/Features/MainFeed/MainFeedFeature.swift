@@ -10,21 +10,18 @@ struct IndexedPost: Equatable {
 struct MainFeedFeature: ReducerProtocol {
 
     private enum Constant {
-        static let limit = 50
         static let nextPageLoadRange = 25
     }
 
     @Dependency(\.sankakuAPI) var sankakuAPI
+    @Dependency(\.feedManager) var feedManager
 
     struct State: Equatable {
         var posts: [IndexedPost] = []
         var searchQuery = ""
         var searchTags: [Tag] = []
         var tagSuggestions: [Tag] = []
-
-        var canLoadMore = true
-        var isLoading = false
-        var nextPageId: String?
+        var feedManagerState: FeedManagerState = .idle
 
         var detailFeedState: DetailFeedFeature.State?
     }
@@ -38,7 +35,7 @@ struct MainFeedFeature: ReducerProtocol {
         case presentDetailFeed(Post)
         case dismissDetailFeed
 
-        case postsResponse(PostsResponse)
+        case loadResponse([Post], FeedManagerState)
         case suggestTagsResponse([Tag])
 
         case detailFeedAction(DetailFeedFeature.Action)
@@ -57,28 +54,23 @@ struct MainFeedFeature: ReducerProtocol {
     func coreReduce(into state: inout State, action: Action) -> Effect<Action, Never> {
         switch action {
         case .appear:
-            return loadMore(state: state)
+            return load(state: state)
 
         case let .loadMorePosts(index):
             guard
-                !state.isLoading,
-                state.canLoadMore,
-                state.posts.count - index <= Constant.nextPageLoadRange
+                state.feedManagerState.allowsLoading,
+                state.posts.count - index == Constant.nextPageLoadRange
             else {
                 return .none
             }
 
-            state.isLoading = true
-
-            return loadMore(state: state)
+            return load(state: state)
 
         case .reload:
             state.posts = []
-            state.nextPageId = nil
-            state.isLoading = false
-            state.canLoadMore = true
+            state.feedManagerState = .idle
 
-            return loadMore(state: state)
+            return load(state: state, reset: true)
 
         case let .setSearchQuery(query):
             state.searchQuery = query
@@ -111,16 +103,9 @@ struct MainFeedFeature: ReducerProtocol {
 
             return .none
 
-        case let .postsResponse(response):
-            state.nextPageId = response.meta.next
-            state.canLoadMore = response.data.count >= Constant.limit
-
-            let newPosts = response.data.enumerated().map { index, post in
-                IndexedPost(index: state.posts.count + index, post: post)
-            }
-
-            state.posts.append(contentsOf: newPosts)
-            state.isLoading = false
+        case let .loadResponse(posts, feedManagerState):
+            state.posts = posts.enumerated().map { IndexedPost(index: $0, post: $1) }
+            state.feedManagerState = feedManagerState
 
             return .none
 
@@ -137,15 +122,16 @@ struct MainFeedFeature: ReducerProtocol {
 
     // MARK: - Private Methods
 
-    private func loadMore(state: State) -> Effect<Action, Never> {
+    private func load(state: State, reset: Bool = false) -> Effect<Action, Never> {
         .task {
-            let response = try await sankakuAPI.getPosts(
-                tags: state.searchTags.map(\.name),
-                limit: Constant.limit,
-                next: state.nextPageId
-            )
+            if reset {
+                await feedManager.reload()
+            }
+            else {
+                await feedManager.loadNextPage()
+            }
 
-            return .postsResponse(response)
+            return await .loadResponse(feedManager.posts, feedManager.state)
         }
         .cancellable(id: LoadPostsID.self, cancelInFlight: true)
     }
@@ -156,6 +142,22 @@ struct MainFeedFeature: ReducerProtocol {
             return .suggestTagsResponse(tags)
         }
         .cancellable(id: SuggestTagsID.self, cancelInFlight: true)
+    }
+
+}
+
+// MARK: - Helpers
+
+extension FeedManagerState {
+
+    fileprivate var allowsLoading: Bool {
+        switch self {
+        case .idle, .error:
+            return true
+
+        case .loading, .finished:
+            return false
+        }
     }
 
 }

@@ -18,6 +18,8 @@
 		2E6A432328F70B4D00F89556 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6A432228F70B4D00F89556 /* TagView.swift */; };
 		2E6A432728F753D700F89556 /* DetailFeedFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6A432628F753D700F89556 /* DetailFeedFeature.swift */; };
 		2E6A433028F7584800F89556 /* DetailFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6A432F28F7584800F89556 /* DetailFeedView.swift */; };
+		2E6A433328F89AEF00F89556 /* FeedManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6A433228F89AEF00F89556 /* FeedManager.swift */; };
+		2E6A433528F8A9A900F89556 /* FeedManagerDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6A433428F8A9A900F89556 /* FeedManagerDependency.swift */; };
 		2ED2CD9328F56C36001CA186 /* BooruViewerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED2CD9228F56C36001CA186 /* BooruViewerApp.swift */; };
 		2ED2CD9728F56C36001CA186 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2ED2CD9628F56C36001CA186 /* Assets.xcassets */; };
 		2ED2CD9B28F56C36001CA186 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2ED2CD9A28F56C36001CA186 /* Preview Assets.xcassets */; };
@@ -30,6 +32,8 @@
 		2E6A432228F70B4D00F89556 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
 		2E6A432628F753D700F89556 /* DetailFeedFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailFeedFeature.swift; sourceTree = "<group>"; };
 		2E6A432F28F7584800F89556 /* DetailFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailFeedView.swift; sourceTree = "<group>"; };
+		2E6A433228F89AEF00F89556 /* FeedManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedManager.swift; sourceTree = "<group>"; };
+		2E6A433428F8A9A900F89556 /* FeedManagerDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedManagerDependency.swift; sourceTree = "<group>"; };
 		2ED2CD8F28F56C36001CA186 /* BooruViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BooruViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2ED2CD9228F56C36001CA186 /* BooruViewerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooruViewerApp.swift; sourceTree = "<group>"; };
 		2ED2CD9428F56C36001CA186 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -74,6 +78,7 @@
 		2E6A431D28F6F48700F89556 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				2E6A433428F8A9A900F89556 /* FeedManagerDependency.swift */,
 				2E6A431E28F6F4A700F89556 /* SankakuAPIDependency.swift */,
 			);
 			path = Dependencies;
@@ -112,6 +117,14 @@
 				2E6A432F28F7584800F89556 /* DetailFeedView.swift */,
 			);
 			path = DetailFeed;
+			sourceTree = "<group>";
+		};
+		2E6A433128F89ADA00F89556 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2E6A433228F89AEF00F89556 /* FeedManager.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		2ED2CD8628F56C36001CA186 = {
@@ -154,6 +167,7 @@
 				2E6A431D28F6F48700F89556 /* Dependencies */,
 				2E6A431828F6E84600F89556 /* Features */,
 				2E6A432028F7031F00F89556 /* Legacy */,
+				2E6A433128F89ADA00F89556 /* Model */,
 				2E6A432128F70B3700F89556 /* Views */,
 				2ED2CD9228F56C36001CA186 /* BooruViewerApp.swift */,
 			);
@@ -256,6 +270,8 @@
 				2E6A431A28F6E8B600F89556 /* MainFeedFeature.swift in Sources */,
 				2E6A432328F70B4D00F89556 /* TagView.swift in Sources */,
 				2E6A433028F7584800F89556 /* DetailFeedView.swift in Sources */,
+				2E6A433328F89AEF00F89556 /* FeedManager.swift in Sources */,
+				2E6A433528F8A9A900F89556 /* FeedManagerDependency.swift in Sources */,
 				2E6A431F28F6F4A700F89556 /* SankakuAPIDependency.swift in Sources */,
 				2E6A432728F753D700F89556 /* DetailFeedFeature.swift in Sources */,
 				2ED2CD9328F56C36001CA186 /* BooruViewerApp.swift in Sources */,
