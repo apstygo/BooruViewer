@@ -20,6 +20,8 @@
 		2E6A433328F89AEF00F89556 /* FeedManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6A433228F89AEF00F89556 /* FeedManager.swift */; };
 		2E6A433528F8A9A900F89556 /* FeedManagerDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6A433428F8A9A900F89556 /* FeedManagerDependency.swift */; };
 		2E6A433828F9AA3900F89556 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2E6A433728F9AA3900F89556 /* SDWebImageSwiftUI */; };
+		2E6A433B28F9FA1E00F89556 /* DetailPageFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6A433A28F9FA1E00F89556 /* DetailPageFeature.swift */; };
+		2E6A433D28F9FB4900F89556 /* DetailPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6A433C28F9FB4900F89556 /* DetailPageView.swift */; };
 		2ED2CD9328F56C36001CA186 /* BooruViewerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED2CD9228F56C36001CA186 /* BooruViewerApp.swift */; };
 		2ED2CD9728F56C36001CA186 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2ED2CD9628F56C36001CA186 /* Assets.xcassets */; };
 		2ED2CD9B28F56C36001CA186 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2ED2CD9A28F56C36001CA186 /* Preview Assets.xcassets */; };
@@ -34,6 +36,8 @@
 		2E6A432F28F7584800F89556 /* DetailFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailFeedView.swift; sourceTree = "<group>"; };
 		2E6A433228F89AEF00F89556 /* FeedManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedManager.swift; sourceTree = "<group>"; };
 		2E6A433428F8A9A900F89556 /* FeedManagerDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedManagerDependency.swift; sourceTree = "<group>"; };
+		2E6A433A28F9FA1E00F89556 /* DetailPageFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPageFeature.swift; sourceTree = "<group>"; };
+		2E6A433C28F9FB4900F89556 /* DetailPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPageView.swift; sourceTree = "<group>"; };
 		2ED2CD8F28F56C36001CA186 /* BooruViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BooruViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2ED2CD9228F56C36001CA186 /* BooruViewerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooruViewerApp.swift; sourceTree = "<group>"; };
 		2ED2CD9428F56C36001CA186 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -70,6 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				2E6A432528F753CB00F89556 /* DetailFeed */,
+				2E6A433928F9FA1100F89556 /* DetailPage */,
 				2E6A432428F74EC600F89556 /* MainFeed */,
 			);
 			path = Features;
@@ -125,6 +130,15 @@
 				2E6A433228F89AEF00F89556 /* FeedManager.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		2E6A433928F9FA1100F89556 /* DetailPage */ = {
+			isa = PBXGroup;
+			children = (
+				2E6A433A28F9FA1E00F89556 /* DetailPageFeature.swift */,
+				2E6A433C28F9FB4900F89556 /* DetailPageView.swift */,
+			);
+			path = DetailPage;
 			sourceTree = "<group>";
 		};
 		2ED2CD8628F56C36001CA186 = {
@@ -269,6 +283,7 @@
 			files = (
 				2E6A431A28F6E8B600F89556 /* MainFeedFeature.swift in Sources */,
 				2E6A432328F70B4D00F89556 /* TagView.swift in Sources */,
+				2E6A433B28F9FA1E00F89556 /* DetailPageFeature.swift in Sources */,
 				2E6A433028F7584800F89556 /* DetailFeedView.swift in Sources */,
 				2E6A433328F89AEF00F89556 /* FeedManager.swift in Sources */,
 				2E6A433528F8A9A900F89556 /* FeedManagerDependency.swift in Sources */,
@@ -276,6 +291,7 @@
 				2E6A432728F753D700F89556 /* DetailFeedFeature.swift in Sources */,
 				2ED2CD9328F56C36001CA186 /* BooruViewerApp.swift in Sources */,
 				2E6A431C28F6F06900F89556 /* MainFeedView.swift in Sources */,
+				2E6A433D28F9FB4900F89556 /* DetailPageView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -37,31 +37,14 @@ struct DetailFeedView: View {
         .tabViewStyle(.page(indexDisplayMode: .never))
     }
 
-    @ViewBuilder
     func page(for post: Post) -> some View {
-        List {
-            image(for: post)
-                .listRowInsets(EdgeInsets())
-
-            if let tags = post.tags {
-                ForEach(tags) { tag in
-                    TagView(tag: tag)
-                }
-            }
+        let store = self.store.scope { state in
+            state.pageStates[post]!
+        } action: { childAction in
+            .detailPageAction(post, childAction)
         }
-        .listStyle(.plain)
-    }
 
-    @ViewBuilder
-    func image(for post: Post) -> some View {
-        WebImage(url: post.sampleURL)
-            .placeholder {
-                WebImage(url: post.previewURL)
-                    .resizable()
-                    .scaledToFit()
-            }
-            .resizable()
-            .scaledToFit()
+        return DetailPageView(store: store)
     }
 
     func selectedPageBinding(for viewStore: ViewStoreOf<DetailFeedFeature>) -> Binding<Int> {
