@@ -93,6 +93,20 @@ public final class SankakuAPI {
         return try await urlSession.executeRequest(request)
     }
 
+    public func getPosts(recommendedFor postId: Int, limit: Int = 40) async throws -> [Post] {
+        var request = Request(
+            url: URL(string: "https://capi-v2.sankakucomplex.com/posts?tags=recommended_for_post:31849612")!,
+            method: .get
+        )
+
+        request.params = [
+            "tags": "recommended_for_post:\(postId)",
+            "limit": "\(limit)"
+        ]
+
+        return try await urlSession.executeRequest(request)
+    }
+
     public func autoSuggestTags(for query: String) async throws -> [Tag] {
         var request = Request(
             url: URL(string: "https://capi-v2.sankakucomplex.com/tags/autosuggestCreating")!,

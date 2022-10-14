@@ -7,7 +7,7 @@ struct DetailFeedFeature: ReducerProtocol {
         var postIndex: Int
         var posts: [IndexedPost] = []
 
-        var pageStates: [Post: DetailPageFeature.State] = [:]
+        var pageStates: IdentifiedArrayOf<DetailPageFeature.State> = []
     }
 
     enum Action: Equatable {
@@ -21,7 +21,14 @@ struct DetailFeedFeature: ReducerProtocol {
 
     @Dependency(\.feedManager) var feedManager
 
-    func reduce(into state: inout State, action: Action) -> Effect<Action, Never> {
+    var body: some ReducerProtocol<State, Action> {
+        Reduce(coreReduce)
+            .forEach(\.pageStates, action: /Action.detailPageAction) {
+                DetailPageFeature()
+            }
+    }
+
+    func coreReduce(into state: inout State, action: Action) -> Effect<Action, Never> {
         switch action {
         case .appear:
             return .task {
@@ -44,13 +51,11 @@ struct DetailFeedFeature: ReducerProtocol {
         case let .setPosts(posts):
             state.posts = posts.enumerated().map { IndexedPost(index: $0, post: $1) }
 
-            var pageStates: [Post: DetailPageFeature.State] = [:]
+            state.pageStates = []
 
             for post in posts {
-                pageStates[post] = .init(post: post)
+                state.pageStates.append(.init(post: post))
             }
-
-            state.pageStates = pageStates
 
             return .none
 

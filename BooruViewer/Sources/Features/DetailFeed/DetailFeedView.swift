@@ -32,7 +32,7 @@ struct DetailFeedView: View {
 
     func page(for post: Post) -> some View {
         let store = self.store.scope { state in
-            state.pageStates[post]!
+            state.pageStates[id: post]!
         } action: { childAction in
             .detailPageAction(post, childAction)
         }
