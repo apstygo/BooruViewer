@@ -6,12 +6,44 @@ struct TagView: View {
     let tag: Tag
 
     var body: some View {
-        Text(tag.name)
+        Text(tag.name.replacingOccurrences(of: "_", with: " "))
             .padding(.horizontal, 8)
             .padding(.vertical, 4)
-            .background(Color.gray)
+            .background(tag.backgroundColor)
             .foregroundColor(.white)
             .cornerRadius(8)
+    }
+
+}
+
+extension Tag {
+
+    fileprivate var backgroundColor: Color {
+        switch tagType {
+        case .general:
+            return .orange
+
+        case .artist:
+            return .red
+
+        case .studio:
+            return .pink
+
+        case .copyright:
+            return .purple
+
+        case .character:
+            return .green
+
+        case .genre:
+            return .brown
+
+        case .medium:
+            return .blue
+
+        case .meta:
+            return .gray
+        }
     }
 
 }
@@ -31,6 +63,22 @@ struct TagView_Previews: PreviewProvider {
             "series_count": 0,
             "tagName": "female"
           },
+    {
+              "id": 777720,
+              "name_en": "hoshime",
+              "name_ja": null,
+              "type": 1,
+              "count": 677,
+              "post_count": 677,
+              "pool_count": 0,
+              "locale": "en",
+              "rating": "e",
+              "version": null,
+              "tagName": "hoshime",
+              "total_post_count": 679,
+              "total_pool_count": 0,
+              "name": "hoshime"
+            },
     {
         "id": 4537,
         "name": "nintendo",

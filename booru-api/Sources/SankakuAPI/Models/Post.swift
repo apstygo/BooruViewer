@@ -6,10 +6,12 @@ public struct Post: Decodable, Hashable, Equatable {
         case previewURL = "preview_url"
         case sampleURL = "sample_url"
         case fileURL = "file_url"
+        case tags
     }
 
     public let id: Int
     public let previewURL: URL?
     public let sampleURL: URL?
     public let fileURL: URL?
+    public let tags: [Tag]
 }

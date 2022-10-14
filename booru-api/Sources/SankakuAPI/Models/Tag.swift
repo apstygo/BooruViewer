@@ -26,6 +26,6 @@ public struct Tag: Decodable, Hashable, Identifiable, Equatable {
     public let name: String
     public let postCount: Int
     public let poolCount: Int
-    public let seriesCount: Int
+    public let seriesCount: Int?
     public let tagType: TagType
 }
