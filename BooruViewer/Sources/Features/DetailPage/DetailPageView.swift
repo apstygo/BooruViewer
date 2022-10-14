@@ -30,9 +30,9 @@ struct DetailPageView: View {
 
     @ViewBuilder
     func image(for post: Post) -> some View {
-        WebImage(url: post.sampleURL)
+        WebImage(url: post.sampleURL, options: .highPriority)
             .placeholder {
-                WebImage(url: post.previewURL)
+                WebImage(url: post.previewURL, options: .highPriority)
                     .resizable()
                     .scaledToFit()
             }
