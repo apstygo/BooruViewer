@@ -43,7 +43,7 @@ struct MainFeedView: View {
                             viewStore.send(.loadMorePosts(index: post.index))
                         }
                         .onTapGesture {
-                            viewStore.send(.presentDetailFeed(post.post))
+                            viewStore.send(.presentDetailFeed(post))
                         }
                 }
             }

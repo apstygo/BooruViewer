@@ -32,7 +32,7 @@ struct MainFeedFeature: ReducerProtocol {
         case reload
         case setSearchQuery(String)
         case setSearchTags([Tag])
-        case presentDetailFeed(Post)
+        case presentDetailFeed(IndexedPost)
         case dismissDetailFeed
 
         case loadResponse([Post], FeedManagerState)
@@ -94,7 +94,7 @@ struct MainFeedFeature: ReducerProtocol {
             return .task { .reload }
 
         case let .presentDetailFeed(post):
-            state.detailFeedState = .init(post: post)
+            state.detailFeedState = .init(postIndex: post.index)
 
             return .none
 

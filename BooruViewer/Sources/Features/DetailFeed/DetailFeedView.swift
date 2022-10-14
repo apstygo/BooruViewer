@@ -10,16 +10,40 @@ struct DetailFeedView: View {
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             content(for: viewStore)
+                .onAppear {
+                    viewStore.send(.appear)
+                }
         }
     }
 
     @ViewBuilder
     func content(for viewStore: ViewStoreOf<DetailFeedFeature>) -> some View {
+        if viewStore.posts.isEmpty {
+            Text("Empty")
+        }
+        else {
+            tabView(for: viewStore)
+        }
+    }
+
+    @ViewBuilder
+    func tabView(for viewStore: ViewStoreOf<DetailFeedFeature>) -> some View {
+        TabView(selection: selectedPageBinding(for: viewStore)) {
+            ForEach(viewStore.posts, id: \.index) { post in
+                page(for: post.post)
+                    .tag(post.index)
+            }
+        }
+        .tabViewStyle(.page(indexDisplayMode: .never))
+    }
+
+    @ViewBuilder
+    func page(for post: Post) -> some View {
         List {
-            image(for: viewStore)
+            image(for: post)
                 .listRowInsets(EdgeInsets())
 
-            if let tags = viewStore.post?.tags {
+            if let tags = post.tags {
                 ForEach(tags) { tag in
                     TagView(tag: tag)
                 }
@@ -29,15 +53,23 @@ struct DetailFeedView: View {
     }
 
     @ViewBuilder
-    func image(for viewStore: ViewStoreOf<DetailFeedFeature>) -> some View {
-        WebImage(url: viewStore.post?.sampleURL)
+    func image(for post: Post) -> some View {
+        WebImage(url: post.sampleURL)
             .placeholder {
-                WebImage(url: viewStore.post?.previewURL)
+                WebImage(url: post.previewURL)
                     .resizable()
                     .scaledToFit()
             }
             .resizable()
             .scaledToFit()
+    }
+
+    func selectedPageBinding(for viewStore: ViewStoreOf<DetailFeedFeature>) -> Binding<Int> {
+        viewStore.binding { state in
+            state.postIndex
+        } send: { postIndex in
+            .scrollToPost(postIndex)
+        }
     }
 
 }
@@ -46,7 +78,7 @@ struct DetailFeedView_Previews: PreviewProvider {
     static var previews: some View {
         DetailFeedView(
             store: Store(
-                initialState: DetailFeedFeature.State(),
+                initialState: DetailFeedFeature.State(postIndex: 0),
                 reducer: DetailFeedFeature()
             )
         )
