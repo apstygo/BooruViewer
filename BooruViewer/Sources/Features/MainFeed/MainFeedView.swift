@@ -46,7 +46,7 @@ struct MainFeedView: View {
                             .onTapGesture {
                                 viewStore.send(.presentDetailFeed(post))
                             }
-                            .id(post.index)
+                            .id(post.index)     // id for programmatic scrolling
                     }
                 }
                 .navigationDestination(
@@ -73,8 +73,10 @@ struct MainFeedView: View {
                 .opacity(viewStore.posts.isEmpty ? 1 : 0)
                 .animation(.default, value: viewStore.posts.isEmpty)
         }
-        .onAppear { viewStore.send(.appear) }
+        .textInputAutocapitalization(.never)
+        .scrollDismissesKeyboard(.immediately)
         .animation(.default, value: viewStore.posts)
+        .onAppear { viewStore.send(.appear) }
         .searchable(
             text: searchQueryBinding(for: viewStore),
             tokens: searchTagsBinding(for: viewStore),
@@ -91,8 +93,6 @@ struct MainFeedView: View {
         .refreshable {
             viewStore.send(.reload)
         }
-        .textInputAutocapitalization(.never)
-        .scrollDismissesKeyboard(.immediately)
     }
 
     // MARK: - Methods

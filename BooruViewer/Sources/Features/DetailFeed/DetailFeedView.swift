@@ -31,7 +31,7 @@ struct DetailFeedView: View {
         TabView(selection: selectedPageBinding(for: viewStore)) {
             ForEach(viewStore.posts, id: \.index) { post in
                 page(for: post.post)
-                    .tag(post.index)
+                    .tag(post.index)    // tag for page binding
             }
         }
         .tabViewStyle(.page(indexDisplayMode: .never))
