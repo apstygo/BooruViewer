@@ -1,6 +1,6 @@
 import SwiftUI
 import ComposableArchitecture
-import Kingfisher
+import SDWebImageSwiftUI
 import SankakuAPI
 
 struct MainFeedView: View {
@@ -121,15 +121,37 @@ private struct PostPreview: View {
     @ViewBuilder
     var content: some View {
         if let previewURL = post.post.previewURL {
-            KFImage(previewURL)
+            WebImage(url: previewURL, options: .retryFailed)
                 .resizable()
-                .fade(duration: 0.3)
-                .onFailureImage(KFCrossPlatformImage(systemName: "exclamationmark.triangle"))
+                .placeholder {
+                    PostPreviewPlaceholder()
+                }
+                .transition(.fade(duration: 0.3))
                 .scaledToFill()
         }
         else {
             Image(systemName: "eye.slash")
         }
+    }
+
+}
+
+private struct PostPreviewPlaceholder: View {
+
+    @State var opacity: Double = 0
+
+    var body: some View {
+        Rectangle()
+            .foregroundColor(.gray)
+            .opacity(opacity)
+            .animation(animation, value: opacity)
+            .onAppear {
+                opacity = 0.5
+            }
+    }
+
+    var animation: Animation {
+        .linear(duration: 1).repeatForever(autoreverses: true)
     }
 
 }

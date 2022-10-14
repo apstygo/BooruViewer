@@ -1,6 +1,6 @@
 import SwiftUI
 import ComposableArchitecture
-import Kingfisher
+import SDWebImageSwiftUI
 
 struct DetailFeedView: View {
 
@@ -8,8 +8,14 @@ struct DetailFeedView: View {
 
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
-            KFImage(viewStore.post?.sampleURL)
+            WebImage(url: viewStore.post?.sampleURL)
+                .placeholder {
+                    WebImage(url: viewStore.post?.previewURL)
+                        .resizable()
+                        .scaledToFit()
+                }
                 .resizable()
+                .scaledToFit()
         }
     }
 
