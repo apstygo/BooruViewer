@@ -16,7 +16,7 @@ struct DetailPageView: View {
     @ViewBuilder
     func page(for viewStore: ViewStoreOf<DetailPageFeature>) -> some View {
         List {
-            image(for: viewStore.post)
+            PostImageView(post: viewStore.post)
                 .listRowInsets(EdgeInsets())
 
             if let tags = viewStore.post.tags {
@@ -28,8 +28,13 @@ struct DetailPageView: View {
         .listStyle(.plain)
     }
 
-    @ViewBuilder
-    func image(for post: Post) -> some View {
+}
+
+private struct PostImageView: View {
+
+    let post: Post
+
+    var body: some View {
         WebImage(url: post.sampleURL, options: .highPriority)
             .placeholder {
                 WebImage(url: post.previewURL, options: .highPriority)
