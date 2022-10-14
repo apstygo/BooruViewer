@@ -36,25 +36,35 @@ struct MainFeedView: View {
     @ViewBuilder
     func feed(for viewStore: VStore) -> some View {
         ScrollView {
-            LazyVGrid(columns: columns, spacing: 2) {
-                ForEach(viewStore.posts, id: \.post.id) { post in
-                    PostPreview(post: post)
-                        .onAppear {
-                            viewStore.send(.loadMorePosts(index: post.index))
-                        }
-                        .onTapGesture {
-                            viewStore.send(.presentDetailFeed(post))
-                        }
+            ScrollViewReader { proxy in
+                LazyVGrid(columns: columns, spacing: 2) {
+                    ForEach(viewStore.posts, id: \.post.id) { post in
+                        PostPreview(post: post)
+                            .onAppear {
+                                viewStore.send(.loadMorePosts(index: post.index))
+                            }
+                            .onTapGesture {
+                                viewStore.send(.presentDetailFeed(post))
+                            }
+                            .id(post.index)
+                    }
                 }
-            }
-            .navigationDestination(
-                isPresented: viewStore.binding(
-                    get: { $0.detailFeedState != nil },
-                    send: .dismissDetailFeed
-                )
-            ) {
-                IfLetStore(store.scope(state: \.detailFeedState, action: { .detailFeedAction($0) })) {
-                    DetailFeedView(store: $0)
+                .navigationDestination(
+                    isPresented: viewStore.binding(
+                        get: { $0.detailFeedState != nil },
+                        send: .dismissDetailFeed
+                    )
+                ) {
+                    IfLetStore(store.scope(state: \.detailFeedState, action: { .detailFeedAction($0) })) {
+                        DetailFeedView(store: $0)
+                    }
+                }
+                .onChange(of: viewStore.forceScrollIndex) { newValue in
+                    guard let newValue else {
+                        return
+                    }
+
+                    proxy.scrollTo(newValue, anchor: .top)
                 }
             }
         }

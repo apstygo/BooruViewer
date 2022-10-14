@@ -22,6 +22,7 @@ struct MainFeedFeature: ReducerProtocol {
         var searchTags: [Tag] = []
         var tagSuggestions: [Tag] = []
         var feedManagerState: FeedManagerState = .idle
+        var forceScrollIndex: Int?
 
         var detailFeedState: DetailFeedFeature.State?
     }
@@ -111,6 +112,11 @@ struct MainFeedFeature: ReducerProtocol {
 
         case let .suggestTagsResponse(tagSuggestions):
             state.tagSuggestions = tagSuggestions.filter { !state.searchTags.contains($0) }
+
+            return .none
+
+        case let .detailFeedAction(.scrollToPost(postIndex)):
+            state.forceScrollIndex = postIndex
 
             return .none
 
