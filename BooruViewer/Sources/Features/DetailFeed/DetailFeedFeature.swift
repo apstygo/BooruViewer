@@ -31,7 +31,15 @@ struct DetailFeedFeature: ReducerProtocol {
         case let .scrollToPost(postIndex):
             state.postIndex = postIndex
 
-            return .none
+            if postIndex == state.posts.count {
+                return .task {
+                    await feedManager.loadNextPage()
+                    return await .setPosts(feedManager.posts)
+                }
+            }
+            else {
+                return .none
+            }
 
         case let .setPosts(posts):
             state.posts = posts.enumerated().map { IndexedPost(index: $0, post: $1) }

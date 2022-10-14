@@ -18,21 +18,14 @@ struct DetailFeedView: View {
 
     @ViewBuilder
     func content(for viewStore: ViewStoreOf<DetailFeedFeature>) -> some View {
-        if viewStore.posts.isEmpty {
-            Text("Empty")
-        }
-        else {
-            tabView(for: viewStore)
-        }
-    }
-
-    @ViewBuilder
-    func tabView(for viewStore: ViewStoreOf<DetailFeedFeature>) -> some View {
         TabView(selection: selectedPageBinding(for: viewStore)) {
             ForEach(viewStore.posts, id: \.index) { post in
                 page(for: post.post)
                     .tag(post.index)    // tag for page binding
             }
+
+            Text("Loading next post...")
+                .tag(viewStore.posts.count)
         }
         .tabViewStyle(.page(indexDisplayMode: .never))
     }
@@ -57,13 +50,13 @@ struct DetailFeedView: View {
 
 }
 
-struct DetailFeedView_Previews: PreviewProvider {
-    static var previews: some View {
-        DetailFeedView(
-            store: Store(
-                initialState: DetailFeedFeature.State(postIndex: 0),
-                reducer: DetailFeedFeature()
-            )
-        )
-    }
-}
+//struct DetailFeedView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        DetailFeedView(
+//            store: Store(
+//                initialState: DetailFeedFeature.State(postIndex: 0),
+//                reducer: DetailFeedFeature()
+//            )
+//        )
+//    }
+//}
