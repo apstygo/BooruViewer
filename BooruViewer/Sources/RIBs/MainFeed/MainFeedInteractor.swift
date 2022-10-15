@@ -1,19 +1,15 @@
-//
-//  MainFeedInteractor.swift
-//  BooruViewer
-//
-//  Created by Artem Pstygo on 15.10.2022.
-//
-
 import ModernRIBs
+import SankakuAPI
 
 protocol MainFeedRouting: ViewableRouting {
     // TODO: Declare methods the interactor can invoke to manage sub-tree via the router.
 }
 
+@MainActor
 protocol MainFeedPresentable: Presentable {
-    var listener: MainFeedPresentableListener? { get set }
-    // TODO: Declare methods the interactor can invoke the presenter to present data.
+    nonisolated var listener: MainFeedPresentableListener? { get set }
+
+    func presentPosts(_ posts: [Post])
 }
 
 protocol MainFeedListener: AnyObject {
@@ -22,23 +18,44 @@ protocol MainFeedListener: AnyObject {
 
 final class MainFeedInteractor: PresentableInteractor<MainFeedPresentable>, MainFeedInteractable, MainFeedPresentableListener {
 
+    // MARK: - Internal Properties
+
     weak var router: MainFeedRouting?
     weak var listener: MainFeedListener?
 
-    // TODO: Add additional dependencies to constructor. Do not perform any logic
-    // in constructor.
-    override init(presenter: MainFeedPresentable) {
+    // MARK: - Private Properties
+
+    private let sankakuAPI: SankakuAPI
+
+    // MARK: - Init
+
+    init(sankakuAPI: SankakuAPI, presenter: MainFeedPresentable) {
+        self.sankakuAPI = sankakuAPI
+
         super.init(presenter: presenter)
         presenter.listener = self
     }
 
+    // MARK: - Lifecycle
+
     override func didBecomeActive() {
         super.didBecomeActive()
-        // TODO: Implement business logic here.
+
+        loadPosts()
     }
 
     override func willResignActive() {
         super.willResignActive()
         // TODO: Pause any business logic.
     }
+
+    // MARK: - Private Methods
+
+    private func loadPosts() {
+        Task {
+            let postsResponse = try await sankakuAPI.getPosts()
+            await presenter.presentPosts(postsResponse.data)
+        }
+    }
+
 }

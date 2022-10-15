@@ -1,11 +1,5 @@
-//
-//  MainFeedBuilder.swift
-//  BooruViewer
-//
-//  Created by Artem Pstygo on 15.10.2022.
-//
-
 import ModernRIBs
+import SankakuAPI
 
 protocol MainFeedDependency: Dependency {
     // TODO: Declare the set of dependencies required by this RIB, but cannot be
@@ -14,7 +8,10 @@ protocol MainFeedDependency: Dependency {
 
 final class MainFeedComponent: Component<MainFeedDependency> {
 
-    // TODO: Declare 'fileprivate' dependencies that are only used by this RIB.
+    var sankakuAPI: SankakuAPI {
+        shared { SankakuAPI() }
+    }
+
 }
 
 // MARK: - Builder
@@ -32,8 +29,10 @@ final class MainFeedBuilder: Builder<MainFeedDependency>, MainFeedBuildable {
     func build(withListener listener: MainFeedListener) -> MainFeedRouting {
         let component = MainFeedComponent(dependency: dependency)
         let viewController = MainFeedViewController()
-        let interactor = MainFeedInteractor(presenter: viewController)
+
+        let interactor = MainFeedInteractor(sankakuAPI: component.sankakuAPI, presenter: viewController)
         interactor.listener = listener
+
         return MainFeedRouter(interactor: interactor, viewController: viewController)
     }
 }
