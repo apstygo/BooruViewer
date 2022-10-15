@@ -1,14 +1,7 @@
-//
-//  RootInteractor.swift
-//  BooruViewer
-//
-//  Created by Artem Pstygo on 15.10.2022.
-//
-
 import ModernRIBs
 
 protocol RootRouting: ViewableRouting {
-    // TODO: Declare methods the interactor can invoke to manage sub-tree via the router.
+    func routeToMainFeed()
 }
 
 protocol RootPresentable: Presentable {
@@ -20,20 +13,24 @@ final class RootInteractor: PresentableInteractor<RootPresentable>, RootInteract
 
     weak var router: RootRouting?
 
-    // TODO: Add additional dependencies to constructor. Do not perform any logic
-    // in constructor.
+    // MARK: - Init
+
     override init(presenter: RootPresentable) {
         super.init(presenter: presenter)
         presenter.listener = self
     }
 
+    // MARK: - Lifecyclt
+
     override func didBecomeActive() {
         super.didBecomeActive()
-        // TODO: Implement business logic here.
+
+        router?.routeToMainFeed()
     }
 
     override func willResignActive() {
         super.willResignActive()
         // TODO: Pause any business logic.
     }
+
 }

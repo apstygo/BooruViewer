@@ -1,25 +1,41 @@
-//
-//  RootRouter.swift
-//  BooruViewer
-//
-//  Created by Artem Pstygo on 15.10.2022.
-//
-
 import ModernRIBs
 
-protocol RootInteractable: Interactable {
+protocol RootInteractable: Interactable, MainFeedListener {
     var router: RootRouting? { get set }
 }
 
 protocol RootViewControllable: ViewControllable {
-    // TODO: Declare methods the router invokes to manipulate the view hierarchy.
+    func presentInNavigationStack(_ viewController: ViewControllable)
 }
 
 final class RootRouter: LaunchRouter<RootInteractable, RootViewControllable>, RootRouting {
 
-    // TODO: Constructor inject child builder protocols to allow building children.
-    override init(interactor: RootInteractable, viewController: RootViewControllable) {
+    // MARK: - Private Properties
+
+    private let mainFeedBuilder: MainFeedBuildable
+
+    private var mainFeed: ViewableRouting?
+
+    // MARK: - Init
+
+    init(interactor: RootInteractable,
+         viewController: RootViewControllable,
+         mainFeedBuilder: MainFeedBuildable) {
+        self.mainFeedBuilder = mainFeedBuilder
+
         super.init(interactor: interactor, viewController: viewController)
+
         interactor.router = self
     }
+
+    // MARK: - Internal Methods
+
+    func routeToMainFeed() {
+        let mainFeed = mainFeedBuilder.build(withListener: interactor)
+        self.mainFeed = mainFeed
+
+        attachChild(mainFeed)
+        viewController.presentInNavigationStack(mainFeed.viewControllable)
+    }
+
 }

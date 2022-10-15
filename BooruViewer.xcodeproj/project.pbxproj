@@ -35,6 +35,10 @@
 		2EFBA93928FB3B040053DCEC /* RootBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFBA93528FB3B040053DCEC /* RootBuilder.swift */; };
 		2EFBA93A28FB3B040053DCEC /* RootInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFBA93628FB3B040053DCEC /* RootInteractor.swift */; };
 		2EFBA93F28FB417C0053DCEC /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2EFBA93E28FB417C0053DCEC /* SnapKit */; };
+		2EFBA94528FB43360053DCEC /* MainFeedRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFBA94128FB43360053DCEC /* MainFeedRouter.swift */; };
+		2EFBA94628FB43360053DCEC /* MainFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFBA94228FB43360053DCEC /* MainFeedViewController.swift */; };
+		2EFBA94728FB43360053DCEC /* MainFeedBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFBA94328FB43360053DCEC /* MainFeedBuilder.swift */; };
+		2EFBA94828FB43360053DCEC /* MainFeedInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFBA94428FB43360053DCEC /* MainFeedInteractor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,6 +67,10 @@
 		2EFBA93428FB3B040053DCEC /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		2EFBA93528FB3B040053DCEC /* RootBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootBuilder.swift; sourceTree = "<group>"; };
 		2EFBA93628FB3B040053DCEC /* RootInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootInteractor.swift; sourceTree = "<group>"; };
+		2EFBA94128FB43360053DCEC /* MainFeedRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeedRouter.swift; sourceTree = "<group>"; };
+		2EFBA94228FB43360053DCEC /* MainFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeedViewController.swift; sourceTree = "<group>"; };
+		2EFBA94328FB43360053DCEC /* MainFeedBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeedBuilder.swift; sourceTree = "<group>"; };
+		2EFBA94428FB43360053DCEC /* MainFeedInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeedInteractor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +173,7 @@
 		2E6A434628FB25E000F89556 /* RIBs */ = {
 			isa = PBXGroup;
 			children = (
+				2EFBA94028FB43000053DCEC /* MainFeed */,
 				2EFBA93228FB3AF50053DCEC /* Root */,
 				2EFBA92E28FB389B0053DCEC /* ViewController.swift */,
 			);
@@ -241,6 +250,17 @@
 				2EFBA93428FB3B040053DCEC /* RootViewController.swift */,
 			);
 			path = Root;
+			sourceTree = "<group>";
+		};
+		2EFBA94028FB43000053DCEC /* MainFeed */ = {
+			isa = PBXGroup;
+			children = (
+				2EFBA94328FB43360053DCEC /* MainFeedBuilder.swift */,
+				2EFBA94128FB43360053DCEC /* MainFeedRouter.swift */,
+				2EFBA94428FB43360053DCEC /* MainFeedInteractor.swift */,
+				2EFBA94228FB43360053DCEC /* MainFeedViewController.swift */,
+			);
+			path = MainFeed;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -332,14 +352,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				2EFBA93728FB3B040053DCEC /* RootRouter.swift in Sources */,
+				2EFBA94528FB43360053DCEC /* MainFeedRouter.swift in Sources */,
 				2EFBA93828FB3B040053DCEC /* RootViewController.swift in Sources */,
 				2E6A431A28F6E8B600F89556 /* MainFeedFeature.swift in Sources */,
+				2EFBA94728FB43360053DCEC /* MainFeedBuilder.swift in Sources */,
 				2E6A432328F70B4D00F89556 /* TagView.swift in Sources */,
 				2EFBA93A28FB3B040053DCEC /* RootInteractor.swift in Sources */,
 				2E6A433B28F9FA1E00F89556 /* DetailPageFeature.swift in Sources */,
 				2EFBA93928FB3B040053DCEC /* RootBuilder.swift in Sources */,
 				2E6A433028F7584800F89556 /* DetailFeedView.swift in Sources */,
 				2E6A433328F89AEF00F89556 /* FeedManager.swift in Sources */,
+				2EFBA94828FB43360053DCEC /* MainFeedInteractor.swift in Sources */,
+				2EFBA94628FB43360053DCEC /* MainFeedViewController.swift in Sources */,
 				2EFBA93128FB39F80053DCEC /* AppComponent.swift in Sources */,
 				2E6A433528F8A9A900F89556 /* FeedManagerDependency.swift in Sources */,
 				2EFBA92C28FB365D0053DCEC /* SceneDelegate.swift in Sources */,

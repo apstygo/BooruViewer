@@ -1,10 +1,3 @@
-//
-//  RootViewController.swift
-//  BooruViewer
-//
-//  Created by Artem Pstygo on 15.10.2022.
-//
-
 import ModernRIBs
 import UIKit
 
@@ -14,13 +7,18 @@ protocol RootPresentableListener: AnyObject {
     // interactor class.
 }
 
-final class RootViewController: UIViewController, RootPresentable, RootViewControllable {
+final class RootViewController: UIViewController, RootPresentable {
 
     weak var listener: RootPresentableListener?
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+}
 
-        view.backgroundColor = .red
+extension RootViewController: RootViewControllable {
+
+    func presentInNavigationStack(_ viewController: ModernRIBs.ViewControllable) {
+        let navigationController = UINavigationController(rootViewController: viewController.uiviewController)
+        navigationController.modalPresentationStyle = .fullScreen
+        present(navigationController, animated: false)
     }
+
 }
