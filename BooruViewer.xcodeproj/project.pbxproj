@@ -34,6 +34,7 @@
 		2EFBA93828FB3B040053DCEC /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFBA93428FB3B040053DCEC /* RootViewController.swift */; };
 		2EFBA93928FB3B040053DCEC /* RootBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFBA93528FB3B040053DCEC /* RootBuilder.swift */; };
 		2EFBA93A28FB3B040053DCEC /* RootInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFBA93628FB3B040053DCEC /* RootInteractor.swift */; };
+		2EFBA93F28FB417C0053DCEC /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2EFBA93E28FB417C0053DCEC /* SnapKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +71,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2E6A433828F9AA3900F89556 /* SDWebImageSwiftUI in Frameworks */,
+				2EFBA93F28FB417C0053DCEC /* SnapKit in Frameworks */,
 				2E34452928F6025C004C4188 /* Collections in Frameworks */,
 				2E02815028F57883001A2ED4 /* SankakuAPI in Frameworks */,
 				2E6A434528FB259900F89556 /* ModernRIBs in Frameworks */,
@@ -265,6 +267,7 @@
 				2E6A433728F9AA3900F89556 /* SDWebImageSwiftUI */,
 				2E6A433F28FA233900F89556 /* SwiftUIFlow */,
 				2E6A434428FB259900F89556 /* ModernRIBs */,
+				2EFBA93E28FB417C0053DCEC /* SnapKit */,
 			);
 			productName = BooruViewer;
 			productReference = 2ED2CD8F28F56C36001CA186 /* BooruViewer.app */;
@@ -301,6 +304,7 @@
 				2E6A433628F9AA3900F89556 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 				2E6A433E28FA233900F89556 /* XCRemoteSwiftPackageReference "SwiftUIFlow" */,
 				2E6A434328FB259900F89556 /* XCRemoteSwiftPackageReference "ModernRIBs" */,
+				2EFBA93D28FB417C0053DCEC /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = 2ED2CD9028F56C36001CA186 /* Products */;
 			projectDirPath = "";
@@ -615,6 +619,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		2EFBA93D28FB417C0053DCEC /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -651,6 +663,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2E6A434328FB259900F89556 /* XCRemoteSwiftPackageReference "ModernRIBs" */;
 			productName = ModernRIBs;
+		};
+		2EFBA93E28FB417C0053DCEC /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2EFBA93D28FB417C0053DCEC /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
