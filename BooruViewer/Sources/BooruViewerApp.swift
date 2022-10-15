@@ -1,7 +1,7 @@
 import SwiftUI
 import ComposableArchitecture
 
-@main
+//@main
 struct BooruViewerApp: App {
 
     var body: some Scene {
