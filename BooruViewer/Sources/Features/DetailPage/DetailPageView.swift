@@ -24,18 +24,16 @@ struct DetailPageView: View {
                 PostImageView(post: viewStore.post)
                     .listRowInsets(EdgeInsets())
 
-                Group {
-                    recommendenPosts(for: viewStore)
+                recommendenPosts(for: viewStore)
 
-                    if let tags = viewStore.post.tags {
-                        VFlow(alignment: .leading) {
-                            ForEach(tags) { tag in
-                                TagView(tag: tag)
-                            }
+                if let tags = viewStore.post.tags {
+                    VFlow(alignment: .leading) {
+                        ForEach(tags) { tag in
+                            TagView(tag: tag)
                         }
                     }
+                    .padding()
                 }
-                .padding()
             }
         }
     }
@@ -44,6 +42,7 @@ struct DetailPageView: View {
     func recommendenPosts(for viewStore: ViewStoreOf<DetailPageFeature>) -> some View {
         VStack(alignment: .leading) {
             Text("Recommended posts")
+                .padding()
 
             switch viewStore.recommendedPosts {
             case let .success(posts):
