@@ -4,19 +4,18 @@ import SankakuAPI
 struct DetailFeedFeature: ReducerProtocol {
 
     struct State: Equatable {
-        var postIndex: Int
-        var posts: [IndexedPost] = []
+        var currentPage: DetailPageFeature.State.ID
 
         var pageStates: IdentifiedArrayOf<DetailPageFeature.State> = []
     }
 
     enum Action: Equatable {
         case appear
-        case scrollToPost(Int)
+        case scrollToPage(DetailPageFeature.State.ID)
 
         case setPosts([Post])
 
-        case detailPageAction(Post, DetailPageFeature.Action)
+        case detailPageAction(Int, DetailPageFeature.Action)
     }
 
     @Dependency(\.feedManager) var feedManager
@@ -35,10 +34,10 @@ struct DetailFeedFeature: ReducerProtocol {
                 return await .setPosts(feedManager.posts)
             }
 
-        case let .scrollToPost(postIndex):
-            state.postIndex = postIndex
+        case let .scrollToPage(pageId):
+            state.currentPage = pageId
 
-            if postIndex == state.posts.count {
+            if pageId == -1 {
                 return .task {
                     await feedManager.loadNextPage()
                     return await .setPosts(feedManager.posts)
@@ -49,13 +48,7 @@ struct DetailFeedFeature: ReducerProtocol {
             }
 
         case let .setPosts(posts):
-            state.posts = posts.enumerated().map { IndexedPost(index: $0, post: $1) }
-
-            state.pageStates = []
-
-            for post in posts {
-                state.pageStates.append(.init(post: post))
-            }
+            state.pageStates = .init(uniqueElements: posts.map { .init(post: $0) })
 
             return .none
 

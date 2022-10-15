@@ -1,6 +1,7 @@
 import SwiftUI
 import ComposableArchitecture
 import SDWebImageSwiftUI
+import SwiftUIFlow
 import SankakuAPI
 
 struct DetailPageView: View {
@@ -18,19 +19,25 @@ struct DetailPageView: View {
 
     @ViewBuilder
     func page(for viewStore: ViewStoreOf<DetailPageFeature>) -> some View {
-        List {
-            PostImageView(post: viewStore.post)
-                .listRowInsets(EdgeInsets())
+        ScrollView {
+            VStack {
+                PostImageView(post: viewStore.post)
+                    .listRowInsets(EdgeInsets())
 
-            recommendenPosts(for: viewStore)
+                Group {
+                    recommendenPosts(for: viewStore)
 
-            if let tags = viewStore.post.tags {
-                ForEach(tags) { tag in
-                    TagView(tag: tag)
+                    if let tags = viewStore.post.tags {
+                        VFlow(alignment: .leading) {
+                            ForEach(tags) { tag in
+                                TagView(tag: tag)
+                            }
+                        }
+                    }
                 }
+                .padding()
             }
         }
-        .listStyle(.plain)
     }
 
     @ViewBuilder
@@ -46,7 +53,7 @@ struct DetailPageView: View {
                             WebImage(url: post.previewURL)
                                 .resizable()
                                 .scaledToFill()
-                                .frame(width: 100, height: 100)
+                                .frame(width: 120, height: 120)
                                 .clipped()
                         }
                     }

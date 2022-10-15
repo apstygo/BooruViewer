@@ -46,8 +46,8 @@ struct DetailPageFeature: ReducerProtocol {
 
 extension DetailPageFeature.State: Identifiable {
 
-    var id: Post {
-        post
+    var id: Int {
+        post.id
     }
 
 }

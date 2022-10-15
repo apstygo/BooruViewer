@@ -22,7 +22,7 @@ struct MainFeedFeature: ReducerProtocol {
         var searchTags: [Tag] = []
         var tagSuggestions: [Tag] = []
         var feedManagerState: FeedManagerState = .idle
-        var forceScrollIndex: Int?
+        var forceScrollPostId: Post.ID?
 
         var detailFeedState: DetailFeedFeature.State?
     }
@@ -95,7 +95,7 @@ struct MainFeedFeature: ReducerProtocol {
             return .task { .reload }
 
         case let .presentDetailFeed(post):
-            state.detailFeedState = .init(postIndex: post.index)
+            state.detailFeedState = .init(currentPage: post.post.id)
 
             return .none
 
@@ -115,8 +115,8 @@ struct MainFeedFeature: ReducerProtocol {
 
             return .none
 
-        case let .detailFeedAction(.scrollToPost(postIndex)):
-            state.forceScrollIndex = postIndex
+        case let .detailFeedAction(.scrollToPage(postId)):
+            state.forceScrollPostId = postId
 
             return .none
 

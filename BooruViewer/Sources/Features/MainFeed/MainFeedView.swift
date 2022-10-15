@@ -46,7 +46,7 @@ struct MainFeedView: View {
                             .onTapGesture {
                                 viewStore.send(.presentDetailFeed(post))
                             }
-                            .id(post.index)     // id for programmatic scrolling
+                            .id(post.post.id)     // id for programmatic scrolling
                     }
                 }
                 .navigationDestination(
@@ -59,12 +59,12 @@ struct MainFeedView: View {
                         DetailFeedView(store: $0)
                     }
                 }
-                .onChange(of: viewStore.forceScrollIndex) { newValue in
+                .onChange(of: viewStore.forceScrollPostId) { newValue in
                     guard let newValue else {
                         return
                     }
 
-                    proxy.scrollTo(newValue, anchor: .top)
+                    proxy.scrollTo(newValue)
                 }
             }
         }
