@@ -1,16 +1,21 @@
 import UIKit
+import ModernRIBs
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    var rootRouter: LaunchRouting?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
-        window = UIWindow(frame: windowScene.coordinateSpace.bounds)
-        window?.windowScene = windowScene
-        window?.rootViewController = ViewController()
-        window?.makeKeyAndVisible()
+        let window = UIWindow(windowScene: windowScene)
+        self.window = window
+
+        let rootRouter = RootBuilder(dependency: AppComponent()).build()
+        self.rootRouter = rootRouter
+
+        rootRouter.launch(from: window)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
