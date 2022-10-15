@@ -32,16 +32,14 @@ struct DetailFeedView: View {
 
     func page(for id: DetailPageFeature.State.ID) -> some View {
         let store = self.store.scope { state in
-            state.pageStates[id: id]!
+            state.pageStates[id: id]
         } action: { childAction in
             .detailPageAction(id, childAction)
         }
 
-//        return IfLetStore(store) { store in
-//            DetailPageView(store: store)
-//        }
-
-        return DetailPageView(store: store)
+        return IfLetStore(store) { store in
+            DetailPageView(store: store)
+        }
     }
 
     func selectedPageBinding(for viewStore: ViewStoreOf<DetailFeedFeature>) -> Binding<DetailPageFeature.State.ID> {
@@ -53,14 +51,3 @@ struct DetailFeedView: View {
     }
 
 }
-
-//struct DetailFeedView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        DetailFeedView(
-//            store: Store(
-//                initialState: DetailFeedFeature.State(postIndex: 0),
-//                reducer: DetailFeedFeature()
-//            )
-//        )
-//    }
-//}
