@@ -95,7 +95,7 @@ struct MainFeedFeature: ReducerProtocol {
             return .task { .reload }
 
         case let .presentDetailFeed(post):
-            state.detailFeedState = .init(currentPage: post.post.id)
+            state.detailFeedState = .init(mode: .dynamic, currentPage: post.post.id)
 
             return .none
 

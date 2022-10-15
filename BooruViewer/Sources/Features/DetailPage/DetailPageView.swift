@@ -14,6 +14,21 @@ struct DetailPageView: View {
                 .onAppear {
                     viewStore.send(.appear)
                 }
+                .navigationDestination(isPresented: isDetailFeedPresentedBinding(for: viewStore)) {
+                    detailFeed
+                }
+        }
+    }
+
+    var detailFeed: some View {
+        let store = self.store.scope { state in
+            state.detailFeedState
+        } action: { detailFeedAction in
+            .detailFeedAction(detailFeedAction)
+        }
+
+        return IfLetStore(store) { store in
+            DetailFeedView(store: store)
         }
     }
 
@@ -40,7 +55,7 @@ struct DetailPageView: View {
 
     @ViewBuilder
     func recommendenPosts(for viewStore: ViewStoreOf<DetailPageFeature>) -> some View {
-        VStack(alignment: .leading) {
+        Group {
             Text("Recommended posts")
                 .padding()
 
@@ -54,6 +69,9 @@ struct DetailPageView: View {
                                 .scaledToFill()
                                 .frame(width: 120, height: 120)
                                 .clipped()
+                                .onTapGesture {
+                                    viewStore.send(.tapRecommendedPost(post))
+                                }
                         }
                     }
                 }
@@ -67,6 +85,10 @@ struct DetailPageView: View {
                 ProgressView()
             }
         }
+    }
+
+    func isDetailFeedPresentedBinding(for viewStore: ViewStoreOf<DetailPageFeature>) -> Binding<Bool> {
+        viewStore.binding(get: { $0.detailFeedState != nil }, send: .dismissDetailFeed)
     }
 
 }

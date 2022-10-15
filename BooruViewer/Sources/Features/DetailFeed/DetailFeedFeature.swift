@@ -3,10 +3,29 @@ import SankakuAPI
 
 struct DetailFeedFeature: ReducerProtocol {
 
-    struct State: Equatable {
-        var currentPage: DetailPageFeature.State.ID
+    enum Mode: Equatable {
+        case dynamic
+        case `static`(posts: [Post])
+    }
 
-        var pageStates: IdentifiedArrayOf<DetailPageFeature.State> = []
+    struct State: Equatable {
+        let mode: Mode
+        var currentPage: DetailPageFeature.State.ID
+        var pageStates: IdentifiedArrayOf<DetailPageFeature.State>
+        var didAppear = false
+
+        init(mode: Mode, currentPage: DetailPageFeature.State.ID) {
+            self.mode = mode
+            self.currentPage = currentPage
+
+            switch mode {
+            case let .static(posts):
+                self.pageStates = .init(uniqueElements: posts.map { .init(post: $0) })
+
+            case .dynamic:
+                self.pageStates = []
+            }
+        }
     }
 
     enum Action: Equatable {
@@ -30,21 +49,30 @@ struct DetailFeedFeature: ReducerProtocol {
     func coreReduce(into state: inout State, action: Action) -> Effect<Action, Never> {
         switch action {
         case .appear:
-            return .task {
-                return await .setPosts(feedManager.posts)
+            guard !state.didAppear else {
+                return .none
+            }
+
+            state.didAppear = true
+
+            switch state.mode {
+            case .static:
+                return .none
+
+            case .dynamic:
+                return .task { await .setPosts(feedManager.posts) }
             }
 
         case let .scrollToPage(pageId):
             state.currentPage = pageId
 
-            if pageId == -1 {
-                return .task {
-                    await feedManager.loadNextPage()
-                    return await .setPosts(feedManager.posts)
-                }
-            }
-            else {
+            guard case .dynamic = state.mode, pageId == -1 else {
                 return .none
+            }
+
+            return .task {
+                await feedManager.loadNextPage()
+                return await .setPosts(feedManager.posts)
             }
 
         case let .setPosts(posts):

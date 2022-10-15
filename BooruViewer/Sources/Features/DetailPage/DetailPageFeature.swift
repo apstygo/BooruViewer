@@ -6,18 +6,31 @@ struct DetailPageFeature: ReducerProtocol {
     struct State: Equatable {
         let post: Post
         var recommendedPosts: TaskResult<[Post]>?
+
+        var detailFeedState: DetailFeedFeature.State?
     }
 
-    enum Action: Equatable {
+    indirect enum Action: Equatable {
         case appear
         case retryLoading
+        case tapRecommendedPost(Post)
+        case dismissDetailFeed
 
         case recommendenPostsResponse(TaskResult<[Post]>)
+
+        case detailFeedAction(DetailFeedFeature.Action)
     }
 
     @Dependency(\.sankakuAPI) var sankakuAPI
 
-    func reduce(into state: inout State, action: Action) -> Effect<Action, Never> {
+    var body: some ReducerProtocol<State, Action> {
+        Reduce(coreReduce)
+            .ifLet(\.detailFeedState, action: /Action.detailFeedAction) {
+                DetailFeedFeature()
+            }
+    }
+
+    func coreReduce(into state: inout State, action: Action) -> Effect<Action, Never> {
         switch action {
         case .appear:
             return loadRecommendedPosts(for: state)
@@ -25,9 +38,27 @@ struct DetailPageFeature: ReducerProtocol {
         case .retryLoading:
             return loadRecommendedPosts(for: state)
 
+        case let .tapRecommendedPost(post):
+            guard case let .success(posts) = state.recommendedPosts else {
+                return .none
+            }
+
+            state.detailFeedState = .init(mode: .static(posts: posts), currentPage: post.id)
+
+            return .none
+
+        case .dismissDetailFeed:
+            state.detailFeedState = nil
+
+            return .none
+
         case let .recommendenPostsResponse(result):
             state.recommendedPosts = result
 
+            return .none
+
+        case .detailFeedAction:
+            // Do nothing
             return .none
         }
     }
