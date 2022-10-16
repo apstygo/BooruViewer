@@ -13,10 +13,11 @@ struct FeedState: Hashable {
     var phase: FeedPhase = .idle
 }
 
-protocol Feed {
+protocol Feed: AnyObject {
 
     var state: FeedState { get }
     var stateStream: AsyncStream<FeedState> { get }
+    var tags: [Tag] { get set }
 
     func reload()
     func loadPage(forItemAt index: Int)
@@ -42,6 +43,8 @@ final class FeedImpl: Feed {
     var stateStream: AsyncStream<FeedState> {
         AsyncStream(stateRelay.removeDuplicates().values)
     }
+
+    var tags: [Tag] = []
 
     // MARK: - Private Properties
 
@@ -95,6 +98,7 @@ final class FeedImpl: Feed {
     private func loadMore() async {
         do {
             let postsResponse = try await sankakuAPI.getPosts(
+                tags: tags.map(\.name),
                 limit: Constant.pageSize,
                 next: nextPageId
             )

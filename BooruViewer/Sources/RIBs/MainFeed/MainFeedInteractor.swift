@@ -32,9 +32,19 @@ final class MainFeedInteractor: PresentableInteractor<MainFeedPresentable>, Main
     private let sankakuAPI: SankakuAPI
     private let feed: Feed
 
-    private var searchTags: [Tag] = []
     private var updatePostsTask: Task<Void, Never>?
     private var suggestTagsTask: Task<Void, Error>?
+
+    private var searchTags: [Tag] = [] {
+        didSet {
+            guard searchTags != oldValue else {
+                return
+            }
+
+            feed.tags = searchTags
+            feed.reload()
+        }
+    }
 
     // MARK: - Init
 
@@ -60,6 +70,7 @@ final class MainFeedInteractor: PresentableInteractor<MainFeedPresentable>, Main
         super.willResignActive()
 
         updatePostsTask?.cancel()
+        suggestTagsTask?.cancel()
     }
 
     // MARK: - Presentable Listener
@@ -71,21 +82,7 @@ final class MainFeedInteractor: PresentableInteractor<MainFeedPresentable>, Main
     func didUpdateSearch(withText searchText: String?, tags: [Tag]) {
         // Suggest new tags for search text
 
-        suggestTagsTask?.cancel()
-
-        suggestTagsTask = Task {
-            guard let query = searchText, !query.isEmpty else {
-                await presenter.presentSuggestedTags([])
-                return
-            }
-
-            let tags = try await sankakuAPI.autoSuggestTags(for: query)
-                .filter { tag in
-                    !searchTags.contains { $0.name == tag.name }
-                }
-
-            await presenter.presentSuggestedTags(tags)
-        }
+        suggestTags(for: searchText)
 
         // Set current tags
 
@@ -114,6 +111,24 @@ final class MainFeedInteractor: PresentableInteractor<MainFeedPresentable>, Main
         }
 
         feed.reload()
+    }
+
+    private func suggestTags(for query: String?) {
+        suggestTagsTask?.cancel()
+
+        suggestTagsTask = Task {
+            guard let query = query, !query.isEmpty else {
+                await presenter.presentSuggestedTags([])
+                return
+            }
+
+            let tags = try await sankakuAPI.autoSuggestTags(for: query)
+                .filter { tag in
+                    !searchTags.contains { $0.name == tag.name }
+                }
+
+            await presenter.presentSuggestedTags(tags)
+        }
     }
 
 }
