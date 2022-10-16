@@ -12,6 +12,8 @@ protocol MainFeedPresentable: Presentable {
 
     func presentPosts(_ posts: [Post])
     func presentSuggestedTags(_ tags: [Tag])
+    func clearSearchText()
+    func presentSearchTags(_ tags: [Tag])
 }
 
 protocol MainFeedListener: AnyObject {
@@ -30,6 +32,7 @@ final class MainFeedInteractor: PresentableInteractor<MainFeedPresentable>, Main
     private let sankakuAPI: SankakuAPI
     private let feed: Feed
 
+    private var searchTags: [Tag] = []
     private var updatePostsTask: Task<Void, Never>?
     private var suggestTagsTask: Task<Void, Error>?
 
@@ -65,22 +68,38 @@ final class MainFeedInteractor: PresentableInteractor<MainFeedPresentable>, Main
         feed.loadPage(forItemAt: indexPath.item)
     }
 
-    func didUpdateSearchText(_ searchText: String) {
+    func didUpdateSearch(withText searchText: String?, tags: [Tag]) {
+        // Suggest new tags for search text
+
         suggestTagsTask?.cancel()
 
         suggestTagsTask = Task {
-            guard !searchText.isEmpty else {
+            guard let query = searchText, !query.isEmpty else {
                 await presenter.presentSuggestedTags([])
                 return
             }
 
-            let tags = try await sankakuAPI.autoSuggestTags(for: searchText)
+            let tags = try await sankakuAPI.autoSuggestTags(for: query)
+                .filter { tag in
+                    !searchTags.contains { $0.name == tag.name }
+                }
+
             await presenter.presentSuggestedTags(tags)
         }
+
+        // Set current tags
+
+        searchTags = tags
     }
 
-    func didCancelSearch() {
-        didUpdateSearchText("")
+    func didSelectTag(_ tag: Tag) {
+        searchTags.append(tag)
+
+        Task {
+            await presenter.clearSearchText()
+            await presenter.presentSearchTags(searchTags)
+            await presenter.presentSuggestedTags([])
+        }
     }
 
     // MARK: - Private Methods

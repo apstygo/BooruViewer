@@ -16,6 +16,7 @@ final class MainFeedSuggestedTagsController: UICollectionViewController {
     // MARK: - Private Properties
 
     private lazy var dataSource: DataSource = makeDataSource()
+    private var onTapTag: ((Tag) -> Void)?
 
     // MARK: - Lifecycle
 
@@ -33,6 +34,18 @@ final class MainFeedSuggestedTagsController: UICollectionViewController {
         snapshot.appendItems(tags)
 
         dataSource.apply(snapshot)
+    }
+
+    // MARK: - UICollectionViewDelegate
+
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: UIView.areAnimationsEnabled)
+
+        guard let tag = dataSource.itemIdentifier(for: indexPath) else {
+            return
+        }
+
+        onTapTag?(tag)
     }
 
     // MARK: - Private Methods
@@ -56,12 +69,18 @@ final class MainFeedSuggestedTagsController: UICollectionViewController {
 
 }
 
+// MARK: - Factory Method
+
 extension MainFeedSuggestedTagsController {
 
-    static func make() -> MainFeedSuggestedTagsController {
+    static func make(onTapTag: @escaping (Tag) -> Void) -> MainFeedSuggestedTagsController {
         let listConfiguration = UICollectionLayoutListConfiguration(appearance: .plain)
         let layout: UICollectionViewCompositionalLayout = .list(using: listConfiguration)
-        return .init(collectionViewLayout: layout)
+
+        let controller = MainFeedSuggestedTagsController(collectionViewLayout: layout)
+        controller.onTapTag = onTapTag
+
+        return controller
     }
 
 }

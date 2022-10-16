@@ -7,8 +7,8 @@ import SankakuAPI
 
 protocol MainFeedPresentableListener: AnyObject {
     func didShowCell(at indexPath: IndexPath)
-    func didUpdateSearchText(_ searchText: String)
-    func didCancelSearch()
+    func didUpdateSearch(withText searchText: String?, tags: [Tag])
+    func didSelectTag(_ tag: Tag)
 }
 
 final class MainFeedViewController: UIViewController, MainFeedViewControllable {
@@ -31,7 +31,10 @@ final class MainFeedViewController: UIViewController, MainFeedViewControllable {
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: makeLayout())
     private lazy var dataSource = configureDataSource()
     private var searchController: UISearchController!
-    private lazy var suggestedTagsController: MainFeedSuggestedTagsController = .make()
+
+    private lazy var suggestedTagsController: MainFeedSuggestedTagsController = .make { [listener] tag in
+        listener?.didSelectTag(tag)
+    }
 
     // MARK: - Lifecycle
 
@@ -68,7 +71,6 @@ final class MainFeedViewController: UIViewController, MainFeedViewControllable {
         searchController.searchBar.searchTextField.placeholder = "Search using tags"
 
         navigationItem.searchController = searchController
-        searchController.delegate = self
         searchController.searchBar.delegate = self
 
         definesPresentationContext = true
@@ -113,11 +115,20 @@ extension MainFeedViewController: MainFeedPresentable {
         suggestedTagsController.presentTags(tags)
     }
 
-}
+    func presentSearchTags(_ tags: [Tag]) {
+        let searchField = searchController.searchBar.searchTextField
 
-// MARK: - UISearchControllerDelegate
+        searchField.tokens = tags.map { tag in
+            let formattedName = tag.name.replacingOccurrences(of: "_", with: " ")
+            let token = UISearchToken(icon: nil, text: formattedName)
+            token.representedObject = tag
+            return token
+        }
+    }
 
-extension MainFeedViewController: UISearchControllerDelegate {
+    func clearSearchText() {
+        searchController.searchBar.searchTextField.text = ""
+    }
 
 }
 
@@ -126,11 +137,15 @@ extension MainFeedViewController: UISearchControllerDelegate {
 extension MainFeedViewController: UISearchBarDelegate {
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        listener?.didUpdateSearchText(searchText)
+        let tags = searchController.searchBar.searchTextField.tokens.map {
+            $0.representedObject as! Tag
+        }
+
+        listener?.didUpdateSearch(withText: searchText, tags: tags)
     }
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        listener?.didCancelSearch()
+        listener?.didUpdateSearch(withText: nil, tags: [])
     }
 
 }
