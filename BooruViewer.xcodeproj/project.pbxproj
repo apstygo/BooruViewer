@@ -38,7 +38,6 @@
 		2ED2CD9728F56C36001CA186 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2ED2CD9628F56C36001CA186 /* Assets.xcassets */; };
 		2EFBA92A28FB363C0053DCEC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFBA92928FB363C0053DCEC /* AppDelegate.swift */; };
 		2EFBA92C28FB365D0053DCEC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFBA92B28FB365D0053DCEC /* SceneDelegate.swift */; };
-		2EFBA92F28FB389B0053DCEC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFBA92E28FB389B0053DCEC /* ViewController.swift */; };
 		2EFBA93128FB39F80053DCEC /* AppComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFBA93028FB39F80053DCEC /* AppComponent.swift */; };
 		2EFBA93728FB3B040053DCEC /* RootRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFBA93328FB3B040053DCEC /* RootRouter.swift */; };
 		2EFBA93828FB3B040053DCEC /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFBA93428FB3B040053DCEC /* RootViewController.swift */; };
@@ -81,7 +80,6 @@
 		2EFBA92928FB363C0053DCEC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2EFBA92B28FB365D0053DCEC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		2EFBA92D28FB37090053DCEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2EFBA92E28FB389B0053DCEC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		2EFBA93028FB39F80053DCEC /* AppComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppComponent.swift; sourceTree = "<group>"; };
 		2EFBA93328FB3B040053DCEC /* RootRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootRouter.swift; sourceTree = "<group>"; };
 		2EFBA93428FB3B040053DCEC /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
@@ -198,7 +196,6 @@
 				2E7A1DB228FC51750009304D /* DetailFeed */,
 				2EFBA94028FB43000053DCEC /* MainFeed */,
 				2EFBA93228FB3AF50053DCEC /* Root */,
-				2EFBA92E28FB389B0053DCEC /* ViewController.swift */,
 			);
 			path = RIBs;
 			sourceTree = "<group>";
@@ -433,7 +430,6 @@
 				2E7A1DC228FC9D0F0009304D /* DetailPageViewController.swift in Sources */,
 				2EFBA92A28FB363C0053DCEC /* AppDelegate.swift in Sources */,
 				2E6A432728F753D700F89556 /* DetailFeedFeature.swift in Sources */,
-				2EFBA92F28FB389B0053DCEC /* ViewController.swift in Sources */,
 				2E7A1DB028FC2A490009304D /* MainFeedSuggestedTagsController.swift in Sources */,
 				2ED2CD9328F56C36001CA186 /* BooruViewerApp.swift in Sources */,
 				2E6A431C28F6F06900F89556 /* MainFeedView.swift in Sources */,
