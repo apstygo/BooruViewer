@@ -7,6 +7,8 @@ import SankakuAPI
 
 protocol MainFeedPresentableListener: AnyObject {
     func didShowCell(at indexPath: IndexPath)
+    func didUpdateSearchText(_ searchText: String)
+    func didCancelSearch()
 }
 
 final class MainFeedViewController: UIViewController, MainFeedViewControllable {
@@ -28,6 +30,8 @@ final class MainFeedViewController: UIViewController, MainFeedViewControllable {
 
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: makeLayout())
     private lazy var dataSource = configureDataSource()
+    private var searchController: UISearchController!
+    private lazy var suggestedTagsController: MainFeedSuggestedTagsController = .make()
 
     // MARK: - Lifecycle
 
@@ -50,6 +54,24 @@ final class MainFeedViewController: UIViewController, MainFeedViewControllable {
 
     private func configureUI() {
         collectionView.dataSource = dataSource
+
+        configureSearch()
+    }
+
+    private func configureSearch() {
+        searchController = UISearchController(searchResultsController: suggestedTagsController)
+        searchController.automaticallyShowsSearchResultsController = true
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.autocapitalizationType = .none
+        searchController.searchBar.autocorrectionType = .no
+        searchController.searchBar.returnKeyType = .done
+        searchController.searchBar.searchTextField.placeholder = "Search using tags"
+
+        navigationItem.searchController = searchController
+        searchController.delegate = self
+        searchController.searchBar.delegate = self
+
+        definesPresentationContext = true
     }
 
     private func configureDataSource() -> DataSource {
@@ -75,6 +97,8 @@ final class MainFeedViewController: UIViewController, MainFeedViewControllable {
 
 }
 
+// MARK: - MainFeedPresentable
+
 extension MainFeedViewController: MainFeedPresentable {
 
     func presentPosts(_ posts: [Post]) {
@@ -85,7 +109,43 @@ extension MainFeedViewController: MainFeedPresentable {
         dataSource.apply(snapshot)
     }
 
+    func presentSuggestedTags(_ tags: [Tag]) {
+        suggestedTagsController.presentTags(tags)
+    }
+
 }
+
+// MARK: - UISearchControllerDelegate
+
+extension MainFeedViewController: UISearchControllerDelegate {
+
+}
+
+// MARK: - UISearchBarDelegate
+
+extension MainFeedViewController: UISearchBarDelegate {
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        listener?.didUpdateSearchText(searchText)
+    }
+
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        listener?.didCancelSearch()
+    }
+
+}
+
+// MARK: - UISearchResultsUpdating
+
+extension MainFeedViewController: UISearchResultsUpdating {
+
+    func updateSearchResults(for searchController: UISearchController) {
+        // TODO: Implement
+    }
+
+}
+
+// MARK: - PostPreview
 
 private struct PostPreview: View {
 
@@ -102,6 +162,8 @@ private struct PostPreview: View {
     }
 
 }
+
+// MARK: - Helpers
 
 extension NSCollectionLayoutSection {
 

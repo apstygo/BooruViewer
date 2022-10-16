@@ -11,6 +11,7 @@ protocol MainFeedPresentable: Presentable {
     nonisolated var listener: MainFeedPresentableListener? { get set }
 
     func presentPosts(_ posts: [Post])
+    func presentSuggestedTags(_ tags: [Tag])
 }
 
 protocol MainFeedListener: AnyObject {
@@ -30,6 +31,7 @@ final class MainFeedInteractor: PresentableInteractor<MainFeedPresentable>, Main
     private let feed: Feed
 
     private var updatePostsTask: Task<Void, Never>?
+    private var suggestTagsTask: Task<Void, Error>?
 
     // MARK: - Init
 
@@ -61,6 +63,24 @@ final class MainFeedInteractor: PresentableInteractor<MainFeedPresentable>, Main
 
     func didShowCell(at indexPath: IndexPath) {
         feed.loadPage(forItemAt: indexPath.item)
+    }
+
+    func didUpdateSearchText(_ searchText: String) {
+        suggestTagsTask?.cancel()
+
+        suggestTagsTask = Task {
+            guard !searchText.isEmpty else {
+                await presenter.presentSuggestedTags([])
+                return
+            }
+
+            let tags = try await sankakuAPI.autoSuggestTags(for: searchText)
+            await presenter.presentSuggestedTags(tags)
+        }
+    }
+
+    func didCancelSearch() {
+        didUpdateSearchText("")
     }
 
     // MARK: - Private Methods
