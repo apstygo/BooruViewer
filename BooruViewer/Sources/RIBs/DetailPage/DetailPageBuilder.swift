@@ -1,4 +1,5 @@
 import ModernRIBs
+import SankakuAPI
 
 protocol DetailPageDependency: Dependency {
     // TODO: Declare the set of dependencies required by this RIB, but cannot be
@@ -13,7 +14,7 @@ final class DetailPageComponent: Component<DetailPageDependency> {
 // MARK: - Builder
 
 protocol DetailPageBuildable: Buildable {
-    func build(withListener listener: DetailPageListener) -> DetailPageRouting
+    func build(withListener listener: DetailPageListener, post: Post) -> DetailPageRouting
 }
 
 final class DetailPageBuilder: Builder<DetailPageDependency>, DetailPageBuildable {
@@ -22,7 +23,7 @@ final class DetailPageBuilder: Builder<DetailPageDependency>, DetailPageBuildabl
         super.init(dependency: dependency)
     }
 
-    func build(withListener listener: DetailPageListener) -> DetailPageRouting {
+    func build(withListener listener: DetailPageListener, post: Post) -> DetailPageRouting {
         let component = DetailPageComponent(dependency: dependency)
         let viewController = DetailPageViewController()
         let interactor = DetailPageInteractor(presenter: viewController)

@@ -1,19 +1,22 @@
 import ModernRIBs
+import SankakuAPI
 
 protocol DetailFeedDependency: Dependency {
-    // TODO: Declare the set of dependencies required by this RIB, but cannot be
-    // created by this RIB.
+    var feed: Feed { get }
 }
 
-final class DetailFeedComponent: Component<DetailFeedDependency> {
+final class DetailFeedComponent: Component<DetailFeedDependency>, DetailPageDependency {
 
-    // TODO: Declare 'fileprivate' dependencies that are only used by this RIB.
+    var feed: Feed {
+        dependency.feed
+    }
+
 }
 
 // MARK: - Builder
 
 protocol DetailFeedBuildable: Buildable {
-    func build(withListener listener: DetailFeedListener) -> DetailFeedRouting
+    func build(withListener listener: DetailFeedListener, post: Post) -> DetailFeedRouting
 }
 
 final class DetailFeedBuilder: Builder<DetailFeedDependency>, DetailFeedBuildable {
@@ -22,11 +25,24 @@ final class DetailFeedBuilder: Builder<DetailFeedDependency>, DetailFeedBuildabl
         super.init(dependency: dependency)
     }
 
-    func build(withListener listener: DetailFeedListener) -> DetailFeedRouting {
+    func build(withListener listener: DetailFeedListener, post: Post) -> DetailFeedRouting {
         let component = DetailFeedComponent(dependency: dependency)
         let viewController = DetailFeedViewController()
-        let interactor = DetailFeedInteractor(presenter: viewController)
+
+        let interactor = DetailFeedInteractor(
+            presenter: viewController,
+            post: post,
+            feed: component.feed
+        )
+
         interactor.listener = listener
-        return DetailFeedRouter(interactor: interactor, viewController: viewController)
+
+        let detailPageBuilder = DetailPageBuilder(dependency: component)
+
+        return DetailFeedRouter(
+            interactor: interactor,
+            viewController: viewController,
+            detailPageBuilder: detailPageBuilder
+        )
     }
 }

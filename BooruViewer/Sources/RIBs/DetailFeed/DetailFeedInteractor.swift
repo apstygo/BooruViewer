@@ -1,7 +1,8 @@
 import ModernRIBs
+import SankakuAPI
 
 protocol DetailFeedRouting: ViewableRouting {
-    // TODO: Declare methods the interactor can invoke to manage sub-tree via the router.
+    func attachPostPages(for posts: [Post], focusedPostIndex: Int)
 }
 
 protocol DetailFeedPresentable: Presentable {
@@ -20,11 +21,19 @@ final class DetailFeedInteractor: PresentableInteractor<DetailFeedPresentable>, 
     weak var router: DetailFeedRouting?
     weak var listener: DetailFeedListener?
 
+    // MARK: - Private Properties
+
+    private let post: Post
+    private let feed: Feed
+
     // MARK: - Init
 
-    // TODO: Add additional dependencies to constructor. Do not perform any logic
-    // in constructor.
-    override init(presenter: DetailFeedPresentable) {
+    init(presenter: DetailFeedPresentable,
+         post: Post,
+         feed: Feed) {
+        self.post = post
+        self.feed = feed
+
         super.init(presenter: presenter)
         presenter.listener = self
     }
@@ -33,12 +42,22 @@ final class DetailFeedInteractor: PresentableInteractor<DetailFeedPresentable>, 
 
     override func didBecomeActive() {
         super.didBecomeActive()
-        // TODO: Implement business logic here.
+
+        attachPostPages()
     }
 
     override func willResignActive() {
         super.willResignActive()
         // TODO: Pause any business logic.
+    }
+
+    // MARK: - Private Methods
+
+    private func attachPostPages() {
+        let posts = feed.state.posts
+        let focusedPostIndex = posts.firstIndex(of: post) ?? 0
+
+        router?.attachPostPages(for: posts, focusedPostIndex: focusedPostIndex)
     }
 
 }

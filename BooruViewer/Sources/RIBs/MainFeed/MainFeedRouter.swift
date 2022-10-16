@@ -33,7 +33,7 @@ final class MainFeedRouter: ViewableRouter<MainFeedInteractable, MainFeedViewCon
     // MARK: - Routing
 
     func routeToDetailFeed(for post: Post) {
-        let detailFeed = detailFeedBuilder.build(withListener: interactor)
+        let detailFeed = detailFeedBuilder.build(withListener: interactor, post: post)
         self.detailFeed = detailFeed
 
         attachChild(detailFeed)
