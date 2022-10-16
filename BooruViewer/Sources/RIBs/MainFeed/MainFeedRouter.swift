@@ -1,26 +1,56 @@
-//
-//  MainFeedRouter.swift
-//  BooruViewer
-//
-//  Created by Artem Pstygo on 15.10.2022.
-//
-
 import ModernRIBs
+import SankakuAPI
 
-protocol MainFeedInteractable: Interactable {
+protocol MainFeedInteractable: Interactable, DetailFeedListener {
     var router: MainFeedRouting? { get set }
     var listener: MainFeedListener? { get set }
 }
 
 protocol MainFeedViewControllable: ViewControllable {
-    // TODO: Declare methods the router invokes to manipulate the view hierarchy.
+    func pushToStack(_ viewController: ViewControllable)
+    func popFromStack()
 }
 
 final class MainFeedRouter: ViewableRouter<MainFeedInteractable, MainFeedViewControllable>, MainFeedRouting {
 
-    // TODO: Constructor inject child builder protocols to allow building children.
-    override init(interactor: MainFeedInteractable, viewController: MainFeedViewControllable) {
+    // MARK: - Private Methods
+
+    private let detailFeedBuilder: DetailFeedBuildable
+
+    private var detailFeed: ViewableRouting?
+
+    // MARK: - Init
+
+    init(interactor: MainFeedInteractable,
+         viewController: MainFeedViewControllable,
+         detailFeedBuilder: DetailFeedBuildable) {
+        self.detailFeedBuilder = detailFeedBuilder
+
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
     }
+
+    // MARK: - Routing
+
+    func routeToDetailFeed(for post: Post) {
+        let detailFeed = detailFeedBuilder.build(withListener: interactor)
+        self.detailFeed = detailFeed
+
+        attachChild(detailFeed)
+        viewController.pushToStack(detailFeed.viewControllable)
+    }
+
+    func detachDetailFeed() {
+        guard let detailFeed else {
+            return
+        }
+
+        if !detailFeed.viewControllable.uiviewController.isMovingFromParent {
+            viewController.popFromStack()
+        }
+
+        detachChild(detailFeed)
+        self.detailFeed = nil
+    }
+
 }

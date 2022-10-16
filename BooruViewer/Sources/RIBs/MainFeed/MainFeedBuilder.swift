@@ -7,7 +7,7 @@ protocol MainFeedDependency: Dependency {
     // created by this RIB.
 }
 
-final class MainFeedComponent: Component<MainFeedDependency> {
+final class MainFeedComponent: Component<MainFeedDependency>, DetailFeedDependency {
 
     var urlSession: URLSession {
         shared {
@@ -53,6 +53,12 @@ final class MainFeedBuilder: Builder<MainFeedDependency>, MainFeedBuildable {
 
         interactor.listener = listener
 
-        return MainFeedRouter(interactor: interactor, viewController: viewController)
+        let detailFeedBuilder = DetailFeedBuilder(dependency: component)
+
+        return MainFeedRouter(
+            interactor: interactor,
+            viewController: viewController,
+            detailFeedBuilder: detailFeedBuilder
+        )
     }
 }

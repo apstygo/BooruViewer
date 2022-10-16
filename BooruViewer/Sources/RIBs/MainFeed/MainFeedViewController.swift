@@ -9,10 +9,11 @@ protocol MainFeedPresentableListener: AnyObject {
     func didShowCell(at indexPath: IndexPath)
     func didUpdateSearch(withText searchText: String?, tags: [Tag])
     func didSelectTag(_ tag: Tag)
+    func didSelectPost(_ post: Post)
     func didRefresh()
 }
 
-final class MainFeedViewController: UIViewController, MainFeedViewControllable {
+final class MainFeedViewController: UIViewController {
 
     // MARK: - Private Types
 
@@ -95,6 +96,9 @@ final class MainFeedViewController: UIViewController, MainFeedViewControllable {
                     .onAppear {
                         listener?.didShowCell(at: indexPath)
                     }
+                    .onTapGesture {
+                        listener?.didSelectPost(post)
+                    }
             }
             .margins([.horizontal, .vertical], 0)
         }
@@ -143,6 +147,33 @@ extension MainFeedViewController: MainFeedPresentable {
 
     func clearSearchText() {
         searchController.searchBar.searchTextField.text = ""
+    }
+
+}
+
+// MARK: - MainFeedViewControllable
+
+extension MainFeedViewController: MainFeedViewControllable {
+
+    func pushToStack(_ viewController: ModernRIBs.ViewControllable) {
+        guard let navigationController else {
+            assertionFailure("Trying to push into non-existent navigation stack")
+            return
+        }
+
+        navigationController.pushViewController(
+            viewController.uiviewController,
+            animated: UIView.areAnimationsEnabled
+        )
+    }
+
+    func popFromStack() {
+        guard let navigationController else {
+            assertionFailure("Trying to pop from non-existent navigation stack")
+            return
+        }
+
+        navigationController.popViewController(animated: UIView.areAnimationsEnabled)
     }
 
 }

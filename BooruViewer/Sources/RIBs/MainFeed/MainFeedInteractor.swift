@@ -3,7 +3,8 @@ import ModernRIBs
 import SankakuAPI
 
 protocol MainFeedRouting: ViewableRouting {
-    // TODO: Declare methods the interactor can invoke to manage sub-tree via the router.
+    func routeToDetailFeed(for post: Post)
+    func detachDetailFeed()
 }
 
 @MainActor
@@ -99,6 +100,10 @@ final class MainFeedInteractor: PresentableInteractor<MainFeedPresentable>, Main
         }
     }
 
+    func didSelectPost(_ post: Post) {
+        router?.routeToDetailFeed(for: post)
+    }
+
     func didRefresh() {
         feed.reload()
     }
@@ -133,6 +138,16 @@ final class MainFeedInteractor: PresentableInteractor<MainFeedPresentable>, Main
 
             await presenter.presentSuggestedTags(tags)
         }
+    }
+
+}
+
+// MARK: - DetailFeedListener
+
+extension MainFeedInteractor: DetailFeedListener {
+
+    func detailFeedDidPop() {
+        router?.detachDetailFeed()
     }
 
 }
