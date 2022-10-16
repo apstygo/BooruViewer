@@ -99,6 +99,10 @@ final class MainFeedInteractor: PresentableInteractor<MainFeedPresentable>, Main
         }
     }
 
+    func didRefresh() {
+        feed.reload()
+    }
+
     // MARK: - Private Methods
 
     private func startPostObserving() {

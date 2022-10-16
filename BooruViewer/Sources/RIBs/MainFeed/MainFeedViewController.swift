@@ -9,6 +9,7 @@ protocol MainFeedPresentableListener: AnyObject {
     func didShowCell(at indexPath: IndexPath)
     func didUpdateSearch(withText searchText: String?, tags: [Tag])
     func didSelectTag(_ tag: Tag)
+    func didRefresh()
 }
 
 final class MainFeedViewController: UIViewController, MainFeedViewControllable {
@@ -56,9 +57,10 @@ final class MainFeedViewController: UIViewController, MainFeedViewControllable {
     // MARK: - Private Methods
 
     private func configureUI() {
-        collectionView.dataSource = dataSource
-
         configureSearch()
+        configureRefresh()
+
+        collectionView.dataSource = dataSource
     }
 
     private func configureSearch() {
@@ -71,9 +73,18 @@ final class MainFeedViewController: UIViewController, MainFeedViewControllable {
         searchController.searchBar.searchTextField.placeholder = "Search using tags"
 
         navigationItem.searchController = searchController
+        collectionView.keyboardDismissMode = .onDrag
         searchController.searchBar.delegate = self
 
         definesPresentationContext = true
+    }
+
+    private func configureRefresh() {
+        let refreshAction = UIAction { [listener] _ in
+            listener?.didRefresh()
+        }
+
+        collectionView.refreshControl = UIRefreshControl(frame: .zero, primaryAction: refreshAction)
     }
 
     private func configureDataSource() -> DataSource {
@@ -109,6 +120,10 @@ extension MainFeedViewController: MainFeedPresentable {
         snapshot.appendItems(posts)
 
         dataSource.apply(snapshot)
+
+        if !posts.isEmpty {
+            collectionView.refreshControl?.endRefreshing()
+        }
     }
 
     func presentSuggestedTags(_ tags: [Tag]) {
