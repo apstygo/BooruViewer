@@ -6,9 +6,7 @@ import SnapKit
 import SankakuAPI
 
 protocol MainFeedPresentableListener: AnyObject {
-    // TODO: Declare properties and methods that the view controller can invoke to perform
-    // business logic, such as signIn(). This protocol is implemented by the corresponding
-    // interactor class.
+    func didShowCell(at indexPath: IndexPath)
 }
 
 final class MainFeedViewController: UIViewController, MainFeedViewControllable {
@@ -55,9 +53,13 @@ final class MainFeedViewController: UIViewController, MainFeedViewControllable {
     }
 
     private func configureDataSource() -> DataSource {
-        let cellRegistration = UICollectionView.CellRegistration<UICollectionViewCell, Post> { cell, _, post in
+        typealias CellRegistration = UICollectionView.CellRegistration<UICollectionViewCell, Post>
+        let cellRegistration = CellRegistration { [listener] cell, indexPath, post in
             cell.contentConfiguration = UIHostingConfiguration {
                 PostPreview(post: post)
+                    .onAppear {
+                        listener?.didShowCell(at: indexPath)
+                    }
             }
             .margins([.horizontal, .vertical], 0)
         }

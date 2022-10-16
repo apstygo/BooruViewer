@@ -1,3 +1,4 @@
+import UIKit
 import ModernRIBs
 import SankakuAPI
 
@@ -18,6 +19,12 @@ protocol MainFeedListener: AnyObject {
 
 final class MainFeedInteractor: PresentableInteractor<MainFeedPresentable>, MainFeedInteractable, MainFeedPresentableListener {
 
+    // MARK: - Private Properties
+
+    private enum Constant {
+        static let loadThreshold = 25
+    }
+
     // MARK: - Internal Properties
 
     weak var router: MainFeedRouting?
@@ -26,11 +33,23 @@ final class MainFeedInteractor: PresentableInteractor<MainFeedPresentable>, Main
     // MARK: - Private Properties
 
     private let sankakuAPI: SankakuAPI
+    private let feedManager: FeedManager
+
+    private var posts: [Post] = [] {
+        didSet {
+            Task {
+                await presenter.presentPosts(posts)
+            }
+        }
+    }
 
     // MARK: - Init
 
-    init(sankakuAPI: SankakuAPI, presenter: MainFeedPresentable) {
+    init(sankakuAPI: SankakuAPI,
+         feedManager: FeedManager,
+         presenter: MainFeedPresentable) {
         self.sankakuAPI = sankakuAPI
+        self.feedManager = feedManager
 
         super.init(presenter: presenter)
         presenter.listener = self
@@ -49,12 +68,22 @@ final class MainFeedInteractor: PresentableInteractor<MainFeedPresentable>, Main
         // TODO: Pause any business logic.
     }
 
+    // MARK: - Presentable Listener
+
+    func didShowCell(at indexPath: IndexPath) {
+        guard posts.count - indexPath.item == Constant.loadThreshold else {
+            return
+        }
+
+        loadPosts()
+    }
+
     // MARK: - Private Methods
 
     private func loadPosts() {
         Task {
-            let postsResponse = try await sankakuAPI.getPosts()
-            await presenter.presentPosts(postsResponse.data)
+            await feedManager.loadNextPage()
+            posts = await feedManager.posts
         }
     }
 

@@ -12,6 +12,10 @@ final class MainFeedComponent: Component<MainFeedDependency> {
         shared { SankakuAPI() }
     }
 
+    var feedManager: FeedManager {
+        shared { FeedManagerImpl(sankakuAPI: sankakuAPI) }
+    }
+
 }
 
 // MARK: - Builder
@@ -30,7 +34,12 @@ final class MainFeedBuilder: Builder<MainFeedDependency>, MainFeedBuildable {
         let component = MainFeedComponent(dependency: dependency)
         let viewController = MainFeedViewController()
 
-        let interactor = MainFeedInteractor(sankakuAPI: component.sankakuAPI, presenter: viewController)
+        let interactor = MainFeedInteractor(
+            sankakuAPI: component.sankakuAPI,
+            feedManager: component.feedManager,
+            presenter: viewController
+        )
+
         interactor.listener = listener
 
         return MainFeedRouter(interactor: interactor, viewController: viewController)
