@@ -24,6 +24,7 @@
 		2E6A433D28F9FB4900F89556 /* DetailPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6A433C28F9FB4900F89556 /* DetailPageView.swift */; };
 		2E6A434028FA233900F89556 /* SwiftUIFlow in Frameworks */ = {isa = PBXBuildFile; productRef = 2E6A433F28FA233900F89556 /* SwiftUIFlow */; };
 		2E6A434528FB259900F89556 /* ModernRIBs in Frameworks */ = {isa = PBXBuildFile; productRef = 2E6A434428FB259900F89556 /* ModernRIBs */; };
+		2E7A1DAE28FC17470009304D /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7A1DAD28FC17470009304D /* Feed.swift */; };
 		2ED2CD9328F56C36001CA186 /* BooruViewerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED2CD9228F56C36001CA186 /* BooruViewerApp.swift */; };
 		2ED2CD9728F56C36001CA186 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2ED2CD9628F56C36001CA186 /* Assets.xcassets */; };
 		2EFBA92A28FB363C0053DCEC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFBA92928FB363C0053DCEC /* AppDelegate.swift */; };
@@ -52,6 +53,7 @@
 		2E6A433428F8A9A900F89556 /* FeedManagerDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedManagerDependency.swift; sourceTree = "<group>"; };
 		2E6A433A28F9FA1E00F89556 /* DetailPageFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPageFeature.swift; sourceTree = "<group>"; };
 		2E6A433C28F9FB4900F89556 /* DetailPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPageView.swift; sourceTree = "<group>"; };
+		2E7A1DAD28FC17470009304D /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
 		2ED2CD8F28F56C36001CA186 /* BooruViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BooruViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2ED2CD9228F56C36001CA186 /* BooruViewerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooruViewerApp.swift; sourceTree = "<group>"; };
 		2ED2CD9428F56C36001CA186 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -157,6 +159,7 @@
 			isa = PBXGroup;
 			children = (
 				2E6A433228F89AEF00F89556 /* FeedManager.swift */,
+				2E7A1DAD28FC17470009304D /* Feed.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -352,6 +355,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2EFBA93728FB3B040053DCEC /* RootRouter.swift in Sources */,
+				2E7A1DAE28FC17470009304D /* Feed.swift in Sources */,
 				2EFBA94528FB43360053DCEC /* MainFeedRouter.swift in Sources */,
 				2EFBA93828FB3B040053DCEC /* RootViewController.swift in Sources */,
 				2E6A431A28F6E8B600F89556 /* MainFeedFeature.swift in Sources */,

@@ -19,12 +19,6 @@ protocol MainFeedListener: AnyObject {
 
 final class MainFeedInteractor: PresentableInteractor<MainFeedPresentable>, MainFeedInteractable, MainFeedPresentableListener {
 
-    // MARK: - Private Properties
-
-    private enum Constant {
-        static let loadThreshold = 25
-    }
-
     // MARK: - Internal Properties
 
     weak var router: MainFeedRouting?
@@ -33,23 +27,17 @@ final class MainFeedInteractor: PresentableInteractor<MainFeedPresentable>, Main
     // MARK: - Private Properties
 
     private let sankakuAPI: SankakuAPI
-    private let feedManager: FeedManager
+    private let feed: Feed
 
-    private var posts: [Post] = [] {
-        didSet {
-            Task {
-                await presenter.presentPosts(posts)
-            }
-        }
-    }
+    private var updatePostsTask: Task<Void, Never>?
 
     // MARK: - Init
 
     init(sankakuAPI: SankakuAPI,
-         feedManager: FeedManager,
+         feed: Feed,
          presenter: MainFeedPresentable) {
         self.sankakuAPI = sankakuAPI
-        self.feedManager = feedManager
+        self.feed = feed
 
         super.init(presenter: presenter)
         presenter.listener = self
@@ -60,31 +48,33 @@ final class MainFeedInteractor: PresentableInteractor<MainFeedPresentable>, Main
     override func didBecomeActive() {
         super.didBecomeActive()
 
-        loadPosts()
+        startPostObserving()
     }
 
     override func willResignActive() {
         super.willResignActive()
-        // TODO: Pause any business logic.
+
+        updatePostsTask?.cancel()
     }
 
     // MARK: - Presentable Listener
 
     func didShowCell(at indexPath: IndexPath) {
-        guard posts.count - indexPath.item == Constant.loadThreshold else {
-            return
-        }
-
-        loadPosts()
+        feed.loadPage(forItemAt: indexPath.item)
     }
 
     // MARK: - Private Methods
 
-    private func loadPosts() {
-        Task {
-            await feedManager.loadNextPage()
-            posts = await feedManager.posts
+    private func startPostObserving() {
+        let postStream = feed.stateStream.map { $0.posts }
+
+        updatePostsTask = Task {
+            for await posts in postStream {
+                await presenter.presentPosts(posts)
+            }
         }
+
+        feed.reload()
     }
 
 }
