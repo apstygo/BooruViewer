@@ -22,10 +22,6 @@ final class MainFeedViewController: UIViewController, MainFeedViewControllable {
     private typealias DataSource = UICollectionViewDiffableDataSource<Section, Post>
     private typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Post>
 
-    private enum Constant {
-        static let cellReuseIdentifier = "cell"
-    }
-
     // MARK: - Internal Properties
 
     weak var listener: MainFeedPresentableListener?
@@ -33,23 +29,7 @@ final class MainFeedViewController: UIViewController, MainFeedViewControllable {
     // MARK: - Private Properties
 
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: makeLayout())
-    private lazy var dataSource = DataSource(collectionView: collectionView) { collectionView, indexPath, post in
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constant.cellReuseIdentifier, for: indexPath)
-
-        cell.contentConfiguration = UIHostingConfiguration {
-            GeometryReader { gr in
-                WebImage(url: post.previewURL)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: gr.size.width, height: gr.size.height)
-                    .clipped()
-            }
-            .padding(.zero)
-        }
-        .margins([.horizontal, .vertical], 0)
-
-        return cell
-    }
+    private lazy var dataSource = configureDataSource()
 
     // MARK: - Lifecycle
 
@@ -72,8 +52,19 @@ final class MainFeedViewController: UIViewController, MainFeedViewControllable {
 
     private func configureUI() {
         collectionView.dataSource = dataSource
+    }
 
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: Constant.cellReuseIdentifier)
+    private func configureDataSource() -> DataSource {
+        let cellRegistration = UICollectionView.CellRegistration<UICollectionViewCell, Post> { cell, _, post in
+            cell.contentConfiguration = UIHostingConfiguration {
+                PostPreview(post: post)
+            }
+            .margins([.horizontal, .vertical], 0)
+        }
+
+        return DataSource(collectionView: collectionView) { collectionView, indexPath, post in
+            collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: post)
+        }
     }
 
     private func makeLayout() -> UICollectionViewCompositionalLayout {
@@ -90,6 +81,22 @@ extension MainFeedViewController: MainFeedPresentable {
         snapshot.appendItems(posts)
 
         dataSource.apply(snapshot)
+    }
+
+}
+
+private struct PostPreview: View {
+
+    let post: Post
+
+    var body: some View {
+        GeometryReader { gr in
+            WebImage(url: post.previewURL)
+                .resizable()
+                .scaledToFill()
+                .frame(width: gr.size.width, height: gr.size.height)
+                .clipped()
+        }
     }
 
 }
