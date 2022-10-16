@@ -6,7 +6,7 @@ public final class SankakuAPI {
 
     // MARK: - Private Properties
 
-    private let urlSession: URLSession = .shared
+    private let urlSession: URLSession
 
     private var accessToken: String?
 
@@ -23,7 +23,9 @@ public final class SankakuAPI {
 
     // MARK: - Init
 
-    public init() { /* Do nothing */ }
+    public init(urlSession: URLSession = .shared) {
+        self.urlSession = urlSession
+    }
 
     // MARK: - Public Methods
 

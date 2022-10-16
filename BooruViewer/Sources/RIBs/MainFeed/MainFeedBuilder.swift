@@ -1,3 +1,4 @@
+import Foundation
 import ModernRIBs
 import SankakuAPI
 
@@ -8,8 +9,18 @@ protocol MainFeedDependency: Dependency {
 
 final class MainFeedComponent: Component<MainFeedDependency> {
 
+    var urlSession: URLSession {
+        shared {
+            let configuration: URLSessionConfiguration = .default
+            configuration.waitsForConnectivity = true
+            configuration.timeoutIntervalForRequest = .infinity
+            configuration.timeoutIntervalForResource = .infinity
+            return URLSession(configuration: configuration)
+        }
+    }
+
     var sankakuAPI: SankakuAPI {
-        shared { SankakuAPI() }
+        shared { SankakuAPI(urlSession: urlSession) }
     }
 
     var feed: Feed {
