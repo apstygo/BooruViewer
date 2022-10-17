@@ -146,7 +146,7 @@ final class MainFeedInteractor: PresentableInteractor<MainFeedPresentable>, Main
 
 extension MainFeedInteractor: DetailFeedListener {
 
-    func detailFeedDidPop() {
+    func detailFeedDidDismiss() {
         router?.detachDetailFeed()
     }
 

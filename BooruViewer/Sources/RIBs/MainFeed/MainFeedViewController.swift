@@ -3,6 +3,7 @@ import SwiftUI
 import SDWebImageSwiftUI
 import ModernRIBs
 import SnapKit
+import sheets
 import SankakuAPI
 
 protocol MainFeedPresentableListener: AnyObject {
@@ -33,6 +34,7 @@ final class MainFeedViewController: UIViewController {
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: makeLayout())
     private lazy var dataSource = configureDataSource()
     private var searchController: UISearchController!
+    private let appStoreTransitioningDelegate = AppStoreTransitioningDelegate()
 
     private lazy var suggestedTagsController: MainFeedSuggestedTagsController = .make { [listener] tag in
         listener?.didSelectTag(tag)
@@ -155,25 +157,20 @@ extension MainFeedViewController: MainFeedPresentable {
 
 extension MainFeedViewController: MainFeedViewControllable {
 
-    func pushToStack(_ viewController: ModernRIBs.ViewControllable) {
-        guard let navigationController else {
-            assertionFailure("Trying to push into non-existent navigation stack")
-            return
-        }
+    func presentModally(_ viewController: ViewControllable) {
+        viewController.uiviewController.modalPresentationStyle = .custom
+        viewController.uiviewController.transitioningDelegate = appStoreTransitioningDelegate
 
-        navigationController.pushViewController(
-            viewController.uiviewController,
-            animated: UIView.areAnimationsEnabled
-        )
+        present(viewController.uiviewController, animated: true)
     }
 
-    func popFromStack() {
-        guard let navigationController else {
-            assertionFailure("Trying to pop from non-existent navigation stack")
+    func dismissModal() {
+        guard presentedViewController != nil else {
+            assertionFailure("Trying to dismiss a view controller that has not been presented")
             return
         }
 
-        navigationController.popViewController(animated: UIView.areAnimationsEnabled)
+        dismiss(animated: true)
     }
 
 }

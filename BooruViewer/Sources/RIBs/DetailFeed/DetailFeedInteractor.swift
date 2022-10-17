@@ -3,6 +3,7 @@ import SankakuAPI
 
 protocol DetailFeedRouting: ViewableRouting {
     func attachPostPages(for posts: [Post], focusedPostIndex: Int)
+    func detachPostPages()
 }
 
 protocol DetailFeedPresentable: Presentable {
@@ -11,7 +12,7 @@ protocol DetailFeedPresentable: Presentable {
 }
 
 protocol DetailFeedListener: AnyObject {
-    func detailFeedDidPop()
+    func detailFeedDidDismiss()
 }
 
 final class DetailFeedInteractor: PresentableInteractor<DetailFeedPresentable>, DetailFeedInteractable {
@@ -48,7 +49,8 @@ final class DetailFeedInteractor: PresentableInteractor<DetailFeedPresentable>, 
 
     override func willResignActive() {
         super.willResignActive()
-        // TODO: Pause any business logic.
+
+        router?.detachPostPages()
     }
 
     // MARK: - Private Methods
@@ -66,8 +68,8 @@ final class DetailFeedInteractor: PresentableInteractor<DetailFeedPresentable>, 
 
 extension DetailFeedInteractor: DetailFeedPresentableListener {
 
-    func didPop() {
-        listener?.detailFeedDidPop()
+    func didDismissInteractively() {
+        listener?.detailFeedDidDismiss()
     }
 
 }

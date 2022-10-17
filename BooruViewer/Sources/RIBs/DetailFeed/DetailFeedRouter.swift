@@ -8,6 +8,7 @@ protocol DetailFeedInteractable: Interactable, DetailPageListener {
 
 protocol DetailFeedViewControllable: ViewControllable {
     func presentPostPages(_ pages: [ViewControllable], focusedPostIndex: Int)
+    func dismissPostPages()
 }
 
 final class DetailFeedRouter: ViewableRouter<DetailFeedInteractable, DetailFeedViewControllable>, DetailFeedRouting {
@@ -42,6 +43,16 @@ final class DetailFeedRouter: ViewableRouter<DetailFeedInteractable, DetailFeedV
         }
 
         viewController.presentPostPages(detailPages.map(\.viewControllable), focusedPostIndex: focusedPostIndex)
+    }
+
+    func detachPostPages() {
+        for detailPage in detailPages {
+            detachChild(detailPage)
+        }
+
+        detailPages = []
+
+        viewController.dismissPostPages()
     }
 
 }

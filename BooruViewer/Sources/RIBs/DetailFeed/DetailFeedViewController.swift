@@ -2,7 +2,7 @@ import UIKit
 import ModernRIBs
 
 protocol DetailFeedPresentableListener: AnyObject {
-    func didPop()
+    func didDismissInteractively()
 }
 
 final class DetailFeedViewController: UIPageViewController, DetailFeedPresentable, DetailFeedViewControllable {
@@ -27,11 +27,11 @@ final class DetailFeedViewController: UIPageViewController, DetailFeedPresentabl
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
 
-        guard isMovingFromParent else {
+        guard isBeingDismissed else {
             return
         }
 
-        listener?.didPop()
+        listener?.didDismissInteractively()
     }
 
     // MARK: - ViewControllable
@@ -44,6 +44,11 @@ final class DetailFeedViewController: UIPageViewController, DetailFeedPresentabl
             direction: .forward,
             animated: false
         )
+    }
+
+    func dismissPostPages() {
+        pages = []
+        setViewControllers([UIViewController()], direction: .forward, animated: false)
     }
 
 }
