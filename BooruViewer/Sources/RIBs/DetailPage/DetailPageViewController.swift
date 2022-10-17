@@ -8,6 +8,7 @@ import SankakuAPI
 protocol DetailPagePresentableListener: AnyObject {
     func didScrollToRelatedPost(at index: Int)
     func willAppear()
+    func didTapOnPost(_ post: Post)
 }
 
 final class DetailPageViewController: UIViewController, DetailPagePresentable, DetailPageViewControllable, Scrollable {
@@ -36,6 +37,7 @@ final class DetailPageViewController: UIViewController, DetailPagePresentable, D
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: makeLayout())
     private lazy var dataSource: DataSource = makeDataSource()
     private var previewedPosts: [ObjectIdentifier: Post] = [:]
+    private let appStoreTransitioningDelegate = AppStoreTransitioningDelegate()
 
     // MARK: - Lifecycle
 
@@ -59,6 +61,23 @@ final class DetailPageViewController: UIViewController, DetailPagePresentable, D
         super.viewWillAppear(animated)
 
         listener?.willAppear()
+    }
+
+    // MARK: - ViewControllable
+
+    func presentModally(_ viewController: ViewControllable) {
+        viewController.uiviewController.modalPresentationStyle = .custom
+        viewController.uiviewController.transitioningDelegate = appStoreTransitioningDelegate
+
+        present(viewController.uiviewController, animated: true)
+    }
+
+    func dismissModal() {
+        guard presentedViewController != nil else {
+            return
+        }
+
+        dismiss(animated: true)
     }
 
     // MARK: - Private Methods
@@ -136,6 +155,9 @@ final class DetailPageViewController: UIViewController, DetailPagePresentable, D
                     .onAppear {
                         listener?.didScrollToRelatedPost(at: indexPath.item)
                     }
+                    .onTapGesture {
+                        listener?.didTapOnPost(post)
+                    }
             }
             .margins([.horizontal, .vertical], 0)
         }
@@ -209,8 +231,12 @@ extension DetailPageViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView,
                         willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration,
                         animator: UIContextMenuInteractionCommitAnimating) {
-        animator.addCompletion {
-            // TODO: Implement
+        guard let post = previewedPosts[ObjectIdentifier(configuration)] else {
+            return
+        }
+
+        animator.addCompletion { [weak listener] in
+            listener?.didTapOnPost(post)
         }
     }
 

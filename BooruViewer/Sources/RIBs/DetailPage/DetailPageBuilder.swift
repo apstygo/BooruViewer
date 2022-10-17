@@ -5,7 +5,11 @@ protocol DetailPageDependency: Dependency {
     var sankakuAPI: SankakuAPI { get }
 }
 
-final class DetailPageComponent: Component<DetailPageDependency> {
+final class DetailPageComponent: Component<DetailPageDependency>, DetailFeedDependency {
+
+    var sankakuAPI: SankakuAPI {
+        dependency.sankakuAPI
+    }
 
     var feed: Feed {
         shared { FeedImpl(sankakuAPI: dependency.sankakuAPI) }
@@ -37,6 +41,12 @@ final class DetailPageBuilder: Builder<DetailPageDependency>, DetailPageBuildabl
 
         interactor.listener = listener
 
-        return DetailPageRouter(interactor: interactor, viewController: viewController)
+        let detailFeedBuilder = DetailFeedBuilder(dependency: component)
+
+        return DetailPageRouter(
+            interactor: interactor,
+            viewController: viewController,
+            detailFeedBuilder: detailFeedBuilder
+        )
     }
 }

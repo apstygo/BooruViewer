@@ -4,7 +4,8 @@ import ModernRIBs
 import SankakuAPI
 
 protocol DetailPageRouting: ViewableRouting {
-    // TODO: Declare methods the interactor can invoke to manage sub-tree via the router.
+    func attachDetailFeed(for post: Post)
+    func detachDetailFeed()
 }
 
 protocol DetailPagePresentable: Presentable {
@@ -73,6 +74,10 @@ final class DetailPageInteractor: PresentableInteractor<DetailPagePresentable>, 
         startUpdates()
     }
 
+    func didTapOnPost(_ post: Post) {
+        router?.attachDetailFeed(for: post)
+    }
+
     // MARK: - Private Methods
 
     private func present() {
@@ -92,6 +97,16 @@ final class DetailPageInteractor: PresentableInteractor<DetailPagePresentable>, 
 
         feed.customTags = ["recommended_for_post:\(post.id)"]
         feed.reload()
+    }
+
+}
+
+// MARK: - DetailFeedListener
+
+extension DetailPageInteractor: DetailFeedListener {
+
+    func detailFeedDidDismiss() {
+        router?.detachDetailFeed()
     }
 
 }
