@@ -3,12 +3,17 @@ import SankakuAPI
 
 protocol DetailFeedDependency: Dependency {
     var feed: Feed { get }
+    var sankakuAPI: SankakuAPI { get }
 }
 
 final class DetailFeedComponent: Component<DetailFeedDependency>, DetailPageDependency {
 
     var feed: Feed {
         dependency.feed
+    }
+
+    var sankakuAPI: SankakuAPI {
+        dependency.sankakuAPI
     }
 
 }

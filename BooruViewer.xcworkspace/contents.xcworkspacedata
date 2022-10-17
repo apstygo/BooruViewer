@@ -7,4 +7,7 @@
    <FileRef
       location = "group:booru-api">
    </FileRef>
+   <FileRef
+      location = "group:../sheets">
+   </FileRef>
 </Workspace>

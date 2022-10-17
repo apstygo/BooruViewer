@@ -3,11 +3,11 @@ import SwiftUI
 import ModernRIBs
 import SDWebImageSwiftUI
 import sheets
+import SankakuAPI
 
 protocol DetailPagePresentableListener: AnyObject {
-    // TODO: Declare properties and methods that the view controller can invoke to perform
-    // business logic, such as signIn(). This protocol is implemented by the corresponding
-    // interactor class.
+    func didScrollToRelatedPost(at index: Int)
+    func willAppear()
 }
 
 final class DetailPageViewController: UIViewController, DetailPagePresentable, DetailPageViewControllable, Scrollable {
@@ -54,6 +54,12 @@ final class DetailPageViewController: UIViewController, DetailPagePresentable, D
         presentViewModel()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        listener?.willAppear()
+    }
+
     // MARK: - Private Methods
 
     private func configureUI() {
@@ -72,15 +78,24 @@ final class DetailPageViewController: UIViewController, DetailPagePresentable, D
     }
 
     private func makeLayout() -> UICollectionViewLayout {
-        UICollectionViewCompositionalLayout { sectionIndex, layoutEnvironment in
-            let itemSize = NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1),
-                heightDimension: .estimated(300)
-            )
+        UICollectionViewCompositionalLayout { [weak self] sectionIndex, layoutEnvironment in
+            switch self?.section(atIndex: sectionIndex) {
+            case .images:
+                let itemSize = NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .estimated(300)
+                )
 
-            let item = NSCollectionLayoutItem(layoutSize: itemSize)
-            let group: NSCollectionLayoutGroup = .horizontal(layoutSize: itemSize, subitems: [item])
-            return NSCollectionLayoutSection(group: group)
+                let item = NSCollectionLayoutItem(layoutSize: itemSize)
+                let group: NSCollectionLayoutGroup = .horizontal(layoutSize: itemSize, subitems: [item])
+                return NSCollectionLayoutSection(group: group)
+
+            case .relatedPosts:
+                return .grid(size: 2)
+
+            case nil:
+                return nil
+            }
         }
     }
 
@@ -100,6 +115,17 @@ final class DetailPageViewController: UIViewController, DetailPagePresentable, D
             .margins([.horizontal, .vertical], 0)
         }
 
+        typealias RelatedPostRegistration = UICollectionView.CellRegistration<UICollectionViewCell, Post>
+        let relatedPostRegistration = RelatedPostRegistration { [weak listener] cell, indexPath, post in
+            cell.contentConfiguration = UIHostingConfiguration {
+                PostPreview(post: post)
+                    .onAppear {
+                        listener?.didScrollToRelatedPost(at: indexPath.item)
+                    }
+            }
+            .margins([.horizontal, .vertical], 0)
+        }
+
         return DataSource(collectionView: collectionView) { collectionView, indexPath, item in
             switch item {
             case let .image(viewModel):
@@ -108,8 +134,26 @@ final class DetailPageViewController: UIViewController, DetailPagePresentable, D
                     for: indexPath,
                     item: viewModel
                 )
+
+            case let .relatedPost(post):
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: relatedPostRegistration,
+                    for: indexPath,
+                    item: post
+                )
             }
         }
+    }
+
+    private func section(atIndex index: Int) -> DetailPageSection? {
+        guard
+            let sections = viewModel?.snapshot.sectionIdentifiers,
+            sections.indices.contains(index)
+        else {
+            return nil
+        }
+
+        return sections[index]
     }
 
 }

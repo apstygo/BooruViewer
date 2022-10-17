@@ -39,7 +39,7 @@ struct MainFeedView: View {
             ScrollViewReader { proxy in
                 LazyVGrid(columns: columns, spacing: 2) {
                     ForEach(viewStore.posts, id: \.post.id) { post in
-                        PostPreview(post: post)
+                        PostPreview(post: post.post)
                             .onAppear {
                                 viewStore.send(.loadMorePosts(index: post.index))
                             }
@@ -115,7 +115,7 @@ struct MainFeedView: View {
 
 }
 
-private struct PostPreview: View {
+private struct _PostPreview: View {
 
     let post: IndexedPost
 
@@ -142,26 +142,6 @@ private struct PostPreview: View {
         else {
             Image(systemName: "eye.slash")
         }
-    }
-
-}
-
-private struct PostPreviewPlaceholder: View {
-
-    @State var opacity: Double = 0
-
-    var body: some View {
-        Rectangle()
-            .foregroundColor(.gray)
-            .opacity(opacity)
-            .animation(animation, value: opacity)
-            .onAppear {
-                opacity = 0.5
-            }
-    }
-
-    var animation: Animation {
-        .linear(duration: 1).repeatForever(autoreverses: true)
     }
 
 }

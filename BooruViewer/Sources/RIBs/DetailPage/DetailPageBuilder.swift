@@ -2,13 +2,15 @@ import ModernRIBs
 import SankakuAPI
 
 protocol DetailPageDependency: Dependency {
-    // TODO: Declare the set of dependencies required by this RIB, but cannot be
-    // created by this RIB.
+    var sankakuAPI: SankakuAPI { get }
 }
 
 final class DetailPageComponent: Component<DetailPageDependency> {
 
-    // TODO: Declare 'fileprivate' dependencies that are only used by this RIB.
+    var feed: Feed {
+        shared { FeedImpl(sankakuAPI: dependency.sankakuAPI) }
+    }
+
 }
 
 // MARK: - Builder
@@ -27,7 +29,12 @@ final class DetailPageBuilder: Builder<DetailPageDependency>, DetailPageBuildabl
         let component = DetailPageComponent(dependency: dependency)
         let viewController = DetailPageViewController()
 
-        let interactor = DetailPageInteractor(presenter: viewController, post: post)
+        let interactor = DetailPageInteractor(
+            presenter: viewController,
+            post: post,
+            feed: component.feed
+        )
+
         interactor.listener = listener
 
         return DetailPageRouter(interactor: interactor, viewController: viewController)

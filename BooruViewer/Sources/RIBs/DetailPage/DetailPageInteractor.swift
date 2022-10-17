@@ -24,11 +24,17 @@ final class DetailPageInteractor: PresentableInteractor<DetailPagePresentable>, 
     // MARK: - Private Properties
 
     private let post: Post
+    private let feed: Feed
+
+    private var postUpdateTask: Task<Void, Never>?
 
     // MARK: - Init
 
-    init(presenter: DetailPagePresentable, post: Post) {
+    init(presenter: DetailPagePresentable,
+         post: Post,
+         feed: Feed) {
         self.post = post
+        self.feed = feed
 
         super.init(presenter: presenter)
         presenter.listener = self
@@ -44,14 +50,43 @@ final class DetailPageInteractor: PresentableInteractor<DetailPagePresentable>, 
 
     override func willResignActive() {
         super.willResignActive()
-        // TODO: Pause any business logic.
+
+        postUpdateTask?.cancel()
+        postUpdateTask = nil
+    }
+
+    // MARK: - PresentableListener
+
+    func didScrollToRelatedPost(at index: Int) {
+        feed.loadPage(forItemAt: index)
+    }
+
+    func willAppear() {
+        startUpdates()
     }
 
     // MARK: - Private Methods
 
     private func present() {
-        let viewModel = DetailPageViewModel(post: post)
+        let viewModel = DetailPageViewModel(post: post, relatedPosts: [])
         presenter.viewModel = viewModel
+    }
+
+    private func startUpdates() {
+        let postStream = feed.stateStream.map(\.posts)
+
+        postUpdateTask = Task { [presenter, post] in
+            for await posts in postStream {
+                let viewModel = DetailPageViewModel(post: post, relatedPosts: posts)
+
+                await MainActor.run {
+                    presenter.viewModel = viewModel
+                }
+            }
+        }
+
+        feed.customTags = ["recommended_for_post:\(post.id)"]
+        feed.reload()
     }
 
 }

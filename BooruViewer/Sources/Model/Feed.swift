@@ -18,6 +18,7 @@ protocol Feed: AnyObject {
     var state: FeedState { get }
     var stateStream: AsyncStream<FeedState> { get }
     var tags: [Tag] { get set }
+    var customTags: [String] { get set }
 
     func reload()
     func loadPage(forItemAt index: Int)
@@ -45,6 +46,7 @@ final class FeedImpl: Feed {
     }
 
     var tags: [Tag] = []
+    var customTags: [String] = []
 
     // MARK: - Private Properties
 
@@ -98,7 +100,7 @@ final class FeedImpl: Feed {
     private func loadMore() async {
         do {
             let postsResponse = try await sankakuAPI.getPosts(
-                tags: tags.map(\.name),
+                tags: tags.map(\.name) + customTags,
                 limit: Constant.pageSize,
                 next: nextPageId
             )

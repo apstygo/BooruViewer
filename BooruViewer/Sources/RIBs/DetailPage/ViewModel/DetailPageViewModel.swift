@@ -3,6 +3,7 @@ import SankakuAPI
 
 enum DetailPageSection: Hashable {
     case images
+    case relatedPosts
 }
 
 enum DetailPageItem: Hashable {
@@ -13,6 +14,7 @@ enum DetailPageItem: Hashable {
     }
 
     case image(Image)
+    case relatedPost(Post)
 }
 
 struct DetailPageViewModel: Hashable {
@@ -24,6 +26,7 @@ struct DetailPageViewModel: Hashable {
     // MARK: - Internal Properties
 
     let post: Post
+    let relatedPosts: [Post]
 
     var snapshot: Snapshot {
         var snapshot = Snapshot()
@@ -36,6 +39,11 @@ struct DetailPageViewModel: Hashable {
             sampleURL: post.sampleURL,
             fileURL: post.fileURL
         ))])
+
+        // Related Posts
+
+        snapshot.appendSections([.relatedPosts])
+        snapshot.appendItems(relatedPosts.map { .relatedPost($0) })
 
         return snapshot
     }

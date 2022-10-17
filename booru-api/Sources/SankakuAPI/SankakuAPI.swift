@@ -31,7 +31,7 @@ public final class SankakuAPI {
 
     // TODO: Implement date filter
     public func getPosts(order: SortOrder = .date,
-                         ratings: Set<Rating> = [.g],
+                         ratings: Set<Rating> = [],
                          hidePostsInBooks: HidePostsInBooks = .never,
                          mediaType: MediaType = .any,
                          mediaSize: MediaSize = .any,
@@ -51,8 +51,10 @@ public final class SankakuAPI {
             "order:\(order.rawValue)"
         ]
 
-        for rating in ratings {
-            additionalTags.append("rating:\(rating.rawValue)")
+        if ratings != [.g, .r15, .r18] {
+            for rating in ratings {
+                additionalTags.append("rating:\(rating.rawValue)")
+            }
         }
 
         if mediaType != .any {
@@ -97,7 +99,7 @@ public final class SankakuAPI {
 
     public func getPosts(recommendedFor postId: Int, limit: Int = 40) async throws -> [Post] {
         var request = Request(
-            url: URL(string: "https://capi-v2.sankakucomplex.com/posts?tags=recommended_for_post:31849612")!,
+            url: URL(string: "https://capi-v2.sankakucomplex.com/posts?tags=recommended_for_post:\(postId)")!,
             method: .get
         )
 
