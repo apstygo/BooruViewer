@@ -35,6 +35,7 @@ final class DetailPageViewController: UIViewController, DetailPagePresentable, D
 
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: makeLayout())
     private lazy var dataSource: DataSource = makeDataSource()
+    private var previewedPosts: [ObjectIdentifier: Post] = [:]
 
     // MARK: - Lifecycle
 
@@ -182,6 +183,37 @@ final class DetailPageViewController: UIViewController, DetailPagePresentable, D
 
 extension DetailPageViewController: UICollectionViewDelegate {
 
+    func collectionView(_ collectionView: UICollectionView,
+                        contextMenuConfigurationForItemsAt indexPaths: [IndexPath],
+                        point: CGPoint) -> UIContextMenuConfiguration? {
+        guard
+            indexPaths.count == 1,
+            let item = dataSource.itemIdentifier(for: indexPaths[0]),
+            case let .relatedPost(post) = item
+        else {
+            return nil
+        }
+
+        let configuration = UIContextMenuConfiguration {
+            let preview = ContextMenuPostPreview(post: post)
+            let hostingController = UIHostingController(rootView: preview)
+            hostingController.sizingOptions = .preferredContentSize
+            return hostingController
+        }
+
+        previewedPosts[ObjectIdentifier(configuration)] = post
+
+        return configuration
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration,
+                        animator: UIContextMenuInteractionCommitAnimating) {
+        animator.addCompletion {
+            // TODO: Implement
+        }
+    }
+
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         scrollableDelegate?.scrollableWillBeginDragging?(scrollView)
     }
@@ -196,23 +228,6 @@ extension DetailPageViewController: UICollectionViewDelegate {
         scrollableDelegate?.scrollableWillEndDragging?(scrollView,
                                                        withVelocity: velocity,
                                                        targetContentOffset: targetContentOffset)
-    }
-
-}
-
-// MARK: - Helpers
-
-extension UIColor {
-
-    fileprivate static var random: UIColor {
-        let range: Range<CGFloat> = 0..<1
-
-        return UIColor(
-            red: .random(in: range),
-            green: .random(in: range),
-            blue: .random(in: range),
-            alpha: 1
-        )
     }
 
 }

@@ -214,12 +214,12 @@ extension MainFeedViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView,
                         contextMenuConfigurationForItemsAt indexPaths: [IndexPath],
                         point: CGPoint) -> UIContextMenuConfiguration? {
-        guard indexPaths.count == 1 else {
+        guard
+            indexPaths.count == 1,
+            let post = dataSource.itemIdentifier(for: indexPaths[0])
+        else {
             return nil
         }
-
-        let index = indexPaths[0].item
-        let post = dataSource.snapshot().itemIdentifiers[index]
 
         let configuration = UIContextMenuConfiguration {
             let preview = ContextMenuPostPreview(post: post)
@@ -243,24 +243,6 @@ extension MainFeedViewController: UICollectionViewDelegate {
         animator.addCompletion { [weak listener] in
             listener?.didPerformPreviewAction(for: post)
         }
-    }
-
-}
-
-// MARK: - ContextMenuPostPreview
-
-private struct ContextMenuPostPreview: View {
-
-    let post: Post
-
-    var body: some View {
-        WebImage(url: post.sampleURL)
-            .resizable()
-            .placeholder {
-                ProgressView()
-                    .frame(width: post.sampleWidth, height: post.sampleHeight)
-            }
-            .scaledToFit()
     }
 
 }
