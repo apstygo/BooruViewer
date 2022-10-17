@@ -1,3 +1,5 @@
+import Foundation
+import Combine
 import ModernRIBs
 import SankakuAPI
 
@@ -26,7 +28,7 @@ final class DetailPageInteractor: PresentableInteractor<DetailPagePresentable>, 
     private let post: Post
     private let feed: Feed
 
-    private var postUpdateTask: Task<Void, Never>?
+    private var postUpdateTask: Cancellable?
 
     // MARK: - Init
 
@@ -73,17 +75,14 @@ final class DetailPageInteractor: PresentableInteractor<DetailPagePresentable>, 
     }
 
     private func startUpdates() {
-        let postStream = feed.stateStream.map(\.posts)
-
-        postUpdateTask = Task { [presenter, post] in
-            for await posts in postStream {
-                let viewModel = DetailPageViewModel(post: post, relatedPosts: posts)
-
-                await MainActor.run {
-                    presenter.viewModel = viewModel
-                }
+        postUpdateTask = feed.statePublisher
+            .map { [post] feedState in
+                DetailPageViewModel(post: post, relatedPosts: feedState.posts)
             }
-        }
+            .receive(on: RunLoop.main)
+            .sink { [weak presenter] viewModel in
+                presenter?.viewModel = viewModel
+            }
 
         feed.customTags = ["recommended_for_post:\(post.id)"]
         feed.reload()

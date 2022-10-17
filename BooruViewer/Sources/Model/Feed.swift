@@ -1,3 +1,4 @@
+import Combine
 import CombineExt
 import SankakuAPI
 
@@ -14,15 +15,19 @@ struct FeedState: Hashable {
 }
 
 protocol Feed: AnyObject {
-
     var state: FeedState { get }
-    var stateStream: AsyncStream<FeedState> { get }
+    var statePublisher: AnyPublisher<FeedState, Never> { get }
     var tags: [Tag] { get set }
     var customTags: [String] { get set }
 
     func reload()
     func loadPage(forItemAt index: Int)
+}
 
+extension Feed {
+    var stateStream: AsyncStream<FeedState> {
+        AsyncStream(statePublisher.values)
+    }
 }
 
 final class FeedImpl: Feed {
@@ -41,8 +46,8 @@ final class FeedImpl: Feed {
         set { stateRelay.accept(newValue) }
     }
 
-    var stateStream: AsyncStream<FeedState> {
-        AsyncStream(stateRelay.removeDuplicates().values)
+    var statePublisher: AnyPublisher<FeedState, Never> {
+        stateRelay.eraseToAnyPublisher()
     }
 
     var tags: [Tag] = []
