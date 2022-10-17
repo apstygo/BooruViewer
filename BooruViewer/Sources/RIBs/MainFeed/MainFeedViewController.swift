@@ -12,6 +12,7 @@ protocol MainFeedPresentableListener: AnyObject {
     func didSelectTag(_ tag: Tag)
     func didSelectPost(_ post: Post)
     func didRefresh()
+    func didPerformPreviewAction(for post: Post)
 }
 
 final class MainFeedViewController: UIViewController {
@@ -40,6 +41,8 @@ final class MainFeedViewController: UIViewController {
         listener?.didSelectTag(tag)
     }
 
+    private var previewedPosts: [ObjectIdentifier: Post] = [:]
+
     // MARK: - Lifecycle
 
     override func loadView() {
@@ -64,6 +67,7 @@ final class MainFeedViewController: UIViewController {
         configureRefresh()
 
         collectionView.dataSource = dataSource
+        collectionView.delegate = self
     }
 
     private func configureSearch() {
@@ -199,6 +203,64 @@ extension MainFeedViewController: UISearchResultsUpdating {
 
     func updateSearchResults(for searchController: UISearchController) {
         // TODO: Implement
+    }
+
+}
+
+// MARK: - UICollectionViewDelegate
+
+extension MainFeedViewController: UICollectionViewDelegate {
+
+    func collectionView(_ collectionView: UICollectionView,
+                        contextMenuConfigurationForItemsAt indexPaths: [IndexPath],
+                        point: CGPoint) -> UIContextMenuConfiguration? {
+        guard indexPaths.count == 1 else {
+            return nil
+        }
+
+        let index = indexPaths[0].item
+        let post = dataSource.snapshot().itemIdentifiers[index]
+
+        let configuration = UIContextMenuConfiguration {
+            let preview = ContextMenuPostPreview(post: post)
+            let hostingController = UIHostingController(rootView: preview)
+            hostingController.sizingOptions = .preferredContentSize
+            return hostingController
+        }
+
+        previewedPosts[ObjectIdentifier(configuration)] = post
+
+        return configuration
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration,
+                        animator: UIContextMenuInteractionCommitAnimating) {
+        guard let post = previewedPosts[ObjectIdentifier(configuration)] else {
+            return
+        }
+
+        animator.addCompletion { [weak listener] in
+            listener?.didPerformPreviewAction(for: post)
+        }
+    }
+
+}
+
+// MARK: - ContextMenuPostPreview
+
+private struct ContextMenuPostPreview: View {
+
+    let post: Post
+
+    var body: some View {
+        WebImage(url: post.sampleURL)
+            .resizable()
+            .placeholder {
+                ProgressView()
+                    .frame(width: post.sampleWidth, height: post.sampleHeight)
+            }
+            .scaledToFit()
     }
 
 }

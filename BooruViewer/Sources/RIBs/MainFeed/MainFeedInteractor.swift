@@ -108,6 +108,10 @@ final class MainFeedInteractor: PresentableInteractor<MainFeedPresentable>, Main
         feed.reload()
     }
 
+    func didPerformPreviewAction(for post: Post) {
+        router?.routeToDetailFeed(for: post)
+    }
+
     // MARK: - Private Methods
 
     private func startPostObserving() {
