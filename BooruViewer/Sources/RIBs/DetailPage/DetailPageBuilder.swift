@@ -26,8 +26,10 @@ final class DetailPageBuilder: Builder<DetailPageDependency>, DetailPageBuildabl
     func build(withListener listener: DetailPageListener, post: Post) -> DetailPageRouting {
         let component = DetailPageComponent(dependency: dependency)
         let viewController = DetailPageViewController()
-        let interactor = DetailPageInteractor(presenter: viewController)
+
+        let interactor = DetailPageInteractor(presenter: viewController, post: post)
         interactor.listener = listener
+
         return DetailPageRouter(interactor: interactor, viewController: viewController)
     }
 }
