@@ -2,6 +2,7 @@ import UIKit
 import SwiftUI
 import ModernRIBs
 import SDWebImageSwiftUI
+import sheets
 
 protocol DetailPagePresentableListener: AnyObject {
     // TODO: Declare properties and methods that the view controller can invoke to perform
@@ -9,7 +10,7 @@ protocol DetailPagePresentableListener: AnyObject {
     // interactor class.
 }
 
-final class DetailPageViewController: UIViewController, DetailPagePresentable, DetailPageViewControllable {
+final class DetailPageViewController: UIViewController, DetailPagePresentable, DetailPageViewControllable, Scrollable {
 
     // MARK: - Private Types
 
@@ -18,6 +19,7 @@ final class DetailPageViewController: UIViewController, DetailPagePresentable, D
     // MARK: - Internal Properties
 
     weak var listener: DetailPagePresentableListener?
+    weak var scrollableDelegate: ScrollableDelegate?
 
     var viewModel: DetailPageViewModel? {
         didSet {
@@ -56,6 +58,7 @@ final class DetailPageViewController: UIViewController, DetailPagePresentable, D
 
     private func configureUI() {
         collectionView.dataSource = dataSource
+        collectionView.delegate = self
 
         view.backgroundColor = .systemBackground
     }
@@ -107,6 +110,28 @@ final class DetailPageViewController: UIViewController, DetailPagePresentable, D
                 )
             }
         }
+    }
+
+}
+
+// MARK: - UICollectionViewDelegate
+
+extension DetailPageViewController: UICollectionViewDelegate {
+
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        scrollableDelegate?.scrollableWillBeginDragging?(scrollView)
+    }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        scrollableDelegate?.scrollableDidScroll?(scrollView)
+    }
+
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView,
+                                   withVelocity velocity: CGPoint,
+                                   targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        scrollableDelegate?.scrollableWillEndDragging?(scrollView,
+                                                       withVelocity: velocity,
+                                                       targetContentOffset: targetContentOffset)
     }
 
 }
