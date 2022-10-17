@@ -22,7 +22,14 @@ final class DetailFeedViewController: UIViewController, DetailFeedPresentable, D
         view = UIView()
 
         embed(pageViewController)
+
         pageViewController.dataSource = self
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        view.backgroundColor = .systemBackground
     }
 
     override func viewDidDisappear(_ animated: Bool) {
