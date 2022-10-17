@@ -90,6 +90,11 @@ final class DetailPageViewController: UIViewController, DetailPagePresentable, D
                 let group: NSCollectionLayoutGroup = .horizontal(layoutSize: itemSize, subitems: [item])
                 return NSCollectionLayoutSection(group: group)
 
+            case .tags:
+                let section: NSCollectionLayoutSection = .flow()
+                section.contentInsets = NSDirectionalEdgeInsets(top: 12, leading: 16, bottom: 16, trailing: 16)
+                return section
+
             case .relatedPosts:
                 return .grid(size: 2)
 
@@ -115,6 +120,14 @@ final class DetailPageViewController: UIViewController, DetailPagePresentable, D
             .margins([.horizontal, .vertical], 0)
         }
 
+        typealias TagRegistration = UICollectionView.CellRegistration<UICollectionViewCell, Tag>
+        let tagRegistration = TagRegistration { cell, indexPath, tag in
+            cell.contentConfiguration = UIHostingConfiguration {
+                TagView(tag: tag)
+            }
+            .margins([.horizontal, .vertical], 0)
+        }
+
         typealias RelatedPostRegistration = UICollectionView.CellRegistration<UICollectionViewCell, Post>
         let relatedPostRegistration = RelatedPostRegistration { [weak listener] cell, indexPath, post in
             cell.contentConfiguration = UIHostingConfiguration {
@@ -133,6 +146,13 @@ final class DetailPageViewController: UIViewController, DetailPagePresentable, D
                     using: imageRegistration,
                     for: indexPath,
                     item: viewModel
+                )
+
+            case let .tag(tag):
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: tagRegistration,
+                    for: indexPath,
+                    item: tag
                 )
 
             case let .relatedPost(post):

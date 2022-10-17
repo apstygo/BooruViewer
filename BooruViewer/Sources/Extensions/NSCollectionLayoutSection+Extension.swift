@@ -24,4 +24,28 @@ extension NSCollectionLayoutSection {
         return NSCollectionLayoutSection(group: group)
     }
 
+    static func flow() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .estimated(50),
+            heightDimension: .estimated(50)
+        )
+
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+        item.edgeSpacing = NSCollectionLayoutEdgeSpacing(
+            leading: nil,
+            top: .fixed(4),
+            trailing: .fixed(4),
+            bottom: nil
+        )
+
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .estimated(100)
+        )
+
+        let group: NSCollectionLayoutGroup = .horizontal(layoutSize: groupSize, subitems: [item])
+        return NSCollectionLayoutSection(group: group)
+    }
+
 }

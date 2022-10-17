@@ -3,6 +3,7 @@ import SankakuAPI
 
 enum DetailPageSection: Hashable {
     case images
+    case tags
     case relatedPosts
 }
 
@@ -14,6 +15,7 @@ enum DetailPageItem: Hashable {
     }
 
     case image(Image)
+    case tag(Tag)
     case relatedPost(Post)
 }
 
@@ -39,6 +41,11 @@ struct DetailPageViewModel: Hashable {
             sampleURL: post.sampleURL,
             fileURL: post.fileURL
         ))])
+
+        // Tags
+
+        snapshot.appendSections([.tags])
+        snapshot.appendItems(post.tags.map { .tag($0) })
 
         // Related Posts
 
