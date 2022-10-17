@@ -27,7 +27,7 @@ final class DetailFeedBuilder: Builder<DetailFeedDependency>, DetailFeedBuildabl
 
     func build(withListener listener: DetailFeedListener, post: Post) -> DetailFeedRouting {
         let component = DetailFeedComponent(dependency: dependency)
-        let viewController = DetailFeedViewController()
+        let viewController: DetailFeedViewController = .make()
 
         let interactor = DetailFeedInteractor(
             presenter: viewController,

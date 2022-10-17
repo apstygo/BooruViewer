@@ -5,7 +5,7 @@ protocol DetailFeedPresentableListener: AnyObject {
     func didPop()
 }
 
-final class DetailFeedViewController: UIViewController, DetailFeedPresentable, DetailFeedViewControllable {
+final class DetailFeedViewController: UIPageViewController, DetailFeedPresentable, DetailFeedViewControllable {
 
     // MARK: - Internal Properties
 
@@ -13,22 +13,14 @@ final class DetailFeedViewController: UIViewController, DetailFeedPresentable, D
 
     // MARK: - Private Properties
 
-    private let pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
     private var pages: [UIViewController] = []
 
     // MARK: - Lifecycle
 
-    override func loadView() {
-        view = UIView()
-
-        embed(pageViewController)
-
-        pageViewController.dataSource = self
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        dataSource = self
         view.backgroundColor = .systemBackground
     }
 
@@ -47,7 +39,7 @@ final class DetailFeedViewController: UIViewController, DetailFeedPresentable, D
     func presentPostPages(_ pages: [ViewControllable], focusedPostIndex: Int) {
         self.pages = pages.map(\.uiviewController)
 
-        pageViewController.setViewControllers(
+        setViewControllers(
             [self.pages[focusedPostIndex]],
             direction: .forward,
             animated: false
@@ -78,6 +70,14 @@ extension DetailFeedViewController: UIPageViewControllerDataSource {
         }
 
         return (index < pages.count - 1) ? pages[index + 1] : nil
+    }
+
+}
+
+extension DetailFeedViewController {
+
+    static func make() -> DetailFeedViewController {
+        .init(transitionStyle: .scroll, navigationOrientation: .horizontal)
     }
 
 }
