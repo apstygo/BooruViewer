@@ -29,6 +29,7 @@ final class DetailPageInteractor: PresentableInteractor<DetailPagePresentable>, 
     private let feed: Feed
 
     private var postUpdateTask: Cancellable?
+    private var didAppearOnce = false
 
     // MARK: - Init
 
@@ -64,6 +65,11 @@ final class DetailPageInteractor: PresentableInteractor<DetailPagePresentable>, 
     }
 
     func willAppear() {
+        guard !didAppearOnce else {
+            return
+        }
+
+        didAppearOnce = true
         startUpdates()
     }
 
