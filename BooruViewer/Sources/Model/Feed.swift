@@ -26,7 +26,17 @@ protocol Feed: AnyObject {
 
 extension Feed {
     var stateStream: AsyncStream<FeedState> {
-        AsyncStream(statePublisher.values)
+        AsyncStream { continuation in
+            let cancellable = statePublisher.sink { _ in
+                continuation.finish()
+            } receiveValue: { state in
+                continuation.yield(state)
+            }
+
+            continuation.onTermination = { _ in
+                cancellable.cancel()
+            }
+        }
     }
 }
 
