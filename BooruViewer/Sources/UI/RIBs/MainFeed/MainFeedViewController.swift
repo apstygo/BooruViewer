@@ -3,7 +3,6 @@ import SwiftUI
 import SDWebImageSwiftUI
 import ModernRIBs
 import SnapKit
-import sheets
 import SankakuAPI
 
 protocol MainFeedPresentableListener: AnyObject {
@@ -35,7 +34,7 @@ final class MainFeedViewController: UIViewController {
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: makeLayout())
     private lazy var dataSource = configureDataSource()
     private var searchController: UISearchController!
-    private let appStoreTransitioningDelegate = AppStoreTransitioningDelegate()
+    private let customTransitioningDelegate = StackTransitioningDelegate()
 
     private lazy var suggestedTagsController: MainFeedSuggestedTagsController = .make { [listener] tag in
         listener?.didSelectTag(tag)
@@ -163,7 +162,7 @@ extension MainFeedViewController: MainFeedViewControllable {
 
     func presentModally(_ viewController: ViewControllable) {
         viewController.uiviewController.modalPresentationStyle = .custom
-        viewController.uiviewController.transitioningDelegate = appStoreTransitioningDelegate
+        viewController.uiviewController.transitioningDelegate = customTransitioningDelegate
 
         present(viewController.uiviewController, animated: true)
     }

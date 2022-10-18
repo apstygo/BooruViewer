@@ -30,6 +30,9 @@
 		2E7A1DD128FDAB320009304D /* PostPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7A1DD028FDAB320009304D /* PostPreview.swift */; };
 		2E7A1DD328FE11F10009304D /* ContextMenuPostPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7A1DD228FE11F10009304D /* ContextMenuPostPreview.swift */; };
 		2ED2CD9728F56C36001CA186 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2ED2CD9628F56C36001CA186 /* Assets.xcassets */; };
+		2EE9B30328FEADD1005C22CD /* StackTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE9B30228FEADD1005C22CD /* StackTransitioningDelegate.swift */; };
+		2EE9B30528FEB24F005C22CD /* StackAnimatedTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE9B30428FEB24F005C22CD /* StackAnimatedTransition.swift */; };
+		2EE9B30728FEBBCD005C22CD /* StackInteractionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE9B30628FEBBCD005C22CD /* StackInteractionController.swift */; };
 		2EFBA92A28FB363C0053DCEC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFBA92928FB363C0053DCEC /* AppDelegate.swift */; };
 		2EFBA92C28FB365D0053DCEC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFBA92B28FB365D0053DCEC /* SceneDelegate.swift */; };
 		2EFBA93128FB39F80053DCEC /* AppComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFBA93028FB39F80053DCEC /* AppComponent.swift */; };
@@ -64,6 +67,9 @@
 		2ED2CD8F28F56C36001CA186 /* BooruViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BooruViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2ED2CD9628F56C36001CA186 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2ED2CD9828F56C36001CA186 /* BooruViewer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BooruViewer.entitlements; sourceTree = "<group>"; };
+		2EE9B30228FEADD1005C22CD /* StackTransitioningDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackTransitioningDelegate.swift; sourceTree = "<group>"; };
+		2EE9B30428FEB24F005C22CD /* StackAnimatedTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackAnimatedTransition.swift; sourceTree = "<group>"; };
+		2EE9B30628FEBBCD005C22CD /* StackInteractionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackInteractionController.swift; sourceTree = "<group>"; };
 		2EFBA92928FB363C0053DCEC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2EFBA92B28FB365D0053DCEC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		2EFBA92D28FB37090053DCEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -229,11 +235,30 @@
 		2EE9B2FF28FEAD04005C22CD /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				2EE9B30028FEAD4F005C22CD /* Presentations */,
 				2EFBA92828FB36320053DCEC /* Lifecycle */,
 				2E6A434628FB25E000F89556 /* RIBs */,
 				2E6A432128F70B3700F89556 /* Views */,
 			);
 			path = UI;
+			sourceTree = "<group>";
+		};
+		2EE9B30028FEAD4F005C22CD /* Presentations */ = {
+			isa = PBXGroup;
+			children = (
+				2EE9B30128FEADAE005C22CD /* Stack */,
+			);
+			path = Presentations;
+			sourceTree = "<group>";
+		};
+		2EE9B30128FEADAE005C22CD /* Stack */ = {
+			isa = PBXGroup;
+			children = (
+				2EE9B30228FEADD1005C22CD /* StackTransitioningDelegate.swift */,
+				2EE9B30428FEB24F005C22CD /* StackAnimatedTransition.swift */,
+				2EE9B30628FEBBCD005C22CD /* StackInteractionController.swift */,
+			);
+			path = Stack;
 			sourceTree = "<group>";
 		};
 		2EFBA92828FB36320053DCEC /* Lifecycle */ = {
@@ -357,6 +382,7 @@
 			files = (
 				2E7A1DBB28FC56A80009304D /* DetailFeedInteractor.swift in Sources */,
 				2EFBA93728FB3B040053DCEC /* RootRouter.swift in Sources */,
+				2EE9B30328FEADD1005C22CD /* StackTransitioningDelegate.swift in Sources */,
 				2E7A1DC128FC9D0F0009304D /* DetailPageRouter.swift in Sources */,
 				2E7A1DAE28FC17470009304D /* Feed.swift in Sources */,
 				2EFBA94528FB43360053DCEC /* MainFeedRouter.swift in Sources */,
@@ -368,6 +394,7 @@
 				2E6A432328F70B4D00F89556 /* TagView.swift in Sources */,
 				2E7A1DC328FC9D0F0009304D /* DetailPageBuilder.swift in Sources */,
 				2EFBA93A28FB3B040053DCEC /* RootInteractor.swift in Sources */,
+				2EE9B30728FEBBCD005C22CD /* StackInteractionController.swift in Sources */,
 				2E7A1DC728FCA76E0009304D /* UIViewController+Extension.swift in Sources */,
 				2E7A1DB928FC56A80009304D /* DetailFeedViewController.swift in Sources */,
 				2EFBA93928FB3B040053DCEC /* RootBuilder.swift in Sources */,
@@ -378,6 +405,7 @@
 				2EFBA92C28FB365D0053DCEC /* SceneDelegate.swift in Sources */,
 				2E7A1DBA28FC56A80009304D /* DetailFeedBuilder.swift in Sources */,
 				2E7A1DCF28FDA7890009304D /* NSCollectionLayoutSection+Extension.swift in Sources */,
+				2EE9B30528FEB24F005C22CD /* StackAnimatedTransition.swift in Sources */,
 				2E7A1DD128FDAB320009304D /* PostPreview.swift in Sources */,
 				2E7A1DC228FC9D0F0009304D /* DetailPageViewController.swift in Sources */,
 				2EFBA92A28FB363C0053DCEC /* AppDelegate.swift in Sources */,

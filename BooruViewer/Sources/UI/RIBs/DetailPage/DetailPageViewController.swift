@@ -2,7 +2,6 @@ import UIKit
 import SwiftUI
 import ModernRIBs
 import SDWebImageSwiftUI
-import sheets
 import SankakuAPI
 
 protocol DetailPagePresentableListener: AnyObject {
@@ -11,7 +10,7 @@ protocol DetailPagePresentableListener: AnyObject {
     func didTapOnPost(_ post: Post)
 }
 
-final class DetailPageViewController: UIViewController, DetailPagePresentable, DetailPageViewControllable, Scrollable {
+final class DetailPageViewController: UIViewController, DetailPagePresentable, DetailPageViewControllable {
 
     // MARK: - Private Types
 
@@ -20,7 +19,6 @@ final class DetailPageViewController: UIViewController, DetailPagePresentable, D
     // MARK: - Internal Properties
 
     weak var listener: DetailPagePresentableListener?
-    weak var scrollableDelegate: ScrollableDelegate?
 
     var viewModel: DetailPageViewModel? {
         didSet {
@@ -37,7 +35,7 @@ final class DetailPageViewController: UIViewController, DetailPagePresentable, D
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: makeLayout())
     private lazy var dataSource: DataSource = makeDataSource()
     private var previewedPosts: [ObjectIdentifier: Post] = [:]
-    private let appStoreTransitioningDelegate = AppStoreTransitioningDelegate()
+    private let customTransitioningDelegate = StackTransitioningDelegate()
 
     // MARK: - Lifecycle
 
@@ -67,7 +65,7 @@ final class DetailPageViewController: UIViewController, DetailPagePresentable, D
 
     func presentModally(_ viewController: ViewControllable) {
         viewController.uiviewController.modalPresentationStyle = .custom
-        viewController.uiviewController.transitioningDelegate = appStoreTransitioningDelegate
+        viewController.uiviewController.transitioningDelegate = customTransitioningDelegate
 
         present(viewController.uiviewController, animated: true)
     }
@@ -238,22 +236,6 @@ extension DetailPageViewController: UICollectionViewDelegate {
         animator.addCompletion { [weak listener] in
             listener?.didTapOnPost(post)
         }
-    }
-
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        scrollableDelegate?.scrollableWillBeginDragging?(scrollView)
-    }
-
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        scrollableDelegate?.scrollableDidScroll?(scrollView)
-    }
-
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView,
-                                   withVelocity velocity: CGPoint,
-                                   targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        scrollableDelegate?.scrollableWillEndDragging?(scrollView,
-                                                       withVelocity: velocity,
-                                                       targetContentOffset: targetContentOffset)
     }
 
 }
