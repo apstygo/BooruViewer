@@ -2,23 +2,28 @@ import UIKit
 
 extension NSCollectionLayoutSection {
 
-    static func grid(size: Int) -> NSCollectionLayoutSection {
+    static func grid(preferredItemSize: CGFloat, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+        let availableWidth = layoutEnvironment.container.effectiveContentSize.width
+        let size = (availableWidth / preferredItemSize).rounded(.toNearestOrAwayFromZero)
+
         let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1 / CGFloat(size)),
+            widthDimension: .fractionalWidth(1 / size),
             heightDimension: .fractionalHeight(1)
         )
 
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
+        item.contentInsets = NSDirectionalEdgeInsets(top: 1, leading: 1, bottom: 1, trailing: 1)
+
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
-            heightDimension: .fractionalWidth(1 / CGFloat(size))
+            heightDimension: .fractionalWidth(1 / size)
         )
 
         let group: NSCollectionLayoutGroup = .horizontal(
             layoutSize: groupSize,
             repeatingSubitem: item,
-            count: size
+            count: Int(size)
         )
 
         return NSCollectionLayoutSection(group: group)

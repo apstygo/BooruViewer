@@ -127,7 +127,7 @@ final class DetailPageViewController: UIViewController, DetailPagePresentable, D
                 return section
 
             case .relatedPosts:
-                return .grid(size: 2)
+                return .grid(preferredItemSize: 200, layoutEnvironment: layoutEnvironment)
 
             case nil:
                 return nil
@@ -139,14 +139,7 @@ final class DetailPageViewController: UIViewController, DetailPagePresentable, D
         typealias ImageRegistration = UICollectionView.CellRegistration<UICollectionViewCell, DetailPageItem.Image>
         let imageRegistration = ImageRegistration { cell, indexPath, viewModel in
             cell.contentConfiguration = UIHostingConfiguration {
-                WebImage(url: viewModel.sampleURL, options: .highPriority)
-                    .placeholder {
-                        WebImage(url: viewModel.previewURL, options: .highPriority)
-                            .resizable()
-                            .scaledToFit()
-                    }
-                    .resizable()
-                    .scaledToFit()
+                PostImageView(viewModel: viewModel)
             }
             .margins([.horizontal, .vertical], 0)
         }
@@ -252,6 +245,62 @@ extension DetailPageViewController: UICollectionViewDelegate {
         animator.addCompletion { [weak listener] in
             listener?.didTapOnPost(post)
         }
+    }
+
+}
+
+// MARK: - PostImageView
+
+private struct PostImageView: View {
+
+    let viewModel: DetailPageItem.Image
+    @State var progressValue: Float = 0
+    @State var progressTotal: Float = 1
+
+    var body: some View {
+        WebImage(url: viewModel.sampleURL, options: .highPriority)
+            .placeholder {
+                placeholder
+            }
+            .resizable()
+            .onProgress { value, total in
+                progressValue = Float(value)
+                progressTotal = Float(total)
+            }
+            .scaledToFit()
+            .overlay(alignment: .bottom) {
+                loadingProgress
+            }
+    }
+
+    @ViewBuilder
+    var placeholder: some View {
+        WebImage(url: viewModel.previewURL, options: .highPriority)
+            .resizable()
+            .scaledToFit()
+            .opacity(0.5)
+    }
+
+    @ViewBuilder
+    var loadingProgress: some View {
+        ProgressView(value: progressValue, total: progressTotal)
+            .tint(.white)
+            .opacity(progressValue == progressTotal ? 0 : 1)
+            .animation(.default, value: progressValue)
+    }
+
+}
+
+// MARK: - Helpers
+
+extension DetailPageItem.Image {
+
+    fileprivate var aspectRatio: CGFloat? {
+        guard let sampleWidth, let sampleHeight else {
+            return nil
+        }
+
+        return sampleWidth / sampleHeight
     }
 
 }

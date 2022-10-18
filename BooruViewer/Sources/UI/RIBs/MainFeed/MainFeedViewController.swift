@@ -93,6 +93,7 @@ final class MainFeedViewController: UIViewController, MainFeedPresentable {
         searchController.searchBar.searchTextField.placeholder = "Search using tags"
 
         navigationItem.searchController = searchController
+        navigationItem.preferredSearchBarPlacement = .inline
         collectionView.keyboardDismissMode = .onDrag
         searchController.searchBar.delegate = self
 
@@ -128,7 +129,9 @@ final class MainFeedViewController: UIViewController, MainFeedPresentable {
     }
 
     private func makeLayout() -> UICollectionViewCompositionalLayout {
-        UICollectionViewCompositionalLayout(section: .grid(size: 2))
+        UICollectionViewCompositionalLayout { _, layoutEnvironment in
+            .grid(preferredItemSize: 200, layoutEnvironment: layoutEnvironment)
+        }
     }
 
     private func applyViewModel() {

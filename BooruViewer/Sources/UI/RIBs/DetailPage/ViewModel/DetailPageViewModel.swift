@@ -11,6 +11,8 @@ enum DetailPageItem: Hashable {
     struct Image: Hashable {
         let previewURL: URL?
         let sampleURL: URL?
+        let sampleWidth: CGFloat?
+        let sampleHeight: CGFloat?
         let fileURL: URL?
     }
 
@@ -39,6 +41,8 @@ struct DetailPageViewModel: Hashable {
         snapshot.appendItems([.image(.init(
             previewURL: post.previewURL,
             sampleURL: post.sampleURL,
+            sampleWidth: post.sampleWidth,
+            sampleHeight: post.sampleHeight,
             fileURL: post.fileURL
         ))])
 
