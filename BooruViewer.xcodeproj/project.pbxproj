@@ -9,11 +9,9 @@
 /* Begin PBXBuildFile section */
 		2E02815028F57883001A2ED4 /* SankakuAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 2E02814F28F57883001A2ED4 /* SankakuAPI */; };
 		2E34452928F6025C004C4188 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = 2E34452828F6025C004C4188 /* Collections */; };
-		2E6A430F28F604CB00F89556 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 2E6A430E28F604CB00F89556 /* ComposableArchitecture */; };
 		2E6A431728F6289200F89556 /* CombineExt in Frameworks */ = {isa = PBXBuildFile; productRef = 2E6A431628F6289200F89556 /* CombineExt */; };
 		2E6A432328F70B4D00F89556 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6A432228F70B4D00F89556 /* TagView.swift */; };
 		2E6A433828F9AA3900F89556 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2E6A433728F9AA3900F89556 /* SDWebImageSwiftUI */; };
-		2E6A434028FA233900F89556 /* SwiftUIFlow in Frameworks */ = {isa = PBXBuildFile; productRef = 2E6A433F28FA233900F89556 /* SwiftUIFlow */; };
 		2E6A434528FB259900F89556 /* ModernRIBs in Frameworks */ = {isa = PBXBuildFile; productRef = 2E6A434428FB259900F89556 /* ModernRIBs */; };
 		2E7A1DAE28FC17470009304D /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7A1DAD28FC17470009304D /* Feed.swift */; };
 		2E7A1DB028FC2A490009304D /* MainFeedSuggestedTagsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7A1DAF28FC2A490009304D /* MainFeedSuggestedTagsController.swift */; };
@@ -92,8 +90,6 @@
 				2E6A434528FB259900F89556 /* ModernRIBs in Frameworks */,
 				2E6A431728F6289200F89556 /* CombineExt in Frameworks */,
 				2E7A1DCD28FD746A0009304D /* sheets in Frameworks */,
-				2E6A434028FA233900F89556 /* SwiftUIFlow in Frameworks */,
-				2E6A430F28F604CB00F89556 /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,10 +280,8 @@
 			packageProductDependencies = (
 				2E02814F28F57883001A2ED4 /* SankakuAPI */,
 				2E34452828F6025C004C4188 /* Collections */,
-				2E6A430E28F604CB00F89556 /* ComposableArchitecture */,
 				2E6A431628F6289200F89556 /* CombineExt */,
 				2E6A433728F9AA3900F89556 /* SDWebImageSwiftUI */,
-				2E6A433F28FA233900F89556 /* SwiftUIFlow */,
 				2E6A434428FB259900F89556 /* ModernRIBs */,
 				2EFBA93E28FB417C0053DCEC /* SnapKit */,
 				2E7A1DCC28FD746A0009304D /* sheets */,
@@ -322,10 +316,8 @@
 			mainGroup = 2ED2CD8628F56C36001CA186;
 			packageReferences = (
 				2E34452728F6025C004C4188 /* XCRemoteSwiftPackageReference "swift-collections" */,
-				2E6A430D28F604CB00F89556 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 				2E6A431528F6289200F89556 /* XCRemoteSwiftPackageReference "CombineExt" */,
 				2E6A433628F9AA3900F89556 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
-				2E6A433E28FA233900F89556 /* XCRemoteSwiftPackageReference "SwiftUIFlow" */,
 				2E6A434328FB259900F89556 /* XCRemoteSwiftPackageReference "ModernRIBs" */,
 				2EFBA93D28FB417C0053DCEC /* XCRemoteSwiftPackageReference "SnapKit" */,
 				2E7A1DCB28FD746A0009304D /* XCRemoteSwiftPackageReference "sheets" */,
@@ -611,14 +603,6 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		2E6A430D28F604CB00F89556 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.9.0;
-			};
-		};
 		2E6A431528F6289200F89556 /* XCRemoteSwiftPackageReference "CombineExt" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/CombineCommunity/CombineExt";
@@ -633,14 +617,6 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 2.0.0;
-			};
-		};
-		2E6A433E28FA233900F89556 /* XCRemoteSwiftPackageReference "SwiftUIFlow" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ciaranrobrien/SwiftUIFlow";
-			requirement = {
-				branch = main;
-				kind = branch;
 			};
 		};
 		2E6A434328FB259900F89556 /* XCRemoteSwiftPackageReference "ModernRIBs" */ = {
@@ -679,11 +655,6 @@
 			package = 2E34452728F6025C004C4188 /* XCRemoteSwiftPackageReference "swift-collections" */;
 			productName = Collections;
 		};
-		2E6A430E28F604CB00F89556 /* ComposableArchitecture */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 2E6A430D28F604CB00F89556 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
-			productName = ComposableArchitecture;
-		};
 		2E6A431628F6289200F89556 /* CombineExt */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 2E6A431528F6289200F89556 /* XCRemoteSwiftPackageReference "CombineExt" */;
@@ -693,11 +664,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2E6A433628F9AA3900F89556 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
 			productName = SDWebImageSwiftUI;
-		};
-		2E6A433F28FA233900F89556 /* SwiftUIFlow */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 2E6A433E28FA233900F89556 /* XCRemoteSwiftPackageReference "SwiftUIFlow" */;
-			productName = SwiftUIFlow;
 		};
 		2E6A434428FB259900F89556 /* ModernRIBs */ = {
 			isa = XCSwiftPackageProductDependency;
