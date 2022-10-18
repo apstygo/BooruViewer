@@ -1,12 +1,11 @@
 import UIKit
 import ModernRIBs
-import sheets
 
 protocol DetailFeedPresentableListener: AnyObject {
     func didDismissInteractively()
 }
 
-final class DetailFeedViewController: ScrollablePageViewController, DetailFeedPresentable, DetailFeedViewControllable {
+final class DetailFeedViewController: UIPageViewController, DetailFeedPresentable, DetailFeedViewControllable {
 
     // MARK: - Internal Properties
 

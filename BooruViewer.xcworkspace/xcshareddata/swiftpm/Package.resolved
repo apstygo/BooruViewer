@@ -82,15 +82,6 @@
       }
     },
     {
-      "identity" : "sheets",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apstygo/sheets",
-      "state" : {
-        "branch" : "master",
-        "revision" : "feeb71902b28f5622d4a96846e3595fac3d24460"
-      }
-    },
-    {
       "identity" : "snapkit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SnapKit/SnapKit",
