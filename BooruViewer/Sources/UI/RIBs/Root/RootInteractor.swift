@@ -34,3 +34,13 @@ final class RootInteractor: PresentableInteractor<RootPresentable>, RootInteract
     }
 
 }
+
+// MARK: - MainFeedListener
+
+extension RootInteractor: MainFeedListener {
+
+    func mainFeedDidDismiss() {
+        // Do nothing
+    }
+
+}

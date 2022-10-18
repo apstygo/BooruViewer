@@ -23,7 +23,7 @@ protocol MainFeedPresentable: Presentable {
 }
 
 protocol MainFeedListener: AnyObject {
-    // TODO: Declare methods the interactor can invoke to communicate with other RIBs.
+    func mainFeedDidDismiss()
 }
 
 final class MainFeedInteractor: PresentableInteractor<MainFeedPresentable>, MainFeedInteractable, MainFeedPresentableListener {
@@ -128,6 +128,10 @@ final class MainFeedInteractor: PresentableInteractor<MainFeedPresentable>, Main
 
     func didPerformPreviewAction(for post: Post) {
         router?.routeToDetailFeed(for: post)
+    }
+
+    func willDisappear() {
+        listener?.mainFeedDidDismiss()
     }
 
     // MARK: - Private Methods

@@ -12,6 +12,7 @@ protocol MainFeedPresentableListener: AnyObject {
     func didSelectPost(_ post: Post)
     func didRefresh()
     func didPerformPreviewAction(for post: Post)
+    func willDisappear()
 }
 
 final class MainFeedViewController: UIViewController {
@@ -57,6 +58,12 @@ final class MainFeedViewController: UIViewController {
         super.viewDidLoad()
 
         configureUI()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        listener?.willDisappear()
     }
 
     // MARK: - Private Methods

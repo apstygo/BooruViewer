@@ -6,6 +6,9 @@ import SankakuAPI
 protocol DetailPageRouting: ViewableRouting {
     func attachDetailFeed(for post: Post)
     func detachDetailFeed()
+
+    func attachMainFeed(for tag: Tag)
+    func detachMainFeed()
 }
 
 protocol DetailPagePresentable: Presentable {
@@ -78,6 +81,10 @@ final class DetailPageInteractor: PresentableInteractor<DetailPagePresentable>, 
         router?.attachDetailFeed(for: post)
     }
 
+    func didTapOnTag(_ tag: Tag) {
+        router?.attachMainFeed(for: tag)
+    }
+
     // MARK: - Private Methods
 
     private func present() {
@@ -107,6 +114,16 @@ extension DetailPageInteractor: DetailFeedListener {
 
     func detailFeedDidDismiss() {
         router?.detachDetailFeed()
+    }
+
+}
+
+// MARK: - MainFeedListener
+
+extension DetailPageInteractor: MainFeedListener {
+
+    func mainFeedDidDismiss() {
+        router?.detachMainFeed()
     }
 
 }

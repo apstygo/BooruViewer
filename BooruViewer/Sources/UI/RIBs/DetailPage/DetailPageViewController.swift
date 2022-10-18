@@ -8,6 +8,7 @@ protocol DetailPagePresentableListener: AnyObject {
     func didScrollToRelatedPost(at index: Int)
     func willAppear()
     func didTapOnPost(_ post: Post)
+    func didTapOnTag(_ tag: Tag)
 }
 
 final class DetailPageViewController: UIViewController, DetailPagePresentable, DetailPageViewControllable {
@@ -63,11 +64,17 @@ final class DetailPageViewController: UIViewController, DetailPagePresentable, D
 
     // MARK: - ViewControllable
 
-    func presentModally(_ viewController: ViewControllable) {
-        viewController.uiviewController.modalPresentationStyle = .custom
-        viewController.uiviewController.transitioningDelegate = customTransitioningDelegate
+    func presentModally(_ viewController: ViewControllable, wrappingInNavigation: Bool) {
+        var viewController = viewController.uiviewController
 
-        present(viewController.uiviewController, animated: true)
+        if wrappingInNavigation {
+            viewController = UINavigationController(rootViewController: viewController)
+        }
+
+        viewController.modalPresentationStyle = .custom
+        viewController.transitioningDelegate = customTransitioningDelegate
+
+        present(viewController, animated: true)
     }
 
     func dismissModal() {
@@ -139,9 +146,12 @@ final class DetailPageViewController: UIViewController, DetailPagePresentable, D
         }
 
         typealias TagRegistration = UICollectionView.CellRegistration<UICollectionViewCell, Tag>
-        let tagRegistration = TagRegistration { cell, indexPath, tag in
+        let tagRegistration = TagRegistration { [weak listener] cell, indexPath, tag in
             cell.contentConfiguration = UIHostingConfiguration {
                 TagView(tag: tag)
+                    .onTapGesture {
+                        listener?.didTapOnTag(tag)
+                    }
             }
             .margins([.horizontal, .vertical], 0)
         }
