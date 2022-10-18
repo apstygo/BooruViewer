@@ -1,4 +1,6 @@
 import UIKit
+import Combine
+import CombineExt
 import ModernRIBs
 import SankakuAPI
 
@@ -12,14 +14,9 @@ protocol MainFeedRouting: ViewableRouting {
     func detachDetailFeed()
 }
 
-@MainActor
 protocol MainFeedPresentable: Presentable {
-    nonisolated var listener: MainFeedPresentableListener? { get set }
-
-    func presentPosts(_ posts: [Post])
-    func presentSuggestedTags(_ tags: [Tag])
-    func clearSearchText()
-    func presentSearchTags(_ tags: [Tag])
+    var listener: MainFeedPresentableListener? { get set }
+    var viewModel: MainFeedViewModel? { get set }
 }
 
 protocol MainFeedListener: AnyObject {
@@ -39,18 +36,14 @@ final class MainFeedInteractor: PresentableInteractor<MainFeedPresentable>, Main
     private let feed: Feed
     private let mode: MainFeedMode
 
-    private var updatePostsTask: Task<Void, Never>?
-    private var suggestTagsTask: Task<Void, Error>?
+    private let searchTagRelay: CurrentValueRelay<[Tag]>
+    private let searchTextRelay = CurrentValueRelay<String?>(nil)
+
+    private var disposeBag: [AnyCancellable] = []
 
     private var searchTags: [Tag] {
-        didSet {
-            guard searchTags != oldValue else {
-                return
-            }
-
-            feed.tags = searchTags
-            feed.reload()
-        }
+        get { searchTagRelay.value }
+        set { searchTagRelay.accept(newValue) }
     }
 
     // MARK: - Init
@@ -65,13 +58,11 @@ final class MainFeedInteractor: PresentableInteractor<MainFeedPresentable>, Main
 
         switch mode {
         case .primary:
-            self.searchTags = []
+            self.searchTagRelay = CurrentValueRelay([])
 
         case let .tag(tag):
-            self.searchTags = [tag]
+            self.searchTagRelay = CurrentValueRelay([tag])
         }
-
-        feed.tags = searchTags
 
         super.init(presenter: presenter)
         presenter.listener = self
@@ -88,8 +79,7 @@ final class MainFeedInteractor: PresentableInteractor<MainFeedPresentable>, Main
     override func willResignActive() {
         super.willResignActive()
 
-        updatePostsTask?.cancel()
-        suggestTagsTask?.cancel()
+        disposeBag.removeAll()
     }
 
     // MARK: - Presentable Listener
@@ -101,7 +91,7 @@ final class MainFeedInteractor: PresentableInteractor<MainFeedPresentable>, Main
     func didUpdateSearch(withText searchText: String?, tags: [Tag]) {
         // Suggest new tags for search text
 
-        suggestTags(for: searchText)
+        searchTextRelay.accept(searchText)
 
         // Set current tags
 
@@ -110,12 +100,7 @@ final class MainFeedInteractor: PresentableInteractor<MainFeedPresentable>, Main
 
     func didSelectTag(_ tag: Tag) {
         searchTags.append(tag)
-
-        Task {
-            await presenter.clearSearchText()
-            await presenter.presentSearchTags(searchTags)
-            await presenter.presentSuggestedTags([])
-        }
+        searchTextRelay.accept(nil)
     }
 
     func didSelectPost(_ post: Post) {
@@ -137,33 +122,50 @@ final class MainFeedInteractor: PresentableInteractor<MainFeedPresentable>, Main
     // MARK: - Private Methods
 
     private func startPostObserving() {
-        let postStream = feed.stateStream.map { $0.posts }
+        let postPublisher = feed.statePublisher
+            .map(\.posts)
 
-        updatePostsTask = Task {
-            for await posts in postStream {
-                await presenter.presentPosts(posts)
-            }
-        }
-
-        feed.reload()
-    }
-
-    private func suggestTags(for query: String?) {
-        suggestTagsTask?.cancel()
-
-        suggestTagsTask = Task {
-            guard let query = query, !query.isEmpty else {
-                await presenter.presentSuggestedTags([])
-                return
-            }
-
-            let tags = try await sankakuAPI.autoSuggestTags(for: query)
-                .filter { tag in
-                    !searchTags.contains { $0.name == tag.name }
+        let suggestedTagPublisher = Publishers.CombineLatest(searchTextRelay, searchTagRelay)
+            .flatMapLatest { [sankakuAPI] searchText, searchTags -> AnyPublisher<[Tag], Never> in
+                guard let searchText, !searchText.isEmpty else {
+                    return Just([]).eraseToAnyPublisher()
                 }
 
-            await presenter.presentSuggestedTags(tags)
-        }
+                return sankakuAPI.autoSuggestTags(for: searchText)
+                    .map { tags in
+                        tags.filter { tag in
+                            !searchTags.contains { $0.name == tag.name }
+                        }
+                    }
+                    .replaceError(with: [])
+                    .eraseToAnyPublisher()
+            }
+
+        Publishers.CombineLatest4(postPublisher, searchTagRelay, searchTextRelay, suggestedTagPublisher)
+            .map { posts, searchTags, searchText, suggestedTags in
+                MainFeedViewModel(
+                    posts: posts,
+                    searchTags: searchTags,
+                    suggestedTags: suggestedTags,
+                    isRefreshing: false,
+                    searchText: searchText
+                )
+            }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak presenter] viewModel in
+                presenter?.viewModel = viewModel
+            }
+            .store(in: &disposeBag)
+
+        searchTagRelay
+            .removeDuplicates()
+            .sink { [feed] tags in
+                feed.tags = tags
+                feed.reload()
+            }
+            .store(in: &disposeBag)
+
+        feed.reload()
     }
 
 }
@@ -174,6 +176,18 @@ extension MainFeedInteractor: DetailFeedListener {
 
     func detailFeedDidDismiss() {
         router?.detachDetailFeed()
+    }
+
+}
+
+// MARK: - Helpers
+
+extension SankakuAPI {
+
+    fileprivate func autoSuggestTags(for query: String) -> AnyPublisher<[Tag], Error> {
+        AnyPublisher { [self] in
+            try await autoSuggestTags(for: query)
+        }
     }
 
 }

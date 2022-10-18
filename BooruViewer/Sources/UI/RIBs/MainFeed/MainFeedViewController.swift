@@ -15,20 +15,25 @@ protocol MainFeedPresentableListener: AnyObject {
     func willDisappear()
 }
 
-final class MainFeedViewController: UIViewController {
+final class MainFeedViewController: UIViewController, MainFeedPresentable {
 
     // MARK: - Private Types
 
-    private enum Section: Hashable {
-        case main
-    }
-
-    private typealias DataSource = UICollectionViewDiffableDataSource<Section, Post>
-    private typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Post>
+    private typealias DataSource = UICollectionViewDiffableDataSource<MainFeedSection, Post>
 
     // MARK: - Internal Properties
 
     weak var listener: MainFeedPresentableListener?
+
+    var viewModel: MainFeedViewModel? {
+        didSet {
+            guard viewModel != oldValue else {
+                return
+            }
+
+            applyViewModel()
+        }
+    }
 
     // MARK: - Private Properties
 
@@ -58,6 +63,7 @@ final class MainFeedViewController: UIViewController {
         super.viewDidLoad()
 
         configureUI()
+        applyViewModel()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -124,29 +130,22 @@ final class MainFeedViewController: UIViewController {
         UICollectionViewCompositionalLayout(section: .grid(size: 2))
     }
 
-}
+    private func applyViewModel() {
+        guard isViewLoaded, let viewModel else {
+            return
+        }
 
-// MARK: - MainFeedPresentable
+        dataSource.apply(viewModel.snapshot)
+        suggestedTagsController.presentTags(viewModel.suggestedTags)
+        presentSearchTags(viewModel.searchTags)
+        setSearchText(viewModel.searchText)
 
-extension MainFeedViewController: MainFeedPresentable {
-
-    func presentPosts(_ posts: [Post]) {
-        var snapshot = Snapshot()
-        snapshot.appendSections([.main])
-        snapshot.appendItems(posts)
-
-        dataSource.apply(snapshot)
-
-        if !posts.isEmpty {
+        if !viewModel.posts.isEmpty {
             collectionView.refreshControl?.endRefreshing()
         }
     }
 
-    func presentSuggestedTags(_ tags: [Tag]) {
-        suggestedTagsController.presentTags(tags)
-    }
-
-    func presentSearchTags(_ tags: [Tag]) {
+    private func presentSearchTags(_ tags: [Tag]) {
         let searchField = searchController.searchBar.searchTextField
 
         searchField.tokens = tags.map { tag in
@@ -157,8 +156,12 @@ extension MainFeedViewController: MainFeedPresentable {
         }
     }
 
-    func clearSearchText() {
-        searchController.searchBar.searchTextField.text = ""
+    private func setSearchText(_ text: String?) {
+        let textField = searchController.searchBar.searchTextField
+
+        if textField.text != text {
+            textField.text = text
+        }
     }
 
 }

@@ -33,6 +33,8 @@
 		2EE9B30328FEADD1005C22CD /* StackTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE9B30228FEADD1005C22CD /* StackTransitioningDelegate.swift */; };
 		2EE9B30528FEB24F005C22CD /* StackAnimatedTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE9B30428FEB24F005C22CD /* StackAnimatedTransition.swift */; };
 		2EE9B30728FEBBCD005C22CD /* StackInteractionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE9B30628FEBBCD005C22CD /* StackInteractionController.swift */; };
+		2EE9B30A28FEEC49005C22CD /* MainFeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE9B30928FEEC49005C22CD /* MainFeedViewModel.swift */; };
+		2EE9B30C28FEF8C1005C22CD /* AnyPublisher+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE9B30B28FEF8C1005C22CD /* AnyPublisher+Extension.swift */; };
 		2EFBA92A28FB363C0053DCEC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFBA92928FB363C0053DCEC /* AppDelegate.swift */; };
 		2EFBA92C28FB365D0053DCEC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFBA92B28FB365D0053DCEC /* SceneDelegate.swift */; };
 		2EFBA93128FB39F80053DCEC /* AppComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFBA93028FB39F80053DCEC /* AppComponent.swift */; };
@@ -70,6 +72,8 @@
 		2EE9B30228FEADD1005C22CD /* StackTransitioningDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackTransitioningDelegate.swift; sourceTree = "<group>"; };
 		2EE9B30428FEB24F005C22CD /* StackAnimatedTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackAnimatedTransition.swift; sourceTree = "<group>"; };
 		2EE9B30628FEBBCD005C22CD /* StackInteractionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackInteractionController.swift; sourceTree = "<group>"; };
+		2EE9B30928FEEC49005C22CD /* MainFeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeedViewModel.swift; sourceTree = "<group>"; };
+		2EE9B30B28FEF8C1005C22CD /* AnyPublisher+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnyPublisher+Extension.swift"; sourceTree = "<group>"; };
 		2EFBA92928FB363C0053DCEC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2EFBA92B28FB365D0053DCEC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		2EFBA92D28FB37090053DCEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -172,6 +176,7 @@
 		2E7A1DC528FCA7420009304D /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				2EE9B30B28FEF8C1005C22CD /* AnyPublisher+Extension.swift */,
 				2E7A1DCE28FDA7890009304D /* NSCollectionLayoutSection+Extension.swift */,
 				2E7A1DC628FCA76E0009304D /* UIViewController+Extension.swift */,
 			);
@@ -261,6 +266,14 @@
 			path = Stack;
 			sourceTree = "<group>";
 		};
+		2EE9B30828FEEC3A005C22CD /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				2EE9B30928FEEC49005C22CD /* MainFeedViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		2EFBA92828FB36320053DCEC /* Lifecycle */ = {
 			isa = PBXGroup;
 			children = (
@@ -285,6 +298,7 @@
 		2EFBA94028FB43000053DCEC /* MainFeed */ = {
 			isa = PBXGroup;
 			children = (
+				2EE9B30828FEEC3A005C22CD /* ViewModel */,
 				2E7A1DB128FC2A4E0009304D /* Helpers */,
 				2EFBA94328FB43360053DCEC /* MainFeedBuilder.swift */,
 				2EFBA94128FB43360053DCEC /* MainFeedRouter.swift */,
@@ -382,6 +396,7 @@
 			files = (
 				2E7A1DBB28FC56A80009304D /* DetailFeedInteractor.swift in Sources */,
 				2EFBA93728FB3B040053DCEC /* RootRouter.swift in Sources */,
+				2EE9B30A28FEEC49005C22CD /* MainFeedViewModel.swift in Sources */,
 				2EE9B30328FEADD1005C22CD /* StackTransitioningDelegate.swift in Sources */,
 				2E7A1DC128FC9D0F0009304D /* DetailPageRouter.swift in Sources */,
 				2E7A1DAE28FC17470009304D /* Feed.swift in Sources */,
@@ -400,6 +415,7 @@
 				2EFBA93928FB3B040053DCEC /* RootBuilder.swift in Sources */,
 				2E7A1DB828FC56A80009304D /* DetailFeedRouter.swift in Sources */,
 				2EFBA94828FB43360053DCEC /* MainFeedInteractor.swift in Sources */,
+				2EE9B30C28FEF8C1005C22CD /* AnyPublisher+Extension.swift in Sources */,
 				2EFBA94628FB43360053DCEC /* MainFeedViewController.swift in Sources */,
 				2EFBA93128FB39F80053DCEC /* AppComponent.swift in Sources */,
 				2EFBA92C28FB365D0053DCEC /* SceneDelegate.swift in Sources */,
