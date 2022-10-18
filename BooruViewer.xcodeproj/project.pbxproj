@@ -210,10 +210,8 @@
 			isa = PBXGroup;
 			children = (
 				2E7A1DC528FCA7420009304D /* Extensions */,
-				2EFBA92828FB36320053DCEC /* Lifecycle */,
-				2E6A434628FB25E000F89556 /* RIBs */,
 				2E6A433128F89ADA00F89556 /* Model */,
-				2E6A432128F70B3700F89556 /* Views */,
+				2EE9B2FF28FEAD04005C22CD /* UI */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -226,6 +224,16 @@
 				2EFBA92D28FB37090053DCEC /* Info.plist */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		2EE9B2FF28FEAD04005C22CD /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				2EFBA92828FB36320053DCEC /* Lifecycle */,
+				2E6A434628FB25E000F89556 /* RIBs */,
+				2E6A432128F70B3700F89556 /* Views */,
+			);
+			path = UI;
 			sourceTree = "<group>";
 		};
 		2EFBA92828FB36320053DCEC /* Lifecycle */ = {
