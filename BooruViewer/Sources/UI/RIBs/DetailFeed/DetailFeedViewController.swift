@@ -28,7 +28,7 @@ final class DetailFeedViewController: ScrollablePageViewController, DetailFeedPr
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
 
-        guard isBeingDismissed else {
+        guard isMovingFromParent else {
             return
         }
 

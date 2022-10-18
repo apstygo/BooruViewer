@@ -12,7 +12,7 @@ protocol MainFeedPresentableListener: AnyObject {
     func didSelectPost(_ post: Post)
     func didRefresh()
     func didPerformPreviewAction(for post: Post)
-    func willDisappear()
+    func didDismissInteractively()
 }
 
 final class MainFeedViewController: UIViewController, MainFeedPresentable {
@@ -40,9 +40,8 @@ final class MainFeedViewController: UIViewController, MainFeedPresentable {
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: makeLayout())
     private lazy var dataSource = configureDataSource()
     private var searchController: UISearchController!
-    private let customTransitioningDelegate = StackTransitioningDelegate()
 
-    private lazy var suggestedTagsController: MainFeedSuggestedTagsController = .make { [listener] tag in
+    private lazy var suggestedTagsController: MainFeedSuggestedTagsController = .make { [weak listener] tag in
         listener?.didSelectTag(tag)
     }
 
@@ -66,10 +65,12 @@ final class MainFeedViewController: UIViewController, MainFeedPresentable {
         applyViewModel()
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
 
-        listener?.willDisappear()
+        if isMovingFromParent {
+            listener?.didDismissInteractively()
+        }
     }
 
     // MARK: - Private Methods
@@ -99,7 +100,7 @@ final class MainFeedViewController: UIViewController, MainFeedPresentable {
     }
 
     private func configureRefresh() {
-        let refreshAction = UIAction { [listener] _ in
+        let refreshAction = UIAction { [weak listener] _ in
             listener?.didRefresh()
         }
 
@@ -108,7 +109,7 @@ final class MainFeedViewController: UIViewController, MainFeedPresentable {
 
     private func configureDataSource() -> DataSource {
         typealias CellRegistration = UICollectionView.CellRegistration<UICollectionViewCell, Post>
-        let cellRegistration = CellRegistration { [listener] cell, indexPath, post in
+        let cellRegistration = CellRegistration { [weak listener] cell, indexPath, post in
             cell.contentConfiguration = UIHostingConfiguration {
                 PostPreview(post: post)
                     .onAppear {
@@ -170,20 +171,31 @@ final class MainFeedViewController: UIViewController, MainFeedPresentable {
 
 extension MainFeedViewController: MainFeedViewControllable {
 
-    func presentModally(_ viewController: ViewControllable) {
-        viewController.uiviewController.modalPresentationStyle = .custom
-        viewController.uiviewController.transitioningDelegate = customTransitioningDelegate
-
-        present(viewController.uiviewController, animated: true)
-    }
-
-    func dismissModal() {
-        guard presentedViewController != nil else {
-            assertionFailure("Trying to dismiss a view controller that has not been presented")
+    func navigate(to viewController: ViewControllable) {
+        guard let navigationController else {
+            assertionFailure("Can't push without a stack")
             return
         }
 
-        dismiss(animated: true)
+        navigationController.pushViewController(viewController.uiviewController, animated: true)
+    }
+
+    func pop(_ viewController: ViewControllable) {
+        guard let navigationController else {
+            assertionFailure("Can't pop without a stack")
+            return
+        }
+
+        guard !viewController.uiviewController.isMovingFromParent else {
+            return
+        }
+
+        guard navigationController.viewControllers.last == viewController.uiviewController else {
+            assertionFailure("The provided view controller is not at the top of the stack")
+            return
+        }
+
+        navigationController.popViewController(animated: true)
     }
 
 }

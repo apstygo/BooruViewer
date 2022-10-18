@@ -64,25 +64,31 @@ final class DetailPageViewController: UIViewController, DetailPagePresentable, D
 
     // MARK: - ViewControllable
 
-    func presentModally(_ viewController: ViewControllable, wrappingInNavigation: Bool) {
-        var viewController = viewController.uiviewController
-
-        if wrappingInNavigation {
-            viewController = UINavigationController(rootViewController: viewController)
-        }
-
-        viewController.modalPresentationStyle = .custom
-        viewController.transitioningDelegate = customTransitioningDelegate
-
-        present(viewController, animated: true)
-    }
-
-    func dismissModal() {
-        guard presentedViewController != nil else {
+    func navigate(to viewController: ViewControllable) {
+        guard let navigationController else {
+            assertionFailure("Can't push without a stack")
             return
         }
 
-        dismiss(animated: true)
+        navigationController.pushViewController(viewController.uiviewController, animated: true)
+    }
+
+    func pop(_ viewController: ViewControllable) {
+        guard let navigationController else {
+            assertionFailure("Can't pop without a stack")
+            return
+        }
+
+        guard !viewController.uiviewController.isMovingFromParent else {
+            return
+        }
+
+        guard navigationController.viewControllers.last == viewController.uiviewController else {
+            assertionFailure("The provided view controller is not at the top of the stack")
+            return
+        }
+
+        navigationController.popViewController(animated: true)
     }
 
     // MARK: - Private Methods

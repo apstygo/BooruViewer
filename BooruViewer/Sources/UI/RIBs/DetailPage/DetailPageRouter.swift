@@ -7,8 +7,8 @@ protocol DetailPageInteractable: Interactable, DetailFeedListener, MainFeedListe
 }
 
 protocol DetailPageViewControllable: ViewControllable {
-    func presentModally(_ viewController: ViewControllable, wrappingInNavigation: Bool)
-    func dismissModal()
+    func navigate(to viewController: ViewControllable)
+    func pop(_ viewController: ViewControllable)
 }
 
 final class DetailPageRouter: ViewableRouter<DetailPageInteractable, DetailPageViewControllable>, DetailPageRouting {
@@ -41,7 +41,7 @@ final class DetailPageRouter: ViewableRouter<DetailPageInteractable, DetailPageV
         self.detailFeed = detailFeed
 
         attachChild(detailFeed)
-        viewController.presentModally(detailFeed.viewControllable, wrappingInNavigation: false)
+        viewController.navigate(to: detailFeed.viewControllable)
     }
 
     func detachDetailFeed() {
@@ -49,10 +49,7 @@ final class DetailPageRouter: ViewableRouter<DetailPageInteractable, DetailPageV
             return
         }
 
-        if !detailFeed.viewControllable.uiviewController.isBeingDismissed {
-            viewController.dismissModal()
-        }
-
+        viewController.pop(detailFeed.viewControllable)
         detachChild(detailFeed)
         self.detailFeed = nil
     }
@@ -62,7 +59,7 @@ final class DetailPageRouter: ViewableRouter<DetailPageInteractable, DetailPageV
         self.mainFeed = mainFeed
 
         attachChild(mainFeed)
-        viewController.presentModally(mainFeed.viewControllable, wrappingInNavigation: true)
+        viewController.navigate(to: mainFeed.viewControllable)
     }
 
     func detachMainFeed() {
@@ -70,10 +67,7 @@ final class DetailPageRouter: ViewableRouter<DetailPageInteractable, DetailPageV
             return
         }
 
-        if !mainFeed.viewControllable.uiviewController.isBeingDismissed {
-            viewController.dismissModal()
-        }
-
+        viewController.pop(mainFeed.viewControllable)
         detachChild(mainFeed)
         self.mainFeed = nil
     }

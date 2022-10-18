@@ -7,8 +7,8 @@ protocol MainFeedInteractable: Interactable, DetailFeedListener {
 }
 
 protocol MainFeedViewControllable: ViewControllable {
-    func presentModally(_ viewController: ViewControllable)
-    func dismissModal()
+    func navigate(to viewController: ViewControllable)
+    func pop(_ viewController: ViewControllable)
 }
 
 final class MainFeedRouter: ViewableRouter<MainFeedInteractable, MainFeedViewControllable>, MainFeedRouting {
@@ -32,12 +32,12 @@ final class MainFeedRouter: ViewableRouter<MainFeedInteractable, MainFeedViewCon
 
     // MARK: - Routing
 
-    func routeToDetailFeed(for post: Post) {
+    func attachDetailFeed(for post: Post) {
         let detailFeed = detailFeedBuilder.build(withListener: interactor, post: post)
         self.detailFeed = detailFeed
 
         attachChild(detailFeed)
-        viewController.presentModally(detailFeed.viewControllable)
+        viewController.navigate(to: detailFeed.viewControllable)
     }
 
     func detachDetailFeed() {
@@ -45,10 +45,7 @@ final class MainFeedRouter: ViewableRouter<MainFeedInteractable, MainFeedViewCon
             return
         }
 
-        if !detailFeed.viewControllable.uiviewController.isBeingDismissed {
-            viewController.dismissModal()
-        }
-
+        viewController.pop(detailFeed.viewControllable)
         detachChild(detailFeed)
         self.detailFeed = nil
     }

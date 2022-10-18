@@ -10,7 +10,7 @@ enum MainFeedMode {
 }
 
 protocol MainFeedRouting: ViewableRouting {
-    func routeToDetailFeed(for post: Post)
+    func attachDetailFeed(for post: Post)
     func detachDetailFeed()
 }
 
@@ -104,7 +104,7 @@ final class MainFeedInteractor: PresentableInteractor<MainFeedPresentable>, Main
     }
 
     func didSelectPost(_ post: Post) {
-        router?.routeToDetailFeed(for: post)
+        router?.attachDetailFeed(for: post)
     }
 
     func didRefresh() {
@@ -112,10 +112,10 @@ final class MainFeedInteractor: PresentableInteractor<MainFeedPresentable>, Main
     }
 
     func didPerformPreviewAction(for post: Post) {
-        router?.routeToDetailFeed(for: post)
+        router?.attachDetailFeed(for: post)
     }
 
-    func willDisappear() {
+    func didDismissInteractively() {
         listener?.mainFeedDidDismiss()
     }
 
