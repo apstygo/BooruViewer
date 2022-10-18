@@ -2,6 +2,11 @@ import UIKit
 import ModernRIBs
 import SankakuAPI
 
+enum MainFeedMode {
+    case primary
+    case tag(Tag)
+}
+
 protocol MainFeedRouting: ViewableRouting {
     func routeToDetailFeed(for post: Post)
     func detachDetailFeed()
@@ -32,11 +37,12 @@ final class MainFeedInteractor: PresentableInteractor<MainFeedPresentable>, Main
 
     private let sankakuAPI: SankakuAPI
     private let feed: Feed
+    private let mode: MainFeedMode
 
     private var updatePostsTask: Task<Void, Never>?
     private var suggestTagsTask: Task<Void, Error>?
 
-    private var searchTags: [Tag] = [] {
+    private var searchTags: [Tag] {
         didSet {
             guard searchTags != oldValue else {
                 return
@@ -51,9 +57,21 @@ final class MainFeedInteractor: PresentableInteractor<MainFeedPresentable>, Main
 
     init(sankakuAPI: SankakuAPI,
          feed: Feed,
+         mode: MainFeedMode,
          presenter: MainFeedPresentable) {
         self.sankakuAPI = sankakuAPI
         self.feed = feed
+        self.mode = mode
+
+        switch mode {
+        case .primary:
+            self.searchTags = []
+
+        case let .tag(tag):
+            self.searchTags = [tag]
+        }
+
+        feed.tags = searchTags
 
         super.init(presenter: presenter)
         presenter.listener = self

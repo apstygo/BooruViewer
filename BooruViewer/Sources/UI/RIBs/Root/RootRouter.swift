@@ -31,7 +31,7 @@ final class RootRouter: LaunchRouter<RootInteractable, RootViewControllable>, Ro
     // MARK: - Internal Methods
 
     func routeToMainFeed() {
-        let mainFeed = mainFeedBuilder.build(withListener: interactor)
+        let mainFeed = mainFeedBuilder.build(withListener: interactor, mode: .primary)
         self.mainFeed = mainFeed
 
         attachChild(mainFeed)

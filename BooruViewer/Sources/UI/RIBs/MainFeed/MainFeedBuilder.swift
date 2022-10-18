@@ -32,7 +32,7 @@ final class MainFeedComponent: Component<MainFeedDependency>, DetailFeedDependen
 // MARK: - Builder
 
 protocol MainFeedBuildable: Buildable {
-    func build(withListener listener: MainFeedListener) -> MainFeedRouting
+    func build(withListener listener: MainFeedListener, mode: MainFeedMode) -> MainFeedRouting
 }
 
 final class MainFeedBuilder: Builder<MainFeedDependency>, MainFeedBuildable {
@@ -41,13 +41,14 @@ final class MainFeedBuilder: Builder<MainFeedDependency>, MainFeedBuildable {
         super.init(dependency: dependency)
     }
 
-    func build(withListener listener: MainFeedListener) -> MainFeedRouting {
+    func build(withListener listener: MainFeedListener, mode: MainFeedMode) -> MainFeedRouting {
         let component = MainFeedComponent(dependency: dependency)
         let viewController = MainFeedViewController()
 
         let interactor = MainFeedInteractor(
             sankakuAPI: component.sankakuAPI,
             feed: component.feed,
+            mode: mode,
             presenter: viewController
         )
 
