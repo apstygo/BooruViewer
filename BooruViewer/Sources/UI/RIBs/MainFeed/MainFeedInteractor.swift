@@ -107,6 +107,10 @@ final class MainFeedInteractor: PresentableInteractor<MainFeedPresentable>, Main
         router?.attachDetailFeed(for: post)
     }
 
+    func didTapEditFilters() {
+        // TODO: Implement
+    }
+
     func didRefresh() {
         feed.reload()
     }

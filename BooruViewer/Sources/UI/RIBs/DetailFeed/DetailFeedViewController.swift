@@ -22,6 +22,7 @@ final class DetailFeedViewController: UIPageViewController, DetailFeedPresentabl
 
         dataSource = self
         view.backgroundColor = .systemBackground
+        navigationItem.backButtonDisplayMode = .minimal
     }
 
     override func viewDidDisappear(_ animated: Bool) {

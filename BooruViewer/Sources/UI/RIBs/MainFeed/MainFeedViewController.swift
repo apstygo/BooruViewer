@@ -10,6 +10,7 @@ protocol MainFeedPresentableListener: AnyObject {
     func didUpdateSearch(withText searchText: String?, tags: [Tag])
     func didSelectTag(_ tag: Tag)
     func didSelectPost(_ post: Post)
+    func didTapEditFilters()
     func didRefresh()
     func didPerformPreviewAction(for post: Post)
     func didDismissInteractively()
@@ -78,6 +79,7 @@ final class MainFeedViewController: UIViewController, MainFeedPresentable {
     private func configureUI() {
         configureSearch()
         configureRefresh()
+        configureNavigationItem()
 
         collectionView.dataSource = dataSource
         collectionView.delegate = self
@@ -106,6 +108,21 @@ final class MainFeedViewController: UIViewController, MainFeedPresentable {
         }
 
         collectionView.refreshControl = UIRefreshControl(frame: .zero, primaryAction: refreshAction)
+    }
+
+    private func configureNavigationItem() {
+        navigationItem.backButtonDisplayMode = .minimal
+
+        let editFiltersImage = UIImage(systemName: "slider.horizontal.3")
+
+        let editFiltersAction = UIAction { [weak listener] _ in
+            listener?.didTapEditFilters()
+        }
+
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: editFiltersImage,
+            primaryAction: editFiltersAction
+        )
     }
 
     private func configureDataSource() -> DataSource {
