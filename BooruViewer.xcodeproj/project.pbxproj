@@ -13,6 +13,7 @@
 		2E33D46D2901903E00C893B3 /* FilterEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E33D4692901903E00C893B3 /* FilterEditorViewController.swift */; };
 		2E33D46E2901903E00C893B3 /* FilterEditorBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E33D46A2901903E00C893B3 /* FilterEditorBuilder.swift */; };
 		2E33D46F2901903E00C893B3 /* FilterEditorInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E33D46B2901903E00C893B3 /* FilterEditorInteractor.swift */; };
+		2E33D4722901974B00C893B3 /* FilterEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E33D4712901974B00C893B3 /* FilterEditorViewModel.swift */; };
 		2E34452928F6025C004C4188 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = 2E34452828F6025C004C4188 /* Collections */; };
 		2E6A431728F6289200F89556 /* CombineExt in Frameworks */ = {isa = PBXBuildFile; productRef = 2E6A431628F6289200F89556 /* CombineExt */; };
 		2E6A432328F70B4D00F89556 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6A432228F70B4D00F89556 /* TagView.swift */; };
@@ -59,6 +60,7 @@
 		2E33D4692901903E00C893B3 /* FilterEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterEditorViewController.swift; sourceTree = "<group>"; };
 		2E33D46A2901903E00C893B3 /* FilterEditorBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterEditorBuilder.swift; sourceTree = "<group>"; };
 		2E33D46B2901903E00C893B3 /* FilterEditorInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterEditorInteractor.swift; sourceTree = "<group>"; };
+		2E33D4712901974B00C893B3 /* FilterEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterEditorViewModel.swift; sourceTree = "<group>"; };
 		2E6A432228F70B4D00F89556 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
 		2E7A1DAD28FC17470009304D /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
 		2E7A1DAF28FC2A490009304D /* MainFeedSuggestedTagsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeedSuggestedTagsController.swift; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 		2E33D4652900A47400C893B3 /* FilterEditor */ = {
 			isa = PBXGroup;
 			children = (
+				2E33D4702901974200C893B3 /* ViewModel */,
 				2E33D46A2901903E00C893B3 /* FilterEditorBuilder.swift */,
 				2E33D4682901903E00C893B3 /* FilterEditorRouter.swift */,
 				2E33D46B2901903E00C893B3 /* FilterEditorInteractor.swift */,
@@ -131,6 +134,14 @@
 				2E33D4662900A49100C893B3 /* FilterEditorView.swift */,
 			);
 			path = FilterEditor;
+			sourceTree = "<group>";
+		};
+		2E33D4702901974200C893B3 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				2E33D4712901974B00C893B3 /* FilterEditorViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		2E6A432128F70B3700F89556 /* Views */ = {
@@ -414,6 +425,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2E7A1DBB28FC56A80009304D /* DetailFeedInteractor.swift in Sources */,
+				2E33D4722901974B00C893B3 /* FilterEditorViewModel.swift in Sources */,
 				2EFBA93728FB3B040053DCEC /* RootRouter.swift in Sources */,
 				2EE9B30A28FEEC49005C22CD /* MainFeedViewModel.swift in Sources */,
 				2EE9B30328FEADD1005C22CD /* StackTransitioningDelegate.swift in Sources */,

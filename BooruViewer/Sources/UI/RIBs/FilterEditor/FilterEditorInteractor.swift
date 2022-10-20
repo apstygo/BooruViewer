@@ -45,4 +45,8 @@ final class FilterEditorInteractor: PresentableInteractor<FilterEditorPresentabl
         listener?.filterEditorDidFinish()
     }
 
+    func didApply() {
+        listener?.filterEditorDidFinish()
+    }
+
 }
