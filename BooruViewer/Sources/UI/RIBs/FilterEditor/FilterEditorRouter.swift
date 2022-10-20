@@ -5,15 +5,11 @@ protocol FilterEditorInteractable: Interactable {
     var listener: FilterEditorListener? { get set }
 }
 
-protocol FilterEditorViewControllable: ViewControllable {
-    // TODO: Declare methods the router invokes to manipulate the view hierarchy.
-}
+final class FilterEditorRouter: ViewableRouter<FilterEditorInteractable, ViewControllable>, FilterEditorRouting {
 
-final class FilterEditorRouter: ViewableRouter<FilterEditorInteractable, FilterEditorViewControllable>, FilterEditorRouting {
-
-    // TODO: Constructor inject child builder protocols to allow building children.
-    override init(interactor: FilterEditorInteractable, viewController: FilterEditorViewControllable) {
+    override init(interactor: FilterEditorInteractable, viewController: ViewControllable) {
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
     }
+
 }

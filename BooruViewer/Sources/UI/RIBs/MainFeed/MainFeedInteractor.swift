@@ -12,6 +12,9 @@ enum MainFeedMode {
 protocol MainFeedRouting: ViewableRouting {
     func attachDetailFeed(for post: Post)
     func detachDetailFeed()
+
+    func attachFilterEditor()
+    func detachFilterEditor()
 }
 
 protocol MainFeedPresentable: Presentable {
@@ -108,7 +111,7 @@ final class MainFeedInteractor: PresentableInteractor<MainFeedPresentable>, Main
     }
 
     func didTapEditFilters() {
-        // TODO: Implement
+        router?.attachFilterEditor()
     }
 
     func didRefresh() {
@@ -180,6 +183,16 @@ extension MainFeedInteractor: DetailFeedListener {
 
     func detailFeedDidDismiss() {
         router?.detachDetailFeed()
+    }
+
+}
+
+// MARK: - FilterEditorListener
+
+extension MainFeedInteractor: FilterEditorListener {
+
+    func filterEditorDidFinish() {
+        router?.detachFilterEditor()
     }
 
 }

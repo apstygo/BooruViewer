@@ -218,6 +218,24 @@ extension MainFeedViewController: MainFeedViewControllable {
         navigationController.popViewController(animated: true)
     }
 
+    func present(_ viewController: ViewControllable) {
+        viewController.uiviewController.modalPresentationStyle = .formSheet
+        present(viewController.uiviewController, animated: true)
+    }
+
+    func dismiss(_ viewController: ViewControllable) {
+        guard presentedViewController == viewController.uiviewController else {
+            assertionFailure("Provided view controller is not the presented one")
+            return
+        }
+
+        guard !viewController.uiviewController.isBeingDismissed else {
+            return
+        }
+
+        dismiss(animated: true)
+    }
+
 }
 
 // MARK: - UISearchBarDelegate

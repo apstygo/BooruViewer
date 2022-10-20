@@ -10,20 +10,24 @@ protocol FilterEditorPresentable: Presentable {
 }
 
 protocol FilterEditorListener: AnyObject {
-    // TODO: Declare methods the interactor can invoke to communicate with other RIBs.
+    func filterEditorDidFinish()
 }
 
 final class FilterEditorInteractor: PresentableInteractor<FilterEditorPresentable>, FilterEditorInteractable, FilterEditorPresentableListener {
 
+    // MARK: - Internal Properties
+
     weak var router: FilterEditorRouting?
     weak var listener: FilterEditorListener?
 
-    // TODO: Add additional dependencies to constructor. Do not perform any logic
-    // in constructor.
+    // MARK: - Init
+
     override init(presenter: FilterEditorPresentable) {
         super.init(presenter: presenter)
         presenter.listener = self
     }
+
+    // MARK: - Lifecycle
 
     override func didBecomeActive() {
         super.didBecomeActive()
@@ -34,4 +38,11 @@ final class FilterEditorInteractor: PresentableInteractor<FilterEditorPresentabl
         super.willResignActive()
         // TODO: Pause any business logic.
     }
+
+    // MARK: - PresentableListener
+
+    func didDismiss() {
+        listener?.filterEditorDidFinish()
+    }
+
 }

@@ -1,10 +1,3 @@
-//
-//  FilterEditorBuilder.swift
-//  BooruViewer
-//
-//  Created by Artem Pstygo on 20.10.2022.
-//
-
 import ModernRIBs
 
 protocol FilterEditorDependency: Dependency {
@@ -31,9 +24,12 @@ final class FilterEditorBuilder: Builder<FilterEditorDependency>, FilterEditorBu
 
     func build(withListener listener: FilterEditorListener) -> FilterEditorRouting {
         let component = FilterEditorComponent(dependency: dependency)
+
         let viewController = FilterEditorViewController()
+
         let interactor = FilterEditorInteractor(presenter: viewController)
         interactor.listener = listener
+
         return FilterEditorRouter(interactor: interactor, viewController: viewController)
     }
 }
