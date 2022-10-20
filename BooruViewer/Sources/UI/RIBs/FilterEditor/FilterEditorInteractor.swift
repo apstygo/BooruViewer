@@ -1,4 +1,5 @@
 import ModernRIBs
+import SankakuAPI
 
 protocol FilterEditorRouting: ViewableRouting {
     // TODO: Declare methods the interactor can invoke to manage sub-tree via the router.
@@ -6,11 +7,12 @@ protocol FilterEditorRouting: ViewableRouting {
 
 protocol FilterEditorPresentable: Presentable {
     var listener: FilterEditorPresentableListener? { get set }
-    // TODO: Declare methods the interactor can invoke the presenter to present data.
+
+    func presentFilters(_ filters: GetPostsFilters)
 }
 
 protocol FilterEditorListener: AnyObject {
-    func filterEditorDidFinish()
+    func filterEditorDidFinish(with filters: GetPostsFilters?)
 }
 
 final class FilterEditorInteractor: PresentableInteractor<FilterEditorPresentable>, FilterEditorInteractable, FilterEditorPresentableListener {
@@ -20,9 +22,15 @@ final class FilterEditorInteractor: PresentableInteractor<FilterEditorPresentabl
     weak var router: FilterEditorRouting?
     weak var listener: FilterEditorListener?
 
+    // MARK: - Private Properties
+
+    private var filters: GetPostsFilters
+
     // MARK: - Init
 
-    override init(presenter: FilterEditorPresentable) {
+    init(presenter: FilterEditorPresentable, filters: GetPostsFilters) {
+        self.filters = filters
+
         super.init(presenter: presenter)
         presenter.listener = self
     }
@@ -31,7 +39,8 @@ final class FilterEditorInteractor: PresentableInteractor<FilterEditorPresentabl
 
     override func didBecomeActive() {
         super.didBecomeActive()
-        // TODO: Implement business logic here.
+
+        presenter.presentFilters(filters)
     }
 
     override func willResignActive() {
@@ -41,12 +50,16 @@ final class FilterEditorInteractor: PresentableInteractor<FilterEditorPresentabl
 
     // MARK: - PresentableListener
 
+    func didUpdateFilters(_ newFilters: GetPostsFilters) {
+        filters = newFilters
+    }
+
     func didDismiss() {
-        listener?.filterEditorDidFinish()
+        listener?.filterEditorDidFinish(with: nil)
     }
 
     func didApply() {
-        listener?.filterEditorDidFinish()
+        listener?.filterEditorDidFinish(with: filters)
     }
 
 }

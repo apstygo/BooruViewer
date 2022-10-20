@@ -224,12 +224,12 @@ extension MainFeedViewController: MainFeedViewControllable {
     }
 
     func dismiss(_ viewController: ViewControllable) {
-        guard presentedViewController == viewController.uiviewController else {
-            assertionFailure("Provided view controller is not the presented one")
+        guard !viewController.uiviewController.isBeingDismissed else {
             return
         }
 
-        guard !viewController.uiviewController.isBeingDismissed else {
+        guard presentedViewController == viewController.uiviewController else {
+            assertionFailure("Provided view controller is not the presented one")
             return
         }
 

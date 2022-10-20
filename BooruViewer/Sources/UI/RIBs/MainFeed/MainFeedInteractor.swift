@@ -13,7 +13,7 @@ protocol MainFeedRouting: ViewableRouting {
     func attachDetailFeed(for post: Post)
     func detachDetailFeed()
 
-    func attachFilterEditor()
+    func attachFilterEditor(with filters: GetPostsFilters)
     func detachFilterEditor()
 }
 
@@ -41,6 +41,7 @@ final class MainFeedInteractor: PresentableInteractor<MainFeedPresentable>, Main
 
     private let searchTagRelay: CurrentValueRelay<[Tag]>
     private let searchTextRelay = CurrentValueRelay<String?>(nil)
+    private let filtersRelay = CurrentValueRelay(GetPostsFilters())
 
     private var disposeBag: [AnyCancellable] = []
 
@@ -111,7 +112,7 @@ final class MainFeedInteractor: PresentableInteractor<MainFeedPresentable>, Main
     }
 
     func didTapEditFilters() {
-        router?.attachFilterEditor()
+        router?.attachFilterEditor(with: filtersRelay.value)
     }
 
     func didRefresh() {
@@ -164,10 +165,10 @@ final class MainFeedInteractor: PresentableInteractor<MainFeedPresentable>, Main
             }
             .store(in: &disposeBag)
 
-        searchTagRelay
-            .removeDuplicates()
-            .sink { [feed] tags in
+        Publishers.CombineLatest(searchTagRelay.removeDuplicates(), filtersRelay.removeDuplicates())
+            .sink { [feed] tags, filters in
                 feed.tags = tags
+                feed.filters = filters
                 feed.reload()
             }
             .store(in: &disposeBag)
@@ -191,7 +192,11 @@ extension MainFeedInteractor: DetailFeedListener {
 
 extension MainFeedInteractor: FilterEditorListener {
 
-    func filterEditorDidFinish() {
+    func filterEditorDidFinish(with filters: GetPostsFilters?) {
+        if let filters {
+            filtersRelay.accept(filters)
+        }
+
         router?.detachFilterEditor()
     }
 

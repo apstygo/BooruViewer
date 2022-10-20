@@ -57,8 +57,8 @@ final class MainFeedRouter: ViewableRouter<MainFeedInteractable, MainFeedViewCon
         self.detailFeed = nil
     }
 
-    func attachFilterEditor() {
-        let filterEditor = filterEditorBuilder.build(withListener: interactor)
+    func attachFilterEditor(with filters: GetPostsFilters) {
+        let filterEditor = filterEditorBuilder.build(withListener: interactor, filters: filters)
         self.filterEditor = filterEditor
 
         attachChild(filterEditor)

@@ -1,6 +1,6 @@
 import Foundation
 
-public struct GetPostsFilters {
+public struct GetPostsFilters: Hashable {
     public var gRatingIncluded: Bool
     public var r15RatingIncluded: Bool
     public var r18RatingIncluded: Bool

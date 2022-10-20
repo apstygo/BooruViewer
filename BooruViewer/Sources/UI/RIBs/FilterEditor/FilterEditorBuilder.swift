@@ -1,4 +1,5 @@
 import ModernRIBs
+import SankakuAPI
 
 protocol FilterEditorDependency: Dependency {
     // TODO: Declare the set of dependencies required by this RIB, but cannot be
@@ -13,7 +14,7 @@ final class FilterEditorComponent: Component<FilterEditorDependency> {
 // MARK: - Builder
 
 protocol FilterEditorBuildable: Buildable {
-    func build(withListener listener: FilterEditorListener) -> FilterEditorRouting
+    func build(withListener listener: FilterEditorListener, filters: GetPostsFilters) -> FilterEditorRouting
 }
 
 final class FilterEditorBuilder: Builder<FilterEditorDependency>, FilterEditorBuildable {
@@ -22,12 +23,12 @@ final class FilterEditorBuilder: Builder<FilterEditorDependency>, FilterEditorBu
         super.init(dependency: dependency)
     }
 
-    func build(withListener listener: FilterEditorListener) -> FilterEditorRouting {
+    func build(withListener listener: FilterEditorListener, filters: GetPostsFilters) -> FilterEditorRouting {
         let component = FilterEditorComponent(dependency: dependency)
 
         let viewController = FilterEditorViewController()
 
-        let interactor = FilterEditorInteractor(presenter: viewController)
+        let interactor = FilterEditorInteractor(presenter: viewController, filters: filters)
         interactor.listener = listener
 
         return FilterEditorRouter(interactor: interactor, viewController: viewController)
