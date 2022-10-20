@@ -1,6 +1,6 @@
 
-public enum HidePostsInBooks: String {
+public enum HidePostsInBooks: String, CaseIterable {
     case never
-    case always
     case inLargerTags = "in-larger-tags"
+    case always
 }

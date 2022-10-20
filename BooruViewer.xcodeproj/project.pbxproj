@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2E02815028F57883001A2ED4 /* SankakuAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 2E02814F28F57883001A2ED4 /* SankakuAPI */; };
+		2E33D4672900A49100C893B3 /* FilterEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E33D4662900A49100C893B3 /* FilterEditorView.swift */; };
 		2E34452928F6025C004C4188 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = 2E34452828F6025C004C4188 /* Collections */; };
 		2E6A431728F6289200F89556 /* CombineExt in Frameworks */ = {isa = PBXBuildFile; productRef = 2E6A431628F6289200F89556 /* CombineExt */; };
 		2E6A432328F70B4D00F89556 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6A432228F70B4D00F89556 /* TagView.swift */; };
@@ -49,6 +50,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2E33D4662900A49100C893B3 /* FilterEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterEditorView.swift; sourceTree = "<group>"; };
 		2E6A432228F70B4D00F89556 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
 		2E7A1DAD28FC17470009304D /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
 		2E7A1DAF28FC2A490009304D /* MainFeedSuggestedTagsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeedSuggestedTagsController.swift; sourceTree = "<group>"; };
@@ -111,6 +113,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		2E33D4652900A47400C893B3 /* FilterEditor */ = {
+			isa = PBXGroup;
+			children = (
+				2E33D4662900A49100C893B3 /* FilterEditorView.swift */,
+			);
+			path = FilterEditor;
+			sourceTree = "<group>";
+		};
 		2E6A432128F70B3700F89556 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -134,6 +144,7 @@
 			children = (
 				2E7A1DBC28FC9CEB0009304D /* DetailPage */,
 				2E7A1DB228FC51750009304D /* DetailFeed */,
+				2E33D4652900A47400C893B3 /* FilterEditor */,
 				2EFBA94028FB43000053DCEC /* MainFeed */,
 				2EFBA93228FB3AF50053DCEC /* Root */,
 			);
@@ -397,6 +408,7 @@
 				2E7A1DC128FC9D0F0009304D /* DetailPageRouter.swift in Sources */,
 				2E7A1DAE28FC17470009304D /* Feed.swift in Sources */,
 				2EFBA94528FB43360053DCEC /* MainFeedRouter.swift in Sources */,
+				2E33D4672900A49100C893B3 /* FilterEditorView.swift in Sources */,
 				2E7A1DD328FE11F10009304D /* ContextMenuPostPreview.swift in Sources */,
 				2E7A1DC428FC9D0F0009304D /* DetailPageInteractor.swift in Sources */,
 				2E7A1DCA28FD56960009304D /* DetailPageViewModel.swift in Sources */,

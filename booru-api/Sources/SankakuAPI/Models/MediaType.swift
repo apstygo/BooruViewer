@@ -1,5 +1,5 @@
 
-public enum MediaType: String {
+public enum MediaType: String, CaseIterable {
     case `any`
     case video
     case gif

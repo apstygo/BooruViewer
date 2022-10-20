@@ -1,5 +1,5 @@
 
-public enum MediaSize: String {
+public enum MediaSize: String, CaseIterable {
     case `any`
     case large
     case huge

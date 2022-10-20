@@ -1,5 +1,5 @@
 
-public enum SortOrder: String {
+public enum SortOrder: String, CaseIterable {
     case date
     case popularity
     case quality
