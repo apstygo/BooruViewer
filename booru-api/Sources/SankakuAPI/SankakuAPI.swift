@@ -29,6 +29,20 @@ public final class SankakuAPI {
 
     // MARK: - Public Methods
 
+    public func authorize(login: String, password: String) async throws -> AuthorizationResponse {
+        var request = Request(
+            url: URL(string: "https://capi-v2.sankakucomplex.com/auth/token")!,
+            method: .post
+        )
+
+        request.body = [
+            "login": login,
+            "password": password
+        ]
+
+        return try await urlSession.executeRequest(request)
+    }
+
     // TODO: Implement date filter
     public func getPosts(filters: GetPostsFilters = .init(),
                          tags: [String] = [],
