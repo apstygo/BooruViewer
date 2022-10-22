@@ -120,6 +120,7 @@ final class MainFeedViewController: UIViewController, MainFeedPresentable {
         }
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: "Filters",
             image: editFiltersImage,
             primaryAction: editFiltersAction
         )
@@ -228,12 +229,12 @@ extension MainFeedViewController: MainFeedViewControllable {
             return
         }
 
-        guard presentedViewController == viewController.uiviewController else {
-            assertionFailure("Provided view controller is not the presented one")
-            return
-        }
+//        guard presentedViewController == viewController.uiviewController else {
+//            assertionFailure("Provided view controller is not the presented one")
+//            return
+//        }
 
-        dismiss(animated: true)
+        viewController.uiviewController.dismiss(animated: true)
     }
 
 }

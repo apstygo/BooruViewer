@@ -133,7 +133,9 @@ final class MainFeedInteractor: PresentableInteractor<MainFeedPresentable>, Main
         let postPublisher = feed.statePublisher
             .map(\.posts)
 
-        let suggestedTagPublisher = Publishers.CombineLatest(searchTextRelay, searchTagRelay)
+        let debouncedSearchText = searchTextRelay.debounce(for: 1, scheduler: DispatchQueue.main)
+
+        let suggestedTagPublisher = Publishers.CombineLatest(debouncedSearchText, searchTagRelay)
             .flatMapLatest { [sankakuAPI] searchText, searchTags -> AnyPublisher<[Tag], Never> in
                 guard let searchText, !searchText.isEmpty else {
                     return Just([]).eraseToAnyPublisher()
