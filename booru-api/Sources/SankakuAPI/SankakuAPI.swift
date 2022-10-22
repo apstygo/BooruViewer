@@ -4,11 +4,13 @@ import SwiftJWT
 
 public final class SankakuAPI {
 
+    // MARK: - Public Properties
+
+    public var accessToken: String?
+
     // MARK: - Private Properties
 
     private let urlSession: URLSession
-
-    private var accessToken: String?
 
     private var accessTokenExpirationDate: Date? {
         get throws {
@@ -40,7 +42,18 @@ public final class SankakuAPI {
             "password": password
         ]
 
-        return try await urlSession.executeRequest(request)
+        let response: AuthorizationResponse = try await executeRequest(request)
+
+        switch response {
+        case let .success(success):
+            accessToken = success.accessToken
+
+        case .failure:
+            // Do nothing
+            break
+        }
+
+        return response
     }
 
     // TODO: Implement date filter
@@ -83,7 +96,7 @@ public final class SankakuAPI {
             "accept": "application/vnd.sankaku.api+json;v=2"
         ]
 
-        return try await urlSession.executeRequest(request)
+        return try await executeRequest(request)
     }
 
     public func getPosts(recommendedFor postId: Int, limit: Int = 40) async throws -> [Post] {
@@ -97,7 +110,7 @@ public final class SankakuAPI {
             "limit": "\(limit)"
         ]
 
-        return try await urlSession.executeRequest(request)
+        return try await executeRequest(request)
     }
 
     public func autoSuggestTags(for query: String) async throws -> [Tag] {
@@ -109,6 +122,18 @@ public final class SankakuAPI {
         request.params = [
             "tag": query
         ]
+
+        return try await executeRequest(request)
+    }
+
+    // MARK: - Private Methods
+
+    private func executeRequest<D: Decodable>(_ request: Request) async throws -> D {
+        var request = request
+
+        if let accessToken {
+            request.headers["authorization"] = "Bearer \(accessToken)"
+        }
 
         return try await urlSession.executeRequest(request)
     }
