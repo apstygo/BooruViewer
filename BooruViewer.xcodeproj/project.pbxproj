@@ -36,6 +36,7 @@
 		2E7A1DCF28FDA7890009304D /* NSCollectionLayoutSection+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7A1DCE28FDA7890009304D /* NSCollectionLayoutSection+Extension.swift */; };
 		2E7A1DD128FDAB320009304D /* PostPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7A1DD028FDAB320009304D /* PostPreview.swift */; };
 		2E7A1DD328FE11F10009304D /* ContextMenuPostPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7A1DD228FE11F10009304D /* ContextMenuPostPreview.swift */; };
+		2EBCD1E72905ADF60087D2D4 /* SecureStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBCD1E62905ADF60087D2D4 /* SecureStore.swift */; };
 		2ED2CD9728F56C36001CA186 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2ED2CD9628F56C36001CA186 /* Assets.xcassets */; };
 		2EE9B30328FEADD1005C22CD /* StackTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE9B30228FEADD1005C22CD /* StackTransitioningDelegate.swift */; };
 		2EE9B30528FEB24F005C22CD /* StackAnimatedTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE9B30428FEB24F005C22CD /* StackAnimatedTransition.swift */; };
@@ -81,6 +82,7 @@
 		2E7A1DCE28FDA7890009304D /* NSCollectionLayoutSection+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSCollectionLayoutSection+Extension.swift"; sourceTree = "<group>"; };
 		2E7A1DD028FDAB320009304D /* PostPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPreview.swift; sourceTree = "<group>"; };
 		2E7A1DD228FE11F10009304D /* ContextMenuPostPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenuPostPreview.swift; sourceTree = "<group>"; };
+		2EBCD1E62905ADF60087D2D4 /* SecureStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureStore.swift; sourceTree = "<group>"; };
 		2ED2CD8F28F56C36001CA186 /* BooruViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BooruViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2ED2CD9628F56C36001CA186 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2ED2CD9828F56C36001CA186 /* BooruViewer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BooruViewer.entitlements; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 			children = (
 				2E37D9FE2905667F00C916CC /* Authorization */,
 				2E7A1DAD28FC17470009304D /* Feed.swift */,
+				2EBCD1E62905ADF60087D2D4 /* SecureStore.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -458,6 +461,7 @@
 				2E7A1DC328FC9D0F0009304D /* DetailPageBuilder.swift in Sources */,
 				2EFBA93A28FB3B040053DCEC /* RootInteractor.swift in Sources */,
 				2EE9B30728FEBBCD005C22CD /* StackInteractionController.swift in Sources */,
+				2EBCD1E72905ADF60087D2D4 /* SecureStore.swift in Sources */,
 				2E7A1DC728FCA76E0009304D /* UIViewController+Extension.swift in Sources */,
 				2E7A1DB928FC56A80009304D /* DetailFeedViewController.swift in Sources */,
 				2EFBA93928FB3B040053DCEC /* RootBuilder.swift in Sources */,
