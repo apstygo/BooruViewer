@@ -63,3 +63,79 @@ final class AuthInfoDefaultsStorage: AuthInfoStorage {
     }
 
 }
+
+final class AuthInfoSecureStorage: AuthInfoStorage {
+
+    // MARK: - Private Types
+
+    private enum Constant {
+        static let service = "sankaku"
+    }
+
+    private struct SensitiveData: Codable {
+        let password: String
+        let accessToken: String
+        let refreshToken: String
+    }
+
+    // MARK: - Internal Properties
+
+    var authInfo: AuthInfo? {
+        get {
+            getAuthInfo()
+        }
+        set {
+            setAuthInfo(newValue)
+        }
+    }
+
+    // MARK: - Private Properties
+
+    private let secureStore: SecureStore
+    private let encoder = JSONEncoder()
+    private let decoder = JSONDecoder()
+
+    // MARK: - Init
+
+    init(secureStore: SecureStore) {
+        self.secureStore = secureStore
+    }
+
+    // MARK: - Private Methods
+
+    private func getAuthInfo() -> AuthInfo? {
+        guard
+            let (login, data) = try? secureStore.getCredentials(forService: Constant.service),
+            let sensitiveData = try? decoder.decode(SensitiveData.self, from: data)
+        else {
+            return nil
+        }
+
+        return AuthInfo(
+            login: login,
+            password: sensitiveData.password,
+            accessToken: sensitiveData.accessToken,
+            refreshToken: sensitiveData.refreshToken
+        )
+    }
+
+    private func setAuthInfo(_ authInfo: AuthInfo?) {
+        guard let authInfo else {
+            try? secureStore.setCredentials(nil, forService: Constant.service)
+            return
+        }
+
+        let sensitiveData = SensitiveData(
+            password: authInfo.password,
+            accessToken: authInfo.accessToken,
+            refreshToken: authInfo.refreshToken
+        )
+
+        guard let data = try? encoder.encode(sensitiveData) else {
+            return
+        }
+
+        try? secureStore.setCredentials((authInfo.login, data), forService: Constant.service)
+    }
+
+}
