@@ -1,6 +1,5 @@
 import Foundation
 import Combine
-import SwiftJWT
 
 public final class SankakuAPI {
 
@@ -11,17 +10,6 @@ public final class SankakuAPI {
     // MARK: - Private Properties
 
     private let urlSession: URLSession
-
-    private var accessTokenExpirationDate: Date? {
-        get throws {
-            guard let accessToken else {
-                return nil
-            }
-
-            let jwt = try JWT<ClaimsStandardJWT>(jwtString: accessToken)
-            return jwt.claims.exp
-        }
-    }
 
     // MARK: - Init
 
@@ -46,7 +34,7 @@ public final class SankakuAPI {
         return try await urlSession.executeRequest(request)
     }
 
-    public func updateCredentials(withRefreshToken refreshToken: String) async throws -> AuthorizationResponse {
+    public func refreshAccessToken(withRefreshToken refreshToken: String) async throws -> AuthorizationResponse {
         var request = Request(
             url: URL(string: "https://capi-v2.sankakucomplex.com/auth/token")!,
             method: .post

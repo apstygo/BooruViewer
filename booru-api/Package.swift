@@ -8,11 +8,10 @@ let package = Package(
     products: [
         .library(name: "SankakuAPI", targets: ["SankakuAPI"])
     ],
-    dependencies: [.package(url: "https://github.com/Kitura/Swift-JWT", .upToNextMajor(from: "4.0.0"))],
+    dependencies: [],
     targets: [
         .target(
-            name: "SankakuAPI",
-            dependencies: [.product(name: "SwiftJWT", package: "Swift-JWT")]
+            name: "SankakuAPI"
         )
     ]
 )
