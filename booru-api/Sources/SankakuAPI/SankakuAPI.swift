@@ -42,18 +42,22 @@ public final class SankakuAPI {
             "password": password
         ]
 
-        let response: AuthorizationResponse = try await executeRequest(request)
+        // Calling urlSession explicitly ensures no authorization is added to the request
+        return try await urlSession.executeRequest(request)
+    }
 
-        switch response {
-        case let .success(success):
-            accessToken = success.accessToken
+    public func updateCredentials(withRefreshToken refreshToken: String) async throws -> AuthorizationResponse {
+        var request = Request(
+            url: URL(string: "https://capi-v2.sankakucomplex.com/auth/token")!,
+            method: .post
+        )
 
-        case .failure:
-            // Do nothing
-            break
-        }
+        request.body = [
+            "refresh_token": refreshToken
+        ]
 
-        return response
+        // Calling urlSession explicitly ensures no authorization is added to the request
+        return try await urlSession.executeRequest(request)
     }
 
     // TODO: Implement date filter
