@@ -21,6 +21,7 @@
 		2E6A432328F70B4D00F89556 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6A432228F70B4D00F89556 /* TagView.swift */; };
 		2E6A433828F9AA3900F89556 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2E6A433728F9AA3900F89556 /* SDWebImageSwiftUI */; };
 		2E6A434528FB259900F89556 /* ModernRIBs in Frameworks */ = {isa = PBXBuildFile; productRef = 2E6A434428FB259900F89556 /* ModernRIBs */; };
+		2E76825D2907202D00ECC68C /* AccessTokenProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E76825C2907202D00ECC68C /* AccessTokenProvider.swift */; };
 		2E7A1DAE28FC17470009304D /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7A1DAD28FC17470009304D /* Feed.swift */; };
 		2E7A1DB028FC2A490009304D /* MainFeedSuggestedTagsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7A1DAF28FC2A490009304D /* MainFeedSuggestedTagsController.swift */; };
 		2E7A1DB828FC56A80009304D /* DetailFeedRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7A1DB428FC56A80009304D /* DetailFeedRouter.swift */; };
@@ -67,6 +68,7 @@
 		2E37D9FF290566A700C916CC /* AuthInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInfo.swift; sourceTree = "<group>"; };
 		2E37DA012905672100C916CC /* AuthInfoStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInfoStorage.swift; sourceTree = "<group>"; };
 		2E6A432228F70B4D00F89556 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
+		2E76825C2907202D00ECC68C /* AccessTokenProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessTokenProvider.swift; sourceTree = "<group>"; };
 		2E7A1DAD28FC17470009304D /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
 		2E7A1DAF28FC2A490009304D /* MainFeedSuggestedTagsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeedSuggestedTagsController.swift; sourceTree = "<group>"; };
 		2E7A1DB428FC56A80009304D /* DetailFeedRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailFeedRouter.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				2E37D9FE2905667F00C916CC /* Authorization */,
+				2E76825C2907202D00ECC68C /* AccessTokenProvider.swift */,
 				2E7A1DAD28FC17470009304D /* Feed.swift */,
 				2EBCD1E62905ADF60087D2D4 /* SecureStore.swift */,
 			);
@@ -471,6 +474,7 @@
 				2EE9B30C28FEF8C1005C22CD /* AnyPublisher+Extension.swift in Sources */,
 				2E37DA022905672100C916CC /* AuthInfoStorage.swift in Sources */,
 				2EFBA94628FB43360053DCEC /* MainFeedViewController.swift in Sources */,
+				2E76825D2907202D00ECC68C /* AccessTokenProvider.swift in Sources */,
 				2EFBA93128FB39F80053DCEC /* AppComponent.swift in Sources */,
 				2E33D46C2901903E00C893B3 /* FilterEditorRouter.swift in Sources */,
 				2EFBA92C28FB365D0053DCEC /* SceneDelegate.swift in Sources */,

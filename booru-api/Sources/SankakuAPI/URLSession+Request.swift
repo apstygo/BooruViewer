@@ -3,7 +3,7 @@ import Combine
 
 extension URLSession {
 
-    enum RequestError: Error {
+    public enum RequestError: Error {
         case badResponseCode(Int)
     }
 
