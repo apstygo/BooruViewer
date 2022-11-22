@@ -36,7 +36,6 @@ final class DetailPageViewController: UIViewController, DetailPagePresentable, D
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: makeLayout())
     private lazy var dataSource: DataSource = makeDataSource()
     private var previewedPosts: [ObjectIdentifier: Post] = [:]
-    private let customTransitioningDelegate = StackTransitioningDelegate()
 
     // MARK: - Lifecycle
 

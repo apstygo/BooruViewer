@@ -40,9 +40,6 @@
 		2EA878B0292D3EAA00AC197F /* BooruViewerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA878AF292D3EAA00AC197F /* BooruViewerApp.swift */; };
 		2EBCD1E72905ADF60087D2D4 /* SecureStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBCD1E62905ADF60087D2D4 /* SecureStore.swift */; };
 		2ED2CD9728F56C36001CA186 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2ED2CD9628F56C36001CA186 /* Assets.xcassets */; };
-		2EE9B30328FEADD1005C22CD /* StackTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE9B30228FEADD1005C22CD /* StackTransitioningDelegate.swift */; };
-		2EE9B30528FEB24F005C22CD /* StackAnimatedTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE9B30428FEB24F005C22CD /* StackAnimatedTransition.swift */; };
-		2EE9B30728FEBBCD005C22CD /* StackInteractionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE9B30628FEBBCD005C22CD /* StackInteractionController.swift */; };
 		2EE9B30A28FEEC49005C22CD /* MainFeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE9B30928FEEC49005C22CD /* MainFeedViewModel.swift */; };
 		2EE9B30C28FEF8C1005C22CD /* AnyPublisher+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE9B30B28FEF8C1005C22CD /* AnyPublisher+Extension.swift */; };
 		2EFBA93128FB39F80053DCEC /* AppComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFBA93028FB39F80053DCEC /* AppComponent.swift */; };
@@ -88,9 +85,6 @@
 		2ED2CD8F28F56C36001CA186 /* BooruViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BooruViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2ED2CD9628F56C36001CA186 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2ED2CD9828F56C36001CA186 /* BooruViewer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BooruViewer.entitlements; sourceTree = "<group>"; };
-		2EE9B30228FEADD1005C22CD /* StackTransitioningDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackTransitioningDelegate.swift; sourceTree = "<group>"; };
-		2EE9B30428FEB24F005C22CD /* StackAnimatedTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackAnimatedTransition.swift; sourceTree = "<group>"; };
-		2EE9B30628FEBBCD005C22CD /* StackInteractionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackInteractionController.swift; sourceTree = "<group>"; };
 		2EE9B30928FEEC49005C22CD /* MainFeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeedViewModel.swift; sourceTree = "<group>"; };
 		2EE9B30B28FEF8C1005C22CD /* AnyPublisher+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnyPublisher+Extension.swift"; sourceTree = "<group>"; };
 		2EFBA92D28FB37090053DCEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -290,30 +284,11 @@
 		2EE9B2FF28FEAD04005C22CD /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				2EE9B30028FEAD4F005C22CD /* Presentations */,
 				2EFBA92828FB36320053DCEC /* Lifecycle */,
 				2E6A434628FB25E000F89556 /* RIBs */,
 				2E6A432128F70B3700F89556 /* Views */,
 			);
 			path = UI;
-			sourceTree = "<group>";
-		};
-		2EE9B30028FEAD4F005C22CD /* Presentations */ = {
-			isa = PBXGroup;
-			children = (
-				2EE9B30128FEADAE005C22CD /* Stack */,
-			);
-			path = Presentations;
-			sourceTree = "<group>";
-		};
-		2EE9B30128FEADAE005C22CD /* Stack */ = {
-			isa = PBXGroup;
-			children = (
-				2EE9B30228FEADD1005C22CD /* StackTransitioningDelegate.swift */,
-				2EE9B30428FEB24F005C22CD /* StackAnimatedTransition.swift */,
-				2EE9B30628FEBBCD005C22CD /* StackInteractionController.swift */,
-			);
-			path = Stack;
 			sourceTree = "<group>";
 		};
 		2EE9B30828FEEC3A005C22CD /* ViewModel */ = {
@@ -445,7 +420,6 @@
 				2E33D4722901974B00C893B3 /* FilterEditorViewModel.swift in Sources */,
 				2EFBA93728FB3B040053DCEC /* RootRouter.swift in Sources */,
 				2EE9B30A28FEEC49005C22CD /* MainFeedViewModel.swift in Sources */,
-				2EE9B30328FEADD1005C22CD /* StackTransitioningDelegate.swift in Sources */,
 				2E7A1DC128FC9D0F0009304D /* DetailPageRouter.swift in Sources */,
 				2E7A1DAE28FC17470009304D /* Feed.swift in Sources */,
 				2EFBA94528FB43360053DCEC /* MainFeedRouter.swift in Sources */,
@@ -460,7 +434,6 @@
 				2E6A432328F70B4D00F89556 /* TagView.swift in Sources */,
 				2E7A1DC328FC9D0F0009304D /* DetailPageBuilder.swift in Sources */,
 				2EFBA93A28FB3B040053DCEC /* RootInteractor.swift in Sources */,
-				2EE9B30728FEBBCD005C22CD /* StackInteractionController.swift in Sources */,
 				2EBCD1E72905ADF60087D2D4 /* SecureStore.swift in Sources */,
 				2E7A1DC728FCA76E0009304D /* UIViewController+Extension.swift in Sources */,
 				2E7A1DB928FC56A80009304D /* DetailFeedViewController.swift in Sources */,
@@ -477,7 +450,6 @@
 				2E33D46C2901903E00C893B3 /* FilterEditorRouter.swift in Sources */,
 				2E7A1DBA28FC56A80009304D /* DetailFeedBuilder.swift in Sources */,
 				2E7A1DCF28FDA7890009304D /* NSCollectionLayoutSection+Extension.swift in Sources */,
-				2EE9B30528FEB24F005C22CD /* StackAnimatedTransition.swift in Sources */,
 				2E7A1DD128FDAB320009304D /* PostPreview.swift in Sources */,
 				2E33D46E2901903E00C893B3 /* FilterEditorBuilder.swift in Sources */,
 				2E7A1DC228FC9D0F0009304D /* DetailPageViewController.swift in Sources */,
