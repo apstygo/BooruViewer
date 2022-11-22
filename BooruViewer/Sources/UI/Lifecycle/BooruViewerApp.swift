@@ -12,6 +12,10 @@ struct BooruViewerApp: App {
 //                        reducer: MainFeedFeature()
 //                    )
 //                )
+
+                Text("// FIXME: Implement some UI 🤭")
+                    .monospaced()
+                    .foregroundColor(.green)
             }
         }
     }
