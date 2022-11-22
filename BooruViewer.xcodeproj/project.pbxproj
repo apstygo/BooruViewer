@@ -39,9 +39,6 @@
 		2E7A1DD328FE11F10009304D /* ContextMenuPostPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7A1DD228FE11F10009304D /* ContextMenuPostPreview.swift */; };
 		2EBCD1E72905ADF60087D2D4 /* SecureStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBCD1E62905ADF60087D2D4 /* SecureStore.swift */; };
 		2ED2CD9728F56C36001CA186 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2ED2CD9628F56C36001CA186 /* Assets.xcassets */; };
-		2EDFD175292D2D9000EB4925 /* NeedleFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 2EDFD174292D2D9000EB4925 /* NeedleFoundation */; };
-		2EDFD178292D2EEF00EB4925 /* NeedleGenerated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDFD177292D2EEF00EB4925 /* NeedleGenerated.swift */; };
-		2EDFD17A292D304000EB4925 /* RootComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDFD179292D304000EB4925 /* RootComponent.swift */; };
 		2EE9B30328FEADD1005C22CD /* StackTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE9B30228FEADD1005C22CD /* StackTransitioningDelegate.swift */; };
 		2EE9B30528FEB24F005C22CD /* StackAnimatedTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE9B30428FEB24F005C22CD /* StackAnimatedTransition.swift */; };
 		2EE9B30728FEBBCD005C22CD /* StackInteractionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE9B30628FEBBCD005C22CD /* StackInteractionController.swift */; };
@@ -91,8 +88,6 @@
 		2ED2CD8F28F56C36001CA186 /* BooruViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BooruViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2ED2CD9628F56C36001CA186 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2ED2CD9828F56C36001CA186 /* BooruViewer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BooruViewer.entitlements; sourceTree = "<group>"; };
-		2EDFD177292D2EEF00EB4925 /* NeedleGenerated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeedleGenerated.swift; sourceTree = "<group>"; };
-		2EDFD179292D304000EB4925 /* RootComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootComponent.swift; sourceTree = "<group>"; };
 		2EE9B30228FEADD1005C22CD /* StackTransitioningDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackTransitioningDelegate.swift; sourceTree = "<group>"; };
 		2EE9B30428FEB24F005C22CD /* StackAnimatedTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackAnimatedTransition.swift; sourceTree = "<group>"; };
 		2EE9B30628FEBBCD005C22CD /* StackInteractionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackInteractionController.swift; sourceTree = "<group>"; };
@@ -122,7 +117,6 @@
 				2E34452928F6025C004C4188 /* Collections in Frameworks */,
 				2E02815028F57883001A2ED4 /* SankakuAPI in Frameworks */,
 				2E6A434528FB259900F89556 /* ModernRIBs in Frameworks */,
-				2EDFD175292D2D9000EB4925 /* NeedleFoundation in Frameworks */,
 				2E6A431728F6289200F89556 /* CombineExt in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -281,7 +275,6 @@
 				2E7A1DC528FCA7420009304D /* Extensions */,
 				2E6A433128F89ADA00F89556 /* Model */,
 				2EE9B2FF28FEAD04005C22CD /* UI */,
-				2EDFD177292D2EEF00EB4925 /* NeedleGenerated.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -350,7 +343,6 @@
 				2EFBA93328FB3B040053DCEC /* RootRouter.swift */,
 				2EFBA93628FB3B040053DCEC /* RootInteractor.swift */,
 				2EFBA93428FB3B040053DCEC /* RootViewController.swift */,
-				2EDFD179292D304000EB4925 /* RootComponent.swift */,
 			);
 			path = Root;
 			sourceTree = "<group>";
@@ -375,7 +367,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2ED2CD9E28F56C36001CA186 /* Build configuration list for PBXNativeTarget "BooruViewer" */;
 			buildPhases = (
-				2EDFD176292D2EBB00EB4925 /* Needle Code Generation */,
 				2ED2CD8B28F56C36001CA186 /* Sources */,
 				2ED2CD8C28F56C36001CA186 /* Frameworks */,
 				2ED2CD8D28F56C36001CA186 /* Resources */,
@@ -392,7 +383,6 @@
 				2E6A433728F9AA3900F89556 /* SDWebImageSwiftUI */,
 				2E6A434428FB259900F89556 /* ModernRIBs */,
 				2EFBA93E28FB417C0053DCEC /* SnapKit */,
-				2EDFD174292D2D9000EB4925 /* NeedleFoundation */,
 			);
 			productName = BooruViewer;
 			productReference = 2ED2CD8F28F56C36001CA186 /* BooruViewer.app */;
@@ -428,7 +418,6 @@
 				2E6A433628F9AA3900F89556 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 				2E6A434328FB259900F89556 /* XCRemoteSwiftPackageReference "ModernRIBs" */,
 				2EFBA93D28FB417C0053DCEC /* XCRemoteSwiftPackageReference "SnapKit" */,
-				2EDFD173292D2D9000EB4925 /* XCRemoteSwiftPackageReference "needle" */,
 			);
 			productRefGroup = 2ED2CD9028F56C36001CA186 /* Products */;
 			projectDirPath = "";
@@ -450,34 +439,12 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		2EDFD176292D2EBB00EB4925 /* Needle Code Generation */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Needle Code Generation";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "export SOURCEKIT_LOGGING=0 && /opt/homebrew/bin/needle generate BooruViewer/Sources/NeedleGenerated.swift BooruViewer/Sources/\n";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		2ED2CD8B28F56C36001CA186 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				2E7A1DBB28FC56A80009304D /* DetailFeedInteractor.swift in Sources */,
-				2EDFD17A292D304000EB4925 /* RootComponent.swift in Sources */,
 				2E33D4722901974B00C893B3 /* FilterEditorViewModel.swift in Sources */,
 				2EFBA93728FB3B040053DCEC /* RootRouter.swift in Sources */,
 				2EE9B30A28FEEC49005C22CD /* MainFeedViewModel.swift in Sources */,
@@ -489,7 +456,6 @@
 				2E7A1DD328FE11F10009304D /* ContextMenuPostPreview.swift in Sources */,
 				2E7A1DC428FC9D0F0009304D /* DetailPageInteractor.swift in Sources */,
 				2E7A1DCA28FD56960009304D /* DetailPageViewModel.swift in Sources */,
-				2EDFD178292D2EEF00EB4925 /* NeedleGenerated.swift in Sources */,
 				2EFBA93828FB3B040053DCEC /* RootViewController.swift in Sources */,
 				2E33D46D2901903E00C893B3 /* FilterEditorViewController.swift in Sources */,
 				2E37DA00290566A700C916CC /* AuthInfo.swift in Sources */,
@@ -773,14 +739,6 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		2EDFD173292D2D9000EB4925 /* XCRemoteSwiftPackageReference "needle" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/uber/needle";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
 		2EFBA93D28FB417C0053DCEC /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -815,11 +773,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2E6A434328FB259900F89556 /* XCRemoteSwiftPackageReference "ModernRIBs" */;
 			productName = ModernRIBs;
-		};
-		2EDFD174292D2D9000EB4925 /* NeedleFoundation */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 2EDFD173292D2D9000EB4925 /* XCRemoteSwiftPackageReference "needle" */;
-			productName = NeedleFoundation;
 		};
 		2EFBA93E28FB417C0053DCEC /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
