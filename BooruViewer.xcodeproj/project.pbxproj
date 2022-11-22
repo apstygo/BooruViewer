@@ -42,7 +42,6 @@
 		2ED2CD9728F56C36001CA186 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2ED2CD9628F56C36001CA186 /* Assets.xcassets */; };
 		2EE9B30A28FEEC49005C22CD /* MainFeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE9B30928FEEC49005C22CD /* MainFeedViewModel.swift */; };
 		2EE9B30C28FEF8C1005C22CD /* AnyPublisher+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE9B30B28FEF8C1005C22CD /* AnyPublisher+Extension.swift */; };
-		2EFBA93128FB39F80053DCEC /* AppComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFBA93028FB39F80053DCEC /* AppComponent.swift */; };
 		2EFBA93728FB3B040053DCEC /* RootRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFBA93328FB3B040053DCEC /* RootRouter.swift */; };
 		2EFBA93828FB3B040053DCEC /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFBA93428FB3B040053DCEC /* RootViewController.swift */; };
 		2EFBA93928FB3B040053DCEC /* RootBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFBA93528FB3B040053DCEC /* RootBuilder.swift */; };
@@ -88,7 +87,6 @@
 		2EE9B30928FEEC49005C22CD /* MainFeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeedViewModel.swift; sourceTree = "<group>"; };
 		2EE9B30B28FEF8C1005C22CD /* AnyPublisher+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnyPublisher+Extension.swift"; sourceTree = "<group>"; };
 		2EFBA92D28FB37090053DCEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2EFBA93028FB39F80053DCEC /* AppComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppComponent.swift; sourceTree = "<group>"; };
 		2EFBA93328FB3B040053DCEC /* RootRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootRouter.swift; sourceTree = "<group>"; };
 		2EFBA93428FB3B040053DCEC /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		2EFBA93528FB3B040053DCEC /* RootBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootBuilder.swift; sourceTree = "<group>"; };
@@ -302,7 +300,6 @@
 		2EFBA92828FB36320053DCEC /* Lifecycle */ = {
 			isa = PBXGroup;
 			children = (
-				2EFBA93028FB39F80053DCEC /* AppComponent.swift */,
 				2EA878AF292D3EAA00AC197F /* BooruViewerApp.swift */,
 			);
 			path = Lifecycle;
@@ -446,7 +443,6 @@
 				2EFBA94628FB43360053DCEC /* MainFeedViewController.swift in Sources */,
 				2E76825D2907202D00ECC68C /* AccessTokenProvider.swift in Sources */,
 				2EA878B0292D3EAA00AC197F /* BooruViewerApp.swift in Sources */,
-				2EFBA93128FB39F80053DCEC /* AppComponent.swift in Sources */,
 				2E33D46C2901903E00C893B3 /* FilterEditorRouter.swift in Sources */,
 				2E7A1DBA28FC56A80009304D /* DetailFeedBuilder.swift in Sources */,
 				2E7A1DCF28FDA7890009304D /* NSCollectionLayoutSection+Extension.swift in Sources */,
