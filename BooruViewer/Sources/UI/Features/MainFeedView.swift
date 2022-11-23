@@ -28,10 +28,7 @@ struct MainFeedView: View {
 
     @ViewBuilder
     func mainContent(for viewStore: ViewStore) -> some View {
-        if viewStore.shouldPresentFullscreenLoader {
-            ProgressView()
-        }
-        else {
+        ZStack {
             GeometryReader { gr in
                 ScrollView {
                     VStack {
@@ -41,11 +38,21 @@ struct MainFeedView: View {
                             }
                         }
 
-                        ProgressView()
+                        if !viewStore.shouldPresentFullscreenLoader {
+                            ProgressView()
+                        }
                     }
                 }
             }
+            .refreshable {
+                viewStore.send(.refresh)
+            }
+
+            if viewStore.shouldPresentFullscreenLoader {
+                ProgressView()
+            }
         }
+        .animation(.default, value: viewStore.posts)
     }
 
     @ViewBuilder

@@ -12,6 +12,7 @@ struct MainFeedFeature: ReducerProtocol {
 
     enum Action: Equatable {
         case appear
+        case refresh
         case postAppeared(Post)
 
         case updateFeedState(FeedState)
@@ -45,6 +46,11 @@ struct MainFeedFeature: ReducerProtocol {
                     await send(.updateFeedState(feedState))
                 }
             }
+
+        case .refresh:
+            feed.reload()
+
+            return .none
 
         case let .postAppeared(post):
             guard let index = state.posts.index(id: post.id) else {
