@@ -18,6 +18,7 @@ struct PostPreview: View {
                 .clipped()
         }
         .aspectRatio(1, contentMode: .fit)
+        .contentShape(Rectangle()) // This fixes incorrect tap area
     }
 
 }

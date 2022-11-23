@@ -1,5 +1,6 @@
 import SwiftUI
 import ComposableArchitecture
+import SankakuAPI
 
 struct MainFeedView: View {
 
@@ -39,11 +40,21 @@ struct MainFeedView: View {
             ScrollView {
                 LazyVGrid(columns: columns, spacing: spacing) {
                     ForEach(viewStore.feedState.posts) { post in
-                        PostPreview(post: post)
+                        item(for: post, viewStore: viewStore)
                     }
                 }
             }
         }
+    }
+
+    @ViewBuilder
+    func item(for post: Post, viewStore: ViewStore) -> some View {
+        PostPreview(post: post)
+            .contextMenu {
+                Text("Menu item")
+            } preview: {
+                ContextMenuPostPreview(post: post)
+            }
     }
 
 }
