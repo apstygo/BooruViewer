@@ -17,6 +17,7 @@ struct PostPreview: View {
                 .frame(width: gr.size.width, height: gr.size.height)
                 .clipped()
         }
+        .aspectRatio(1, contentMode: .fit)
     }
 
 }
