@@ -104,7 +104,19 @@ private struct MainFeedContent: View {
     func item(for post: Post) -> some View {
         PostPreview(post: post)
             .contextMenu {
-                Text("Menu item")
+                Button {
+                    // Do nothing
+                } label: {
+                    Label("Favorite", systemImage: "heart")
+                }
+                .disabled(true)
+
+                if let sourceURL = post.sourceURL {
+                    Link(destination: sourceURL) {
+                        Label("Go to source", systemImage: "photo")
+                    }
+                }
+
             } preview: {
                 ContextMenuPostPreview(post: post)
             }

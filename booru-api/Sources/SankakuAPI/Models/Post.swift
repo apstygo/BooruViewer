@@ -13,6 +13,7 @@ public struct Post: Decodable, Hashable, Equatable, Identifiable {
         case width
         case height
         case tags
+        case source
     }
 
     public let id: Int
@@ -26,9 +27,18 @@ public struct Post: Decodable, Hashable, Equatable, Identifiable {
     public let width: CGFloat?
     public let height: CGFloat?
     public let tags: [Tag]
+    public let source: String?
 }
 
 extension Post {
+
+    public var sourceURL: URL? {
+        guard let source else {
+            return nil
+        }
+
+        return URL(string: source)
+    }
 
     var previewSize: CGSize? {
         guard let previewWidth, let previewHeight else {
