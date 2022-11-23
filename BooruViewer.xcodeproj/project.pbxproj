@@ -19,6 +19,9 @@
 		2E7A1DD128FDAB320009304D /* PostPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7A1DD028FDAB320009304D /* PostPreview.swift */; };
 		2E7A1DD328FE11F10009304D /* ContextMenuPostPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7A1DD228FE11F10009304D /* ContextMenuPostPreview.swift */; };
 		2EA878B0292D3EAA00AC197F /* BooruViewerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA878AF292D3EAA00AC197F /* BooruViewerApp.swift */; };
+		2EA878B3292DD34100AC197F /* MainFeedFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA878B2292DD34100AC197F /* MainFeedFeature.swift */; };
+		2EA878B6292DD3A000AC197F /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 2EA878B5292DD3A000AC197F /* ComposableArchitecture */; };
+		2EA878BA292DD45300AC197F /* MainFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA878B9292DD45300AC197F /* MainFeedView.swift */; };
 		2EBCD1E72905ADF60087D2D4 /* SecureStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBCD1E62905ADF60087D2D4 /* SecureStore.swift */; };
 		2ED2CD9728F56C36001CA186 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2ED2CD9628F56C36001CA186 /* Assets.xcassets */; };
 		2EE9B30C28FEF8C1005C22CD /* AnyPublisher+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE9B30B28FEF8C1005C22CD /* AnyPublisher+Extension.swift */; };
@@ -33,6 +36,8 @@
 		2E7A1DD028FDAB320009304D /* PostPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPreview.swift; sourceTree = "<group>"; };
 		2E7A1DD228FE11F10009304D /* ContextMenuPostPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenuPostPreview.swift; sourceTree = "<group>"; };
 		2EA878AF292D3EAA00AC197F /* BooruViewerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooruViewerApp.swift; sourceTree = "<group>"; };
+		2EA878B2292DD34100AC197F /* MainFeedFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeedFeature.swift; sourceTree = "<group>"; };
+		2EA878B9292DD45300AC197F /* MainFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeedView.swift; sourceTree = "<group>"; };
 		2EBCD1E62905ADF60087D2D4 /* SecureStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureStore.swift; sourceTree = "<group>"; };
 		2ED2CD8F28F56C36001CA186 /* BooruViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BooruViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2ED2CD9628F56C36001CA186 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -46,6 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EA878B6292DD3A000AC197F /* ComposableArchitecture in Frameworks */,
 				2E6A433828F9AA3900F89556 /* SDWebImageSwiftUI in Frameworks */,
 				2E34452928F6025C004C4188 /* Collections in Frameworks */,
 				2E02815028F57883001A2ED4 /* SankakuAPI in Frameworks */,
@@ -101,6 +107,15 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		2EA878B1292D431600AC197F /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				2EA878B2292DD34100AC197F /* MainFeedFeature.swift */,
+				2EA878B9292DD45300AC197F /* MainFeedView.swift */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
 		2ED2CD8628F56C36001CA186 = {
 			isa = PBXGroup;
 			children = (
@@ -150,6 +165,7 @@
 		2EE9B2FF28FEAD04005C22CD /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				2EA878B1292D431600AC197F /* Features */,
 				2EFBA92828FB36320053DCEC /* Lifecycle */,
 				2E6A432128F70B3700F89556 /* Views */,
 			);
@@ -185,6 +201,7 @@
 				2E34452828F6025C004C4188 /* Collections */,
 				2E6A431628F6289200F89556 /* CombineExt */,
 				2E6A433728F9AA3900F89556 /* SDWebImageSwiftUI */,
+				2EA878B5292DD3A000AC197F /* ComposableArchitecture */,
 			);
 			productName = BooruViewer;
 			productReference = 2ED2CD8F28F56C36001CA186 /* BooruViewer.app */;
@@ -218,6 +235,7 @@
 				2E34452728F6025C004C4188 /* XCRemoteSwiftPackageReference "swift-collections" */,
 				2E6A431528F6289200F89556 /* XCRemoteSwiftPackageReference "CombineExt" */,
 				2E6A433628F9AA3900F89556 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+				2EA878B4292DD3A000AC197F /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 			);
 			productRefGroup = 2ED2CD9028F56C36001CA186 /* Products */;
 			projectDirPath = "";
@@ -247,11 +265,13 @@
 				2E7A1DAE28FC17470009304D /* Feed.swift in Sources */,
 				2E7A1DD328FE11F10009304D /* ContextMenuPostPreview.swift in Sources */,
 				2E37DA00290566A700C916CC /* AuthInfo.swift in Sources */,
+				2EA878B3292DD34100AC197F /* MainFeedFeature.swift in Sources */,
 				2E6A432328F70B4D00F89556 /* TagView.swift in Sources */,
 				2EBCD1E72905ADF60087D2D4 /* SecureStore.swift in Sources */,
 				2EE9B30C28FEF8C1005C22CD /* AnyPublisher+Extension.swift in Sources */,
 				2E37DA022905672100C916CC /* AuthInfoStorage.swift in Sources */,
 				2E76825D2907202D00ECC68C /* AccessTokenProvider.swift in Sources */,
+				2EA878BA292DD45300AC197F /* MainFeedView.swift in Sources */,
 				2EA878B0292D3EAA00AC197F /* BooruViewerApp.swift in Sources */,
 				2E7A1DD128FDAB320009304D /* PostPreview.swift in Sources */,
 			);
@@ -499,6 +519,14 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		2EA878B4292DD3A000AC197F /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -520,6 +548,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2E6A433628F9AA3900F89556 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
 			productName = SDWebImageSwiftUI;
+		};
+		2EA878B5292DD3A000AC197F /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2EA878B4292DD3A000AC197F /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
