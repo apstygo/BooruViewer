@@ -3,15 +3,53 @@ import SankakuAPI
 
 struct TagView: View {
 
-    let tag: Tag
+    // MARK: - Internal Properties
+
+    let tagToken: TagToken
+
+    // MARK: - Init
+
+    init(tagToken: TagToken) {
+        self.tagToken = tagToken
+    }
+
+    init(tag: Tag) {
+        self.tagToken = .tag(tag)
+    }
+
+    init(_ tagName: String) {
+        self.tagToken = .raw(tagName)
+    }
+
+    // MARK: - Layout
+
+    var title: String {
+        tagToken.tagName.replacingOccurrences(of: "_", with: " ")
+    }
 
     var body: some View {
-        Text(tag.name.replacingOccurrences(of: "_", with: " "))
+        Text(title)
             .padding(.horizontal, 8)
             .padding(.vertical, 4)
-            .background(tag.backgroundColor)
+            .background(tagToken.backgroundColor)
             .foregroundColor(.white)
             .cornerRadius(8)
+    }
+
+}
+
+// MARK: - Helpers
+
+extension TagToken {
+
+    fileprivate var backgroundColor: Color {
+        switch self {
+        case let .tag(tag):
+            return tag.backgroundColor
+
+        case .raw:
+            return .gray
+        }
     }
 
 }
@@ -27,7 +65,7 @@ extension Tag {
             return .red
 
         case .studio:
-            return .pink
+            return Color(.magenta)
 
         case .copyright:
             return .purple
@@ -47,6 +85,8 @@ extension Tag {
     }
 
 }
+
+// MARK: - Previews
 
 struct TagView_Previews: PreviewProvider {
 

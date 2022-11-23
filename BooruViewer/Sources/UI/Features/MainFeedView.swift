@@ -17,15 +17,58 @@ struct MainFeedView: View {
 private struct MainFeedContent: View {
 
     @ObservedObject var viewStore: ViewStoreOf<MainFeedFeature>
-    @State var searchText: String = ""
     let spacing: CGFloat = 2
+
+    var searchTextBinding: Binding<String> {
+        viewStore.binding {
+            $0.searchText
+        } send: {
+            .updateSearchText($0)
+        }
+    }
+
+    var tokenBinding: Binding<IdentifiedArrayOf<TagToken>> {
+        viewStore.binding {
+            $0.tags
+        } send: {
+            .updateTags($0)
+        }
+    }
+
+    var suggestedTokenBinding: Binding<IdentifiedArrayOf<TagToken>> {
+        Binding {
+            viewStore.suggestedTags
+        } set: { _ in
+            // Do nothing
+        }
+    }
+
+    var searchFieldPlacement: SearchFieldPlacement {
+        #if os(iOS)
+            .navigationBarDrawer(displayMode: .always)
+        #else
+            .automatic
+        #endif
+    }
 
     var body: some View {
         content
-            .searchable(text: $searchText)
             .onAppear {
                 viewStore.send(.appear)
             }
+            .searchable(
+                text: searchTextBinding,
+                tokens: tokenBinding,
+                suggestedTokens: suggestedTokenBinding,
+                placement: searchFieldPlacement,
+                prompt: "Search using tags"
+            ) { token in
+                TagView(tagToken: token)
+            }
+            #if os(iOS)
+            .textInputAutocapitalization(.never)
+            #endif
+            .scrollDismissesKeyboard(.immediately)
     }
 
     @ViewBuilder
