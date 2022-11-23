@@ -4,22 +4,24 @@ import SankakuAPI
 
 struct MainFeedView: View {
 
-    typealias ViewStore = ViewStoreOf<MainFeedFeature>
-
     let store: StoreOf<MainFeedFeature>
-    let spacing: CGFloat = 2
-
-    @State var searchText: String = ""
 
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
-            content(for: viewStore)
+            MainFeedContent(viewStore: viewStore)
         }
     }
 
-    @ViewBuilder
-    func content(for viewStore: ViewStore) -> some View {
-        mainContent(for: viewStore)
+}
+
+private struct MainFeedContent: View {
+
+    @ObservedObject var viewStore: ViewStoreOf<MainFeedFeature>
+    @State var searchText: String = ""
+    let spacing: CGFloat = 2
+
+    var body: some View {
+        content
             .searchable(text: $searchText)
             .onAppear {
                 viewStore.send(.appear)
@@ -27,14 +29,14 @@ struct MainFeedView: View {
     }
 
     @ViewBuilder
-    func mainContent(for viewStore: ViewStore) -> some View {
+    var content: some View {
         ZStack {
             GeometryReader { gr in
                 ScrollView {
                     VStack {
                         LazyVGrid(columns: calculateColumns(availableWidth: gr.size.width, preferredItemWidth: 200), spacing: spacing) {
                             ForEach(viewStore.posts) { post in
-                                item(for: post, viewStore: viewStore)
+                                item(for: post)
                             }
                         }
 
@@ -56,7 +58,7 @@ struct MainFeedView: View {
     }
 
     @ViewBuilder
-    func item(for post: Post, viewStore: ViewStore) -> some View {
+    func item(for post: Post) -> some View {
         PostPreview(post: post)
             .contextMenu {
                 Text("Menu item")
