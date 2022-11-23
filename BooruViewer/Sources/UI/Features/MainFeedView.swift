@@ -11,11 +11,6 @@ struct MainFeedView: View {
 
     @State var searchText: String = ""
 
-    var columns: [GridItem] {
-        let item = GridItem(.flexible(), spacing: spacing)
-        return Array(repeating: item, count: 2)
-    }
-
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             content(for: viewStore)
@@ -37,10 +32,12 @@ struct MainFeedView: View {
             ProgressView()
         }
         else {
-            ScrollView {
-                LazyVGrid(columns: columns, spacing: spacing) {
-                    ForEach(viewStore.feedState.posts) { post in
-                        item(for: post, viewStore: viewStore)
+            GeometryReader { gr in
+                ScrollView {
+                    LazyVGrid(columns: calculateColumns(availableWidth: gr.size.width, preferredItemWidth: 200), spacing: spacing) {
+                        ForEach(viewStore.feedState.posts) { post in
+                            item(for: post, viewStore: viewStore)
+                        }
                     }
                 }
             }
@@ -55,6 +52,12 @@ struct MainFeedView: View {
             } preview: {
                 ContextMenuPostPreview(post: post)
             }
+    }
+
+    func calculateColumns(availableWidth: CGFloat, preferredItemWidth: CGFloat) -> [GridItem] {
+        let itemCount = Int((availableWidth / preferredItemWidth).rounded(.toNearestOrAwayFromZero))
+        let item = GridItem(.flexible(), spacing: spacing)
+        return Array(repeating: item, count: itemCount)
     }
 
 }
