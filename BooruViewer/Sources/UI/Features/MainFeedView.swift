@@ -28,16 +28,20 @@ struct MainFeedView: View {
 
     @ViewBuilder
     func mainContent(for viewStore: ViewStore) -> some View {
-        if viewStore.feedState.shouldPresentFullscreenLoader {
+        if viewStore.shouldPresentFullscreenLoader {
             ProgressView()
         }
         else {
             GeometryReader { gr in
                 ScrollView {
-                    LazyVGrid(columns: calculateColumns(availableWidth: gr.size.width, preferredItemWidth: 200), spacing: spacing) {
-                        ForEach(viewStore.feedState.posts) { post in
-                            item(for: post, viewStore: viewStore)
+                    VStack {
+                        LazyVGrid(columns: calculateColumns(availableWidth: gr.size.width, preferredItemWidth: 200), spacing: spacing) {
+                            ForEach(viewStore.posts) { post in
+                                item(for: post, viewStore: viewStore)
+                            }
                         }
+
+                        ProgressView()
                     }
                 }
             }
@@ -51,6 +55,9 @@ struct MainFeedView: View {
                 Text("Menu item")
             } preview: {
                 ContextMenuPostPreview(post: post)
+            }
+            .onAppear {
+                viewStore.send(.postAppeared(post))
             }
     }
 
@@ -93,10 +100,10 @@ extension Color {
 
 }
 
-extension FeedState {
+extension MainFeedFeature.State {
 
     fileprivate var shouldPresentFullscreenLoader: Bool {
-        switch (posts.isEmpty, phase) {
+        switch (posts.isEmpty, feedPhase) {
         case (true, .idle), (true, .loading):
             return true
 

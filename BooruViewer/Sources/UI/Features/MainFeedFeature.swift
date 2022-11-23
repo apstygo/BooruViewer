@@ -6,11 +6,14 @@ struct MainFeedFeature: ReducerProtocol {
 
     struct State: Equatable {
         var didAppear = false
-        var feedState = FeedState()
+        var feedPhase: FeedPhase = .idle
+        var posts: IdentifiedArrayOf<Post> = []
     }
 
     enum Action: Equatable {
         case appear
+        case postAppeared(Post)
+
         case updateFeedState(FeedState)
     }
 
@@ -43,8 +46,18 @@ struct MainFeedFeature: ReducerProtocol {
                 }
             }
 
+        case let .postAppeared(post):
+            guard let index = state.posts.index(id: post.id) else {
+                return .none
+            }
+
+            feed.loadPage(forItemAt: index)
+
+            return .none
+
         case let .updateFeedState(newFeedState):
-            state.feedState = newFeedState
+            state.feedPhase = newFeedState.phase
+            state.posts = IdentifiedArray(uniqueElements: newFeedState.posts)
 
             return .none
         }
