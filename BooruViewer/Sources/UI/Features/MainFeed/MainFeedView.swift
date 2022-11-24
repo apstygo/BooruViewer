@@ -8,7 +8,7 @@ struct MainFeedView: View {
 
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
-            MainFeedContent(viewStore: viewStore)
+            MainFeedContent(store: store, viewStore: viewStore)
         }
     }
 
@@ -16,32 +16,9 @@ struct MainFeedView: View {
 
 private struct MainFeedContent: View {
 
+    let store: StoreOf<MainFeedFeature>
     @ObservedObject var viewStore: ViewStoreOf<MainFeedFeature>
     let spacing: CGFloat = 2
-
-    var searchTextBinding: Binding<String> {
-        viewStore.binding {
-            $0.searchText
-        } send: {
-            .updateSearchText($0)
-        }
-    }
-
-    var tokenBinding: Binding<IdentifiedArrayOf<TagToken>> {
-        viewStore.binding {
-            $0.tags
-        } send: {
-            .updateTags($0)
-        }
-    }
-
-    var suggestedTokenBinding: Binding<IdentifiedArrayOf<TagToken>> {
-        Binding {
-            viewStore.suggestedTags
-        } set: { _ in
-            // Do nothing
-        }
-    }
 
     var searchFieldPlacement: SearchFieldPlacement {
         #if os(iOS)
@@ -50,6 +27,8 @@ private struct MainFeedContent: View {
             .automatic
         #endif
     }
+
+    // MARK: - Layout
 
     var body: some View {
         content
@@ -68,8 +47,9 @@ private struct MainFeedContent: View {
             .scrollDismissesKeyboard(.immediately)
             #if os(iOS)
             .textInputAutocapitalization(.never)
-            #elseif os(macOS)
+            #endif
             .toolbar {
+                #if os(macOS)
                 ToolbarItem {
                     Button {
                         viewStore.send(.refresh)
@@ -79,8 +59,21 @@ private struct MainFeedContent: View {
                     .disabled(viewStore.isDoingInitialLoading)
                     .keyboardShortcut("R", modifiers: .command)
                 }
+                #endif
+
+                ToolbarItem {
+                    Button {
+                        viewStore.send(.presentFilters)
+                    } label: {
+                        Label("Filters", systemImage: "line.3.horizontal.decrease")
+                    }
+                }
             }
-            #endif
+            .sheet(isPresented: isFilterEditorPresented) {
+                IfLetStore(store.scope(state: { $0.filterEditorState }, action: { .filterEditor($0) })) { store in
+                    FilterEditorView(store: store)
+                }
+            }
     }
 
     @ViewBuilder
@@ -141,6 +134,40 @@ private struct MainFeedContent: View {
         let itemCount = Int((availableWidth / preferredItemWidth).rounded(.toNearestOrAwayFromZero))
         let item = GridItem(.flexible(), spacing: spacing)
         return Array(repeating: item, count: itemCount)
+    }
+
+    // MARK: - Bindings
+
+    var searchTextBinding: Binding<String> {
+        viewStore.binding {
+            $0.searchText
+        } send: {
+            .updateSearchText($0)
+        }
+    }
+
+    var tokenBinding: Binding<IdentifiedArrayOf<TagToken>> {
+        viewStore.binding {
+            $0.tags
+        } send: {
+            .updateTags($0)
+        }
+    }
+
+    var suggestedTokenBinding: Binding<IdentifiedArrayOf<TagToken>> {
+        Binding {
+            viewStore.suggestedTags
+        } set: { _ in
+            // Do nothing
+        }
+    }
+
+    var isFilterEditorPresented: Binding<Bool> {
+        viewStore.binding { state in
+            state.filterEditorState != nil
+        } send: { newValue in
+            newValue ? .presentFilters : .dismissFilters
+        }
     }
 
 }

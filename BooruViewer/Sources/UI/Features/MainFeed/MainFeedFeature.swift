@@ -11,17 +11,24 @@ struct MainFeedFeature: ReducerProtocol {
         var searchText = ""
         var tags: IdentifiedArrayOf<TagToken> = []
         var suggestedTags: IdentifiedArrayOf<TagToken> = []
+        var filters = GetPostsFilters()
+
+        var filterEditorState: FilterEditorFeature.State?
     }
 
     enum Action: Equatable {
         case appear
         case refresh
+        case presentFilters
         case postAppeared(Post)
         case updateSearchText(String)
         case updateTags(IdentifiedArrayOf<TagToken>)
 
         case updateFeedState(FeedState)
         case tagsResponse([Tag])
+        case dismissFilters
+
+        case filterEditor(FilterEditorFeature.Action)
     }
 
     private enum Operation: Hashable {
@@ -42,8 +49,16 @@ struct MainFeedFeature: ReducerProtocol {
         self.feed = FeedImpl(sankakuAPI: sankakuAPI)
     }
 
-    func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
+    var body: some ReducerProtocol<State, Action> {
+        Reduce(core)
+            .ifLet(\.filterEditorState, action: /Action.filterEditor) {
+                FilterEditorFeature()
+            }
+    }
+
+    func core(state: inout State, action: Action) -> EffectTask<Action> {
         func reload() {
+            feed.filters = state.filters
             feed.setTagTokens(state.tags)
             feed.reload()
         }
@@ -64,6 +79,11 @@ struct MainFeedFeature: ReducerProtocol {
 
         case .refresh:
             reload()
+
+            return .none
+
+        case .presentFilters:
+            state.filterEditorState = .init(filters: state.filters)
 
             return .none
 
@@ -95,6 +115,7 @@ struct MainFeedFeature: ReducerProtocol {
                 return .cancel(id: Operation.loadTagSuggestions)
             }
 
+            // FIXME: Debounce tag search
             return .task {
                 let tags = try await sankakuAPI.autoSuggestTags(for: newSearchText)
                 return .tagsResponse(tags)
@@ -127,6 +148,28 @@ struct MainFeedFeature: ReducerProtocol {
 
             state.suggestedTags = IdentifiedArray(uncheckedUniqueElements: tagTokens)
 
+            return .none
+
+        case .dismissFilters:
+            state.filterEditorState = nil
+
+            return .none
+
+        case .filterEditor(.apply):
+            guard let newFilters = state.filterEditorState?.filters else {
+                assertionFailure("Filter editor should be present at this point.")
+                return .none
+            }
+
+            state.filters = newFilters
+            state.filterEditorState = nil
+
+            reload()
+
+            return .none
+
+        case .filterEditor:
+            // Do nothing
             return .none
         }
     }

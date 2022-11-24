@@ -25,18 +25,29 @@ private struct FilterEditorContent: View {
 
     @ObservedObject var viewStore: ViewStoreOf<FilterEditorFeature>
 
+    var applyButtonPlacement: ToolbarItemPlacement {
+        #if os(iOS)
+        .navigationBarTrailing
+        #else
+        .automatic
+        #endif
+    }
+
     // MARK: - Layout
 
     var body: some View {
         NavigationStack {
             form
                 .navigationTitle("Filters")
+                #if os(iOS)
                 .navigationBarTitleDisplayMode(.inline)
+                #endif
                 .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
+                    ToolbarItem(placement: applyButtonPlacement) {
                         Button("Apply") {
                             viewStore.send(.apply)
                         }
+                        .disabled(!viewStore.isApplyButtonActive)
                     }
                 }
         }
@@ -104,7 +115,7 @@ struct FilterEditorView_Previews: PreviewProvider {
     static var previews: some View {
         FilterEditorView(
             store: Store(
-                initialState: FilterEditorFeature.State(),
+                initialState: FilterEditorFeature.State(filters: .init()),
                 reducer: FilterEditorFeature()
             )
         )

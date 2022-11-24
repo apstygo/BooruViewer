@@ -4,7 +4,17 @@ import SankakuAPI
 struct FilterEditorFeature: ReducerProtocol {
 
     struct State: Equatable {
-        var filters = GetPostsFilters()
+        var initialFilters: GetPostsFilters
+        var filters: GetPostsFilters
+
+        init(filters: GetPostsFilters) {
+            self.initialFilters = filters
+            self.filters = filters
+        }
+
+        var isApplyButtonActive: Bool {
+            initialFilters != filters
+        }
     }
 
     enum Action: Equatable {
@@ -16,7 +26,7 @@ struct FilterEditorFeature: ReducerProtocol {
     func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
         switch action {
         case .apply:
-            // TODO: Implement
+            // Handled by parent
             return .none
 
         case let .setFilters(newFilters):
