@@ -19,6 +19,8 @@
 		2E7A1DD128FDAB320009304D /* PostPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7A1DD028FDAB320009304D /* PostPreview.swift */; };
 		2E7A1DD328FE11F10009304D /* ContextMenuPostPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7A1DD228FE11F10009304D /* ContextMenuPostPreview.swift */; };
 		2EA09EF7292E6C660075F503 /* TagToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA09EF6292E6C660075F503 /* TagToken.swift */; };
+		2EA09EFB292F37E40075F503 /* FilterEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA09EFA292F37E40075F503 /* FilterEditorView.swift */; };
+		2EA09EFD292F38470075F503 /* FilterEditorFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA09EFC292F38470075F503 /* FilterEditorFeature.swift */; };
 		2EA878B0292D3EAA00AC197F /* BooruViewerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA878AF292D3EAA00AC197F /* BooruViewerApp.swift */; };
 		2EA878B3292DD34100AC197F /* MainFeedFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA878B2292DD34100AC197F /* MainFeedFeature.swift */; };
 		2EA878B6292DD3A000AC197F /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 2EA878B5292DD3A000AC197F /* ComposableArchitecture */; };
@@ -37,6 +39,8 @@
 		2E7A1DD028FDAB320009304D /* PostPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPreview.swift; sourceTree = "<group>"; };
 		2E7A1DD228FE11F10009304D /* ContextMenuPostPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenuPostPreview.swift; sourceTree = "<group>"; };
 		2EA09EF6292E6C660075F503 /* TagToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagToken.swift; sourceTree = "<group>"; };
+		2EA09EFA292F37E40075F503 /* FilterEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterEditorView.swift; sourceTree = "<group>"; };
+		2EA09EFC292F38470075F503 /* FilterEditorFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterEditorFeature.swift; sourceTree = "<group>"; };
 		2EA878AF292D3EAA00AC197F /* BooruViewerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooruViewerApp.swift; sourceTree = "<group>"; };
 		2EA878B2292DD34100AC197F /* MainFeedFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeedFeature.swift; sourceTree = "<group>"; };
 		2EA878B9292DD45300AC197F /* MainFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeedView.swift; sourceTree = "<group>"; };
@@ -109,11 +113,29 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		2EA878B1292D431600AC197F /* Features */ = {
+		2EA09EF8292F37A50075F503 /* MainFeed */ = {
 			isa = PBXGroup;
 			children = (
 				2EA878B2292DD34100AC197F /* MainFeedFeature.swift */,
 				2EA878B9292DD45300AC197F /* MainFeedView.swift */,
+			);
+			path = MainFeed;
+			sourceTree = "<group>";
+		};
+		2EA09EF9292F37D00075F503 /* FilterEditor */ = {
+			isa = PBXGroup;
+			children = (
+				2EA09EFC292F38470075F503 /* FilterEditorFeature.swift */,
+				2EA09EFA292F37E40075F503 /* FilterEditorView.swift */,
+			);
+			path = FilterEditor;
+			sourceTree = "<group>";
+		};
+		2EA878B1292D431600AC197F /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				2EA09EF9292F37D00075F503 /* FilterEditor */,
+				2EA09EF8292F37A50075F503 /* MainFeed */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -272,9 +294,11 @@
 				2E6A432328F70B4D00F89556 /* TagView.swift in Sources */,
 				2EA09EF7292E6C660075F503 /* TagToken.swift in Sources */,
 				2EBCD1E72905ADF60087D2D4 /* SecureStore.swift in Sources */,
+				2EA09EFB292F37E40075F503 /* FilterEditorView.swift in Sources */,
 				2EE9B30C28FEF8C1005C22CD /* AnyPublisher+Extension.swift in Sources */,
 				2E37DA022905672100C916CC /* AuthInfoStorage.swift in Sources */,
 				2E76825D2907202D00ECC68C /* AccessTokenProvider.swift in Sources */,
+				2EA09EFD292F38470075F503 /* FilterEditorFeature.swift in Sources */,
 				2EA878BA292DD45300AC197F /* MainFeedView.swift in Sources */,
 				2EA878B0292D3EAA00AC197F /* BooruViewerApp.swift in Sources */,
 				2E7A1DD128FDAB320009304D /* PostPreview.swift in Sources */,

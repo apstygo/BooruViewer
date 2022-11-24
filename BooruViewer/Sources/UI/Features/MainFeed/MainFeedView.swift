@@ -65,6 +65,7 @@ private struct MainFeedContent: View {
             ) { token in
                 TagView(tagToken: token)
             }
+            .scrollDismissesKeyboard(.immediately)
             #if os(iOS)
             .textInputAutocapitalization(.never)
             #elseif os(macOS)
@@ -80,8 +81,6 @@ private struct MainFeedContent: View {
                 }
             }
             #endif
-            .scrollDismissesKeyboard(.immediately)
-
     }
 
     @ViewBuilder
