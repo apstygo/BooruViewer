@@ -67,8 +67,21 @@ private struct MainFeedContent: View {
             }
             #if os(iOS)
             .textInputAutocapitalization(.never)
+            #elseif os(macOS)
+            .toolbar {
+                ToolbarItem {
+                    Button {
+                        viewStore.send(.refresh)
+                    } label: {
+                        Label("Reload", systemImage: "arrow.clockwise")
+                    }
+                    .disabled(viewStore.isDoingInitialLoading)
+                    .keyboardShortcut("R", modifiers: .command)
+                }
+            }
             #endif
             .scrollDismissesKeyboard(.immediately)
+
     }
 
     @ViewBuilder
@@ -83,7 +96,7 @@ private struct MainFeedContent: View {
                             }
                         }
 
-                        if !viewStore.shouldPresentFullscreenLoader {
+                        if !viewStore.isDoingInitialLoading {
                             ProgressView()
                         }
                     }
@@ -93,7 +106,7 @@ private struct MainFeedContent: View {
                 viewStore.send(.refresh)
             }
 
-            if viewStore.shouldPresentFullscreenLoader {
+            if viewStore.isDoingInitialLoading {
                 ProgressView()
             }
         }
@@ -166,7 +179,7 @@ extension Color {
 
 extension MainFeedFeature.State {
 
-    fileprivate var shouldPresentFullscreenLoader: Bool {
+    fileprivate var isDoingInitialLoading: Bool {
         switch (posts.isEmpty, feedPhase) {
         case (true, .idle), (true, .loading):
             return true
