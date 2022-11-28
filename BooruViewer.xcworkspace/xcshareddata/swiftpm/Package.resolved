@@ -1,6 +1,15 @@
 {
   "pins" : [
     {
+      "identity" : "asyncview",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ralfebert/AsyncView/",
+      "state" : {
+        "revision" : "62905b5289b766911c4d464517dce64b3b973100",
+        "version" : "0.5.1"
+      }
+    },
+    {
       "identity" : "combine-schedulers",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/combine-schedulers",
@@ -97,6 +106,15 @@
       "state" : {
         "revision" : "4b666bcc59ba1711a7543ecb37e1d181963b180c",
         "version" : "0.4.2"
+      }
+    },
+    {
+      "identity" : "swiftuiflow",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ciaranrobrien/SwiftUIFlow",
+      "state" : {
+        "branch" : "main",
+        "revision" : "b300d3c0110116f3520066dfb8dcf3006cf593c3"
       }
     },
     {

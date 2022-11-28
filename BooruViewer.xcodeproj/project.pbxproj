@@ -21,11 +21,15 @@
 		2EA09EF7292E6C660075F503 /* TagToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA09EF6292E6C660075F503 /* TagToken.swift */; };
 		2EA09EFB292F37E40075F503 /* FilterEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA09EFA292F37E40075F503 /* FilterEditorView.swift */; };
 		2EA09EFD292F38470075F503 /* FilterEditorFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA09EFC292F38470075F503 /* FilterEditorFeature.swift */; };
+		2EA09F00292FAE540075F503 /* PostDetailFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA09EFF292FAE540075F503 /* PostDetailFeature.swift */; };
+		2EA09F04292FB2880075F503 /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA09F03292FB2880075F503 /* PostDetailView.swift */; };
+		2EA09F0C292FBC080075F503 /* AsyncView in Frameworks */ = {isa = PBXBuildFile; productRef = 2EA09F0B292FBC080075F503 /* AsyncView */; };
 		2EA878B0292D3EAA00AC197F /* BooruViewerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA878AF292D3EAA00AC197F /* BooruViewerApp.swift */; };
 		2EA878B3292DD34100AC197F /* MainFeedFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA878B2292DD34100AC197F /* MainFeedFeature.swift */; };
 		2EA878B6292DD3A000AC197F /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 2EA878B5292DD3A000AC197F /* ComposableArchitecture */; };
 		2EA878BA292DD45300AC197F /* MainFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA878B9292DD45300AC197F /* MainFeedView.swift */; };
 		2EBCD1E72905ADF60087D2D4 /* SecureStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBCD1E62905ADF60087D2D4 /* SecureStore.swift */; };
+		2ECB9CD329348DF100CA5EA1 /* SwiftUIFlow in Frameworks */ = {isa = PBXBuildFile; productRef = 2ECB9CD229348DF100CA5EA1 /* SwiftUIFlow */; };
 		2ED2CD9728F56C36001CA186 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2ED2CD9628F56C36001CA186 /* Assets.xcassets */; };
 		2EE9B30C28FEF8C1005C22CD /* AnyPublisher+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE9B30B28FEF8C1005C22CD /* AnyPublisher+Extension.swift */; };
 /* End PBXBuildFile section */
@@ -41,6 +45,8 @@
 		2EA09EF6292E6C660075F503 /* TagToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagToken.swift; sourceTree = "<group>"; };
 		2EA09EFA292F37E40075F503 /* FilterEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterEditorView.swift; sourceTree = "<group>"; };
 		2EA09EFC292F38470075F503 /* FilterEditorFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterEditorFeature.swift; sourceTree = "<group>"; };
+		2EA09EFF292FAE540075F503 /* PostDetailFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailFeature.swift; sourceTree = "<group>"; };
+		2EA09F03292FB2880075F503 /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
 		2EA878AF292D3EAA00AC197F /* BooruViewerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooruViewerApp.swift; sourceTree = "<group>"; };
 		2EA878B2292DD34100AC197F /* MainFeedFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeedFeature.swift; sourceTree = "<group>"; };
 		2EA878B9292DD45300AC197F /* MainFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeedView.swift; sourceTree = "<group>"; };
@@ -58,7 +64,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				2EA878B6292DD3A000AC197F /* ComposableArchitecture in Frameworks */,
+				2ECB9CD329348DF100CA5EA1 /* SwiftUIFlow in Frameworks */,
 				2E6A433828F9AA3900F89556 /* SDWebImageSwiftUI in Frameworks */,
+				2EA09F0C292FBC080075F503 /* AsyncView in Frameworks */,
 				2E34452928F6025C004C4188 /* Collections in Frameworks */,
 				2E02815028F57883001A2ED4 /* SankakuAPI in Frameworks */,
 				2E6A431728F6289200F89556 /* CombineExt in Frameworks */,
@@ -131,11 +139,21 @@
 			path = FilterEditor;
 			sourceTree = "<group>";
 		};
+		2EA09EFE292FAE450075F503 /* PostDetail */ = {
+			isa = PBXGroup;
+			children = (
+				2EA09EFF292FAE540075F503 /* PostDetailFeature.swift */,
+				2EA09F03292FB2880075F503 /* PostDetailView.swift */,
+			);
+			path = PostDetail;
+			sourceTree = "<group>";
+		};
 		2EA878B1292D431600AC197F /* Features */ = {
 			isa = PBXGroup;
 			children = (
 				2EA09EF9292F37D00075F503 /* FilterEditor */,
 				2EA09EF8292F37A50075F503 /* MainFeed */,
+				2EA09EFE292FAE450075F503 /* PostDetail */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -227,6 +245,8 @@
 				2E6A431628F6289200F89556 /* CombineExt */,
 				2E6A433728F9AA3900F89556 /* SDWebImageSwiftUI */,
 				2EA878B5292DD3A000AC197F /* ComposableArchitecture */,
+				2EA09F0B292FBC080075F503 /* AsyncView */,
+				2ECB9CD229348DF100CA5EA1 /* SwiftUIFlow */,
 			);
 			productName = BooruViewer;
 			productReference = 2ED2CD8F28F56C36001CA186 /* BooruViewer.app */;
@@ -261,6 +281,8 @@
 				2E6A431528F6289200F89556 /* XCRemoteSwiftPackageReference "CombineExt" */,
 				2E6A433628F9AA3900F89556 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 				2EA878B4292DD3A000AC197F /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+				2EA09F0A292FBC080075F503 /* XCRemoteSwiftPackageReference "AsyncView" */,
+				2ECB9CD129348DF100CA5EA1 /* XCRemoteSwiftPackageReference "SwiftUIFlow" */,
 			);
 			productRefGroup = 2ED2CD9028F56C36001CA186 /* Products */;
 			projectDirPath = "";
@@ -294,12 +316,14 @@
 				2E6A432328F70B4D00F89556 /* TagView.swift in Sources */,
 				2EA09EF7292E6C660075F503 /* TagToken.swift in Sources */,
 				2EBCD1E72905ADF60087D2D4 /* SecureStore.swift in Sources */,
+				2EA09F00292FAE540075F503 /* PostDetailFeature.swift in Sources */,
 				2EA09EFB292F37E40075F503 /* FilterEditorView.swift in Sources */,
 				2EE9B30C28FEF8C1005C22CD /* AnyPublisher+Extension.swift in Sources */,
 				2E37DA022905672100C916CC /* AuthInfoStorage.swift in Sources */,
 				2E76825D2907202D00ECC68C /* AccessTokenProvider.swift in Sources */,
 				2EA09EFD292F38470075F503 /* FilterEditorFeature.swift in Sources */,
 				2EA878BA292DD45300AC197F /* MainFeedView.swift in Sources */,
+				2EA09F04292FB2880075F503 /* PostDetailView.swift in Sources */,
 				2EA878B0292D3EAA00AC197F /* BooruViewerApp.swift in Sources */,
 				2E7A1DD128FDAB320009304D /* PostPreview.swift in Sources */,
 			);
@@ -547,9 +571,25 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		2EA09F0A292FBC080075F503 /* XCRemoteSwiftPackageReference "AsyncView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ralfebert/AsyncView/";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.5.1;
+			};
+		};
 		2EA878B4292DD3A000AC197F /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		2ECB9CD129348DF100CA5EA1 /* XCRemoteSwiftPackageReference "SwiftUIFlow" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ciaranrobrien/SwiftUIFlow";
 			requirement = {
 				branch = main;
 				kind = branch;
@@ -577,10 +617,20 @@
 			package = 2E6A433628F9AA3900F89556 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
 			productName = SDWebImageSwiftUI;
 		};
+		2EA09F0B292FBC080075F503 /* AsyncView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2EA09F0A292FBC080075F503 /* XCRemoteSwiftPackageReference "AsyncView" */;
+			productName = AsyncView;
+		};
 		2EA878B5292DD3A000AC197F /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 2EA878B4292DD3A000AC197F /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
+		};
+		2ECB9CD229348DF100CA5EA1 /* SwiftUIFlow */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2ECB9CD129348DF100CA5EA1 /* XCRemoteSwiftPackageReference "SwiftUIFlow" */;
+			productName = SwiftUIFlow;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
