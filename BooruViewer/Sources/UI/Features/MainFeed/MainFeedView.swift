@@ -1,5 +1,6 @@
 import SwiftUI
 import ComposableArchitecture
+import SwiftUINavigation
 import SankakuAPI
 
 struct MainFeedView: View {
@@ -74,6 +75,11 @@ private struct MainFeedContent: View {
                     FilterEditorView(store: store)
                 }
             }
+            .navigationDestination(isPresented: isPostDetailPresented) {
+                IfLetStore(store.scope(state: { $0.postDetailState }, action: { .postDetail($0) })) { store in
+                    PostDetailView(store: store)
+                }
+            }
     }
 
     @ViewBuilder
@@ -110,6 +116,12 @@ private struct MainFeedContent: View {
         PostPreview(post: post)
             .contextMenu {
                 Button {
+                    viewStore.send(.openPost(post))
+                } label: {
+                    Label("Open post", systemImage: "photo")
+                }
+
+                Button {
                     // Do nothing
                 } label: {
                     Label("Favorite", systemImage: "heart")
@@ -118,7 +130,7 @@ private struct MainFeedContent: View {
 
                 if let sourceURL = post.sourceURL {
                     Link(destination: sourceURL) {
-                        Label("Go to source", systemImage: "photo")
+                        Label("Go to source", systemImage: "link")
                     }
                 }
 
@@ -127,6 +139,9 @@ private struct MainFeedContent: View {
             }
             .onAppear {
                 viewStore.send(.postAppeared(post))
+            }
+            .onTapGesture {
+                viewStore.send(.openPost(post))
             }
     }
 
@@ -167,6 +182,14 @@ private struct MainFeedContent: View {
             state.filterEditorState != nil
         } send: { newValue in
             newValue ? .presentFilters : .dismissFilters
+        }
+    }
+
+    var isPostDetailPresented: Binding<Bool> {
+        viewStore.binding { state in
+            state.postDetailState != nil
+        } send: { newValue in
+            .dismissPost
         }
     }
 

@@ -13,22 +13,30 @@ struct MainFeedFeature: ReducerProtocol {
         var suggestedTags: IdentifiedArrayOf<TagToken> = []
         var filters = GetPostsFilters()
 
-        var filterEditorState: FilterEditorFeature.State?
+        var destination: Destination?
     }
 
     enum Action: Equatable {
         case appear
         case refresh
         case presentFilters
+        case dismissFilters
         case postAppeared(Post)
+        case openPost(Post)
+        case dismissPost
         case updateSearchText(String)
         case updateTags(IdentifiedArrayOf<TagToken>)
 
         case updateFeedState(FeedState)
         case tagsResponse([Tag])
-        case dismissFilters
 
         case filterEditor(FilterEditorFeature.Action)
+        case postDetail(PostDetailFeature.Action)
+    }
+
+    enum Destination: Equatable {
+        case filterEditor(FilterEditorFeature.State)
+        case postDetail(PostDetailFeature.State)
     }
 
     private enum Operation: Hashable {
@@ -69,6 +77,8 @@ struct MainFeedFeature: ReducerProtocol {
                 return .none
             }
 
+            state.didAppear = true
+
             feed.reload()
 
             return .run { send in
@@ -83,7 +93,7 @@ struct MainFeedFeature: ReducerProtocol {
             return .none
 
         case .presentFilters:
-            state.filterEditorState = .init(filters: state.filters)
+            state.destination = .filterEditor(.init(filters: state.filters))
 
             return .none
 
@@ -93,6 +103,16 @@ struct MainFeedFeature: ReducerProtocol {
             }
 
             feed.loadPage(forItemAt: index)
+
+            return .none
+
+        case let .openPost(post):
+            state.destination = .postDetail(.init(post: post))
+
+            return .none
+
+        case .dismissPost:
+            state.destination = nil
 
             return .none
 
@@ -151,7 +171,7 @@ struct MainFeedFeature: ReducerProtocol {
             return .none
 
         case .dismissFilters:
-            state.filterEditorState = nil
+            state.destination = nil
 
             return .none
 
@@ -162,13 +182,17 @@ struct MainFeedFeature: ReducerProtocol {
             }
 
             state.filters = newFilters
-            state.filterEditorState = nil
+            state.destination = nil
 
             reload()
 
             return .none
 
         case .filterEditor:
+            // Do nothing
+            return .none
+
+        case .postDetail:
             // Do nothing
             return .none
         }
@@ -195,6 +219,40 @@ extension Feed {
             }
 
             return string
+        }
+    }
+
+}
+
+extension MainFeedFeature.State {
+
+    var filterEditorState: FilterEditorFeature.State? {
+        get {
+            switch destination {
+            case let .filterEditor(state):
+                return state
+
+            default:
+                return nil
+            }
+        }
+        set {
+            destination = newValue.map { .filterEditor($0) }
+        }
+    }
+
+    var postDetailState: PostDetailFeature.State? {
+        get {
+            switch destination {
+            case let .postDetail(state):
+                return state
+
+            default:
+                return nil
+            }
+        }
+        set {
+            destination = newValue.map { .postDetail($0) }
         }
     }
 
