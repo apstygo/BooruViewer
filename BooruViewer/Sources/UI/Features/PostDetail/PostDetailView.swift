@@ -39,6 +39,7 @@ private struct PostDetailContent: View {
                 .padding(.horizontal, 12)
             }
         }
+        .navigationBarTitleDisplayMode(.inline)
     }
 
 }
@@ -59,12 +60,9 @@ private struct PostImageView: View {
             .resizable()
             .onProgress { value, total in
                 progressValue = Float(value)
-                progressTotal = Float(total)
+                progressTotal = max(0, Float(total))
             }
             .scaledToFit()
-            .overlay(alignment: .bottom) {
-                loadingProgress
-            }
     }
 
     @ViewBuilder
@@ -72,7 +70,9 @@ private struct PostImageView: View {
         WebImage(url: viewModel.previewURL, options: .highPriority)
             .resizable()
             .scaledToFit()
-            .opacity(0.5)
+            .overlay(alignment: .bottom) {
+                loadingProgress
+            }
     }
 
     @ViewBuilder
