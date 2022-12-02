@@ -43,18 +43,14 @@ struct MainFeedFeature: ReducerProtocol {
         case loadTagSuggestions
     }
 
-    let sankakuAPI: SankakuAPI
-    let feed: Feed
+    private let sankakuAPI: SankakuAPI
+    private let feed: Feed
 
     init() {
-        let configuration: URLSessionConfiguration = .default
-        configuration.waitsForConnectivity = true
-        configuration.timeoutIntervalForRequest = .infinity
-        configuration.timeoutIntervalForResource = .infinity
+        @Dependency(\.sankakuAPI) var sharedAPI
 
-        let urlSession = URLSession(configuration: configuration)
-        self.sankakuAPI = SankakuAPI(urlSession: urlSession)
-        self.feed = FeedImpl(sankakuAPI: sankakuAPI)
+        self.sankakuAPI = sharedAPI
+        self.feed = FeedImpl(sankakuAPI: sharedAPI)
     }
 
     var body: some ReducerProtocol<State, Action> {

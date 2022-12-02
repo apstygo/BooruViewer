@@ -88,7 +88,7 @@ private struct MainFeedContent: View {
             GeometryReader { gr in
                 ScrollView {
                     VStack {
-                        LazyVGrid(columns: calculateColumns(availableWidth: gr.size.width, preferredItemWidth: 200), spacing: spacing) {
+                        LazyVGrid(columns: .dynamic(availableWidth: gr.size.width, spacing: spacing), spacing: spacing) {
                             ForEach(viewStore.posts) { post in
                                 item(for: post)
                             }
@@ -143,12 +143,6 @@ private struct MainFeedContent: View {
             .onTapGesture {
                 viewStore.send(.openPost(post))
             }
-    }
-
-    func calculateColumns(availableWidth: CGFloat, preferredItemWidth: CGFloat) -> [GridItem] {
-        let itemCount = Int((availableWidth / preferredItemWidth).rounded(.toNearestOrAwayFromZero))
-        let item = GridItem(.flexible(), spacing: spacing)
-        return Array(repeating: item, count: itemCount)
     }
 
     // MARK: - Bindings
@@ -213,18 +207,6 @@ struct MainFeedView_Previews: PreviewProvider {
 }
 
 // MARK: - Helpers
-
-extension Color {
-
-    fileprivate static var random: Color {
-        Color(
-            red: .random(in: 0..<1),
-            green: .random(in: 0..<1),
-            blue: .random(in: 0..<1)
-        )
-    }
-
-}
 
 extension MainFeedFeature.State {
 

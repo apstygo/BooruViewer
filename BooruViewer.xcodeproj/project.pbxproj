@@ -30,6 +30,9 @@
 		2EA878BA292DD45300AC197F /* MainFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA878B9292DD45300AC197F /* MainFeedView.swift */; };
 		2EBCD1E72905ADF60087D2D4 /* SecureStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBCD1E62905ADF60087D2D4 /* SecureStore.swift */; };
 		2ECB9CD329348DF100CA5EA1 /* SwiftUIFlow in Frameworks */ = {isa = PBXBuildFile; productRef = 2ECB9CD229348DF100CA5EA1 /* SwiftUIFlow */; };
+		2ECB9CD929365FF300CA5EA1 /* SankakuAPIDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECB9CD829365FF300CA5EA1 /* SankakuAPIDependency.swift */; };
+		2ECB9CDD293662B900CA5EA1 /* URLSession+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECB9CDC293662B900CA5EA1 /* URLSession+Extension.swift */; };
+		2ECB9CE129366FE800CA5EA1 /* GridItem+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECB9CE029366FE800CA5EA1 /* GridItem+Extension.swift */; };
 		2ED2CD9728F56C36001CA186 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2ED2CD9628F56C36001CA186 /* Assets.xcassets */; };
 		2EE9B30C28FEF8C1005C22CD /* AnyPublisher+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE9B30B28FEF8C1005C22CD /* AnyPublisher+Extension.swift */; };
 /* End PBXBuildFile section */
@@ -51,6 +54,9 @@
 		2EA878B2292DD34100AC197F /* MainFeedFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeedFeature.swift; sourceTree = "<group>"; };
 		2EA878B9292DD45300AC197F /* MainFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeedView.swift; sourceTree = "<group>"; };
 		2EBCD1E62905ADF60087D2D4 /* SecureStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureStore.swift; sourceTree = "<group>"; };
+		2ECB9CD829365FF300CA5EA1 /* SankakuAPIDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SankakuAPIDependency.swift; sourceTree = "<group>"; };
+		2ECB9CDC293662B900CA5EA1 /* URLSession+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+Extension.swift"; sourceTree = "<group>"; };
+		2ECB9CE029366FE800CA5EA1 /* GridItem+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GridItem+Extension.swift"; sourceTree = "<group>"; };
 		2ED2CD8F28F56C36001CA186 /* BooruViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BooruViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2ED2CD9628F56C36001CA186 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2ED2CD9828F56C36001CA186 /* BooruViewer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BooruViewer.entitlements; sourceTree = "<group>"; };
@@ -117,6 +123,8 @@
 			isa = PBXGroup;
 			children = (
 				2EE9B30B28FEF8C1005C22CD /* AnyPublisher+Extension.swift */,
+				2ECB9CDC293662B900CA5EA1 /* URLSession+Extension.swift */,
+				2ECB9CE029366FE800CA5EA1 /* GridItem+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -158,6 +166,14 @@
 			path = Features;
 			sourceTree = "<group>";
 		};
+		2ECB9CD729365FE500CA5EA1 /* DI */ = {
+			isa = PBXGroup;
+			children = (
+				2ECB9CD829365FF300CA5EA1 /* SankakuAPIDependency.swift */,
+			);
+			path = DI;
+			sourceTree = "<group>";
+		};
 		2ED2CD8628F56C36001CA186 = {
 			isa = PBXGroup;
 			children = (
@@ -187,6 +203,7 @@
 		2ED2CDA128F570A0001CA186 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				2ECB9CD729365FE500CA5EA1 /* DI */,
 				2E7A1DC528FCA7420009304D /* Extensions */,
 				2E6A433128F89ADA00F89556 /* Model */,
 				2EE9B2FF28FEAD04005C22CD /* UI */,
@@ -312,6 +329,8 @@
 				2E7A1DAE28FC17470009304D /* Feed.swift in Sources */,
 				2E7A1DD328FE11F10009304D /* ContextMenuPostPreview.swift in Sources */,
 				2E37DA00290566A700C916CC /* AuthInfo.swift in Sources */,
+				2ECB9CD929365FF300CA5EA1 /* SankakuAPIDependency.swift in Sources */,
+				2ECB9CE129366FE800CA5EA1 /* GridItem+Extension.swift in Sources */,
 				2EA878B3292DD34100AC197F /* MainFeedFeature.swift in Sources */,
 				2E6A432328F70B4D00F89556 /* TagView.swift in Sources */,
 				2EA09EF7292E6C660075F503 /* TagToken.swift in Sources */,
@@ -320,6 +339,7 @@
 				2EA09EFB292F37E40075F503 /* FilterEditorView.swift in Sources */,
 				2EE9B30C28FEF8C1005C22CD /* AnyPublisher+Extension.swift in Sources */,
 				2E37DA022905672100C916CC /* AuthInfoStorage.swift in Sources */,
+				2ECB9CDD293662B900CA5EA1 /* URLSession+Extension.swift in Sources */,
 				2E76825D2907202D00ECC68C /* AccessTokenProvider.swift in Sources */,
 				2EA09EFD292F38470075F503 /* FilterEditorFeature.swift in Sources */,
 				2EA878BA292DD45300AC197F /* MainFeedView.swift in Sources */,
