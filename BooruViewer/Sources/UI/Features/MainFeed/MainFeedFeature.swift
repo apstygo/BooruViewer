@@ -58,6 +58,9 @@ struct MainFeedFeature: ReducerProtocol {
             .ifLet(\.filterEditorState, action: /Action.filterEditor) {
                 FilterEditorFeature()
             }
+            .ifLet(\.postDetailState, action: /Action.postDetail) {
+                PostDetailFeature()
+            }
     }
 
     func core(state: inout State, action: Action) -> EffectTask<Action> {
