@@ -129,6 +129,7 @@ final class FeedImpl: Feed {
             state.phase = (postsResponse.data.count == Constant.pageSize) ? .idle : .finished
         }
         catch {
+            print("⚠️ \(error)")
             state.phase = .error
         }
     }
