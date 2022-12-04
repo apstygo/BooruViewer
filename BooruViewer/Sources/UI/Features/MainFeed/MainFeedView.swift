@@ -5,20 +5,13 @@ import SankakuAPI
 
 struct MainFeedView: View {
 
-    let store: StoreOf<MainFeedFeature>
+    // MARK: - Internal Types
 
-    var body: some View {
-        WithViewStore(store, observe: { State(featureState: $0) }) { viewStore in
-            MainFeedContent(store: store, viewStore: viewStore)
-        }
-    }
+    typealias ViewStore = ComposableArchitecture.ViewStore<MainFeedView.State, MainFeedFeature.Action>
 
-}
-
-private struct MainFeedContent: View {
+    // MARK: - Internal Properties
 
     let store: StoreOf<MainFeedFeature>
-    @ObservedObject var viewStore: ViewStore<MainFeedView.State, MainFeedFeature.Action>
     let spacing: CGFloat = 2
 
     var searchFieldPlacement: SearchFieldPlacement {
@@ -32,14 +25,20 @@ private struct MainFeedContent: View {
     // MARK: - Layout
 
     var body: some View {
-        content
+        WithViewStore(store, observe: { State(featureState: $0) }) { viewStore in
+            body(viewStore: viewStore)
+        }
+    }
+
+    func body(viewStore: ViewStore) -> some View {
+        feed(viewStore: viewStore)
             .onAppear {
                 viewStore.send(.appear)
             }
             .searchable(
-                text: searchTextBinding,
-                tokens: tokenBinding,
-                suggestedTokens: suggestedTokenBinding,
+                text: searchText(viewStore: viewStore),
+                tokens: tokens(viewStore: viewStore),
+                suggestedTokens: suggestedTokens(viewStore: viewStore),
                 placement: searchFieldPlacement,
                 prompt: "Search using tags"
             ) { token in
@@ -70,27 +69,26 @@ private struct MainFeedContent: View {
                     }
                 }
             }
-            .sheet(isPresented: isFilterEditorPresented) {
+            .sheet(isPresented: isFilterEditorPresented(viewStore: viewStore)) {
                 IfLetStore(store.scope(state: { $0.filterEditorState }, action: { .filterEditor($0) })) { store in
                     FilterEditorView(store: store)
                 }
             }
-            .navigationDestination(isPresented: isPostDetailPresented) {
+            .navigationDestination(isPresented: isPostDetailPresented(viewStore: viewStore)) {
                 IfLetStore(store.scope(state: { $0.postDetailState }, action: { .postDetail($0) })) { store in
                     PostDetailView(store: store)
                 }
             }
     }
 
-    @ViewBuilder
-    var content: some View {
+    func feed(viewStore: ViewStore) -> some View {
         ZStack {
             GeometryReader { gr in
                 ScrollView {
                     VStack {
                         LazyVGrid(columns: .dynamic(availableWidth: gr.size.width, spacing: spacing), spacing: spacing) {
                             ForEach(viewStore.posts) { post in
-                                item(for: post)
+                                item(viewStore: viewStore, post: post)
                             }
                         }
 
@@ -111,8 +109,7 @@ private struct MainFeedContent: View {
         .animation(.default, value: viewStore.posts)
     }
 
-    @ViewBuilder
-    func item(for post: Post) -> some View {
+    func item(viewStore: ViewStore, post: Post) -> some View {
         PostPreview(post: post)
             .contextMenu {
                 Button {
@@ -147,7 +144,7 @@ private struct MainFeedContent: View {
 
     // MARK: - Bindings
 
-    var searchTextBinding: Binding<String> {
+    func searchText(viewStore: ViewStore) -> Binding<String> {
         viewStore.binding {
             $0.searchText
         } send: {
@@ -155,7 +152,7 @@ private struct MainFeedContent: View {
         }
     }
 
-    var tokenBinding: Binding<IdentifiedArrayOf<TagToken>> {
+    func tokens(viewStore: ViewStore) -> Binding<IdentifiedArrayOf<TagToken>> {
         viewStore.binding {
             $0.tags
         } send: {
@@ -163,7 +160,7 @@ private struct MainFeedContent: View {
         }
     }
 
-    var suggestedTokenBinding: Binding<IdentifiedArrayOf<TagToken>> {
+    func suggestedTokens(viewStore: ViewStore) -> Binding<IdentifiedArrayOf<TagToken>> {
         Binding {
             viewStore.suggestedTags
         } set: { _ in
@@ -171,7 +168,7 @@ private struct MainFeedContent: View {
         }
     }
 
-    var isFilterEditorPresented: Binding<Bool> {
+    func isFilterEditorPresented(viewStore: ViewStore) -> Binding<Bool> {
         viewStore.binding { state in
             state.isFilterEditorPresented
         } send: { newValue in
@@ -179,7 +176,7 @@ private struct MainFeedContent: View {
         }
     }
 
-    var isPostDetailPresented: Binding<Bool> {
+    func isPostDetailPresented(viewStore: ViewStore) -> Binding<Bool> {
         viewStore.binding { state in
             state.isPostDetailPresented
         } send: { newValue in
