@@ -4,7 +4,7 @@ import SankakuAPI
 
 struct MainFeedFeature: ReducerProtocol {
 
-    struct State: Equatable {
+    struct State {
         var didAppear = false
         var feedPhase: FeedPhase = .idle
         var posts: IdentifiedArrayOf<Post> = []
@@ -34,7 +34,7 @@ struct MainFeedFeature: ReducerProtocol {
         case postDetail(PostDetailFeature.Action)
     }
 
-    enum Destination: Equatable {
+    enum Destination {
         case filterEditor(FilterEditorFeature.State)
         case postDetail(PostDetailFeature.State)
     }

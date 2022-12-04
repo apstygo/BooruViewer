@@ -3,8 +3,8 @@ import SankakuAPI
 
 struct PostDetailFeature: ReducerProtocol {
 
-    struct State: Equatable {
-        struct Recommended: Equatable {
+    struct State {
+        struct Recommended {
             var posts: IdentifiedArrayOf<Post> = []
             var feedPhase: FeedPhase = .idle
         }
