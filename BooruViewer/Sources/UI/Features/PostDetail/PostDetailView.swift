@@ -47,6 +47,7 @@ struct PostDetailView: View {
             }
         }
         .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle(String(describing: viewStore.post.id))
         .onAppear {
             viewStore.send(.appear)
         }
