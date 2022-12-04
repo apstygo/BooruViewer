@@ -30,14 +30,15 @@ struct PostDetailView: View {
                     PostImageView(viewModel: viewStore.post)
 
                     Group {
-                        Text("Tags")
-                            .font(.title)
+                        sectionHeader("Tags")
 
                         VFlow(alignment: .leading, spacing: 8) {
                             ForEach(viewStore.post.tags) { tag in
                                 TagView(tag: tag)
                             }
                         }
+
+                        sectionHeader("Recommended posts")
                     }
                     .padding(.horizontal, 12)
 
@@ -49,6 +50,11 @@ struct PostDetailView: View {
         .onAppear {
             viewStore.send(.appear)
         }
+    }
+
+    func sectionHeader(_ title: String) -> some View {
+        Text(title)
+            .font(.title)
     }
 
     func recommendedPosts(availableWidth: CGFloat) -> some View {
