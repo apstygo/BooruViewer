@@ -7,22 +7,23 @@ import SankakuAPI
 
 struct PostDetailView: View {
 
+    // MARK: - Internal Types
+
+    typealias ViewStore = ViewStoreOf<PostDetailFeature>
+
+    // MARK: - Internal Properties
+
     let store: StoreOf<PostDetailFeature>
+
+    // MARK: - Layout
 
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
-            PostDetailContent(store: store, viewStore: viewStore)
+            body(for: viewStore)
         }
     }
 
-}
-
-private struct PostDetailContent: View {
-
-    let store: StoreOf<PostDetailFeature>
-    @ObservedObject var viewStore: ViewStoreOf<PostDetailFeature>
-
-    var body: some View {
+    func body(for viewStore: ViewStore) -> some View {
         GeometryReader { gr in
             ScrollView {
                 VStack(alignment: .leading) {
