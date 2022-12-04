@@ -92,13 +92,7 @@ struct PostDetailView_Previews: PreviewProvider {
     static let api = SankakuAPI()
 
     static func getTopPost() async throws -> Post {
-        let filters = GetPostsFilters(
-            gRatingIncluded: true,
-            r15RatingIncluded: false,
-            r18RatingIncluded: false
-        )
-
-        let response = try await api.getPosts(filters: filters)
+        let response = try await api.getPosts()
         return response.data[0]
     }
 

@@ -11,8 +11,8 @@ public struct GetPostsFilters: Hashable {
     public var mediaType: MediaType
 
     public init(gRatingIncluded: Bool = true,
-                r15RatingIncluded: Bool = true,
-                r18RatingIncluded: Bool = true,
+                r15RatingIncluded: Bool = false,
+                r18RatingIncluded: Bool = false,
                 sortOrder: SortOrder = .date,
                 threshold: Threshold = .zero,
                 hidePostsInBooks: HidePostsInBooks = .never,
