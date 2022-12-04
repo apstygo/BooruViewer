@@ -8,7 +8,7 @@ struct MainFeedView: View {
     let store: StoreOf<MainFeedFeature>
 
     var body: some View {
-        WithViewStore(store, observe: { $0 }) { viewStore in
+        WithViewStore(store, observe: { State(featureState: $0) }) { viewStore in
             MainFeedContent(store: store, viewStore: viewStore)
         }
     }
@@ -18,7 +18,7 @@ struct MainFeedView: View {
 private struct MainFeedContent: View {
 
     let store: StoreOf<MainFeedFeature>
-    @ObservedObject var viewStore: ViewStoreOf<MainFeedFeature>
+    @ObservedObject var viewStore: ViewStore<MainFeedView.State, MainFeedFeature.Action>
     let spacing: CGFloat = 2
 
     var searchFieldPlacement: SearchFieldPlacement {
@@ -173,7 +173,7 @@ private struct MainFeedContent: View {
 
     var isFilterEditorPresented: Binding<Bool> {
         viewStore.binding { state in
-            state.filterEditorState != nil
+            state.isFilterEditorPresented
         } send: { newValue in
             newValue ? .presentFilters : .dismissFilters
         }
@@ -181,7 +181,7 @@ private struct MainFeedContent: View {
 
     var isPostDetailPresented: Binding<Bool> {
         viewStore.binding { state in
-            state.postDetailState != nil
+            state.isPostDetailPresented
         } send: { newValue in
             .dismissPost
         }
@@ -208,7 +208,31 @@ struct MainFeedView_Previews: PreviewProvider {
 
 // MARK: - Helpers
 
-extension MainFeedFeature.State {
+extension MainFeedView {
+
+    struct State: Equatable {
+        let posts: IdentifiedArrayOf<Post>
+        let feedPhase: FeedPhase
+        let searchText: String
+        let tags: IdentifiedArrayOf<TagToken>
+        let suggestedTags: IdentifiedArrayOf<TagToken>
+        let isFilterEditorPresented: Bool
+        let isPostDetailPresented: Bool
+
+        init(featureState: MainFeedFeature.State) {
+            self.posts = featureState.posts
+            self.feedPhase = featureState.feedPhase
+            self.searchText = featureState.searchText
+            self.tags = featureState.tags
+            self.suggestedTags = featureState.suggestedTags
+            self.isFilterEditorPresented = featureState.filterEditorState != nil
+            self.isPostDetailPresented = featureState.postDetailState != nil
+        }
+    }
+
+}
+
+extension MainFeedView.State {
 
     fileprivate var isDoingInitialLoading: Bool {
         switch (posts.isEmpty, feedPhase) {
