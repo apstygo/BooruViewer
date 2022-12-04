@@ -36,7 +36,14 @@ struct PostDetailFeature: ReducerProtocol {
         case postDetail(PostDetailFeature.Action)
     }
 
-    func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
+    var body: some ReducerProtocol<State, Action> {
+        Reduce(core)
+            .ifLet(\.postDetailState, action: /Action.postDetail) {
+                PostDetailFeature()
+            }
+    }
+
+    func core(state: inout State, action: Action) -> EffectTask<Action> {
         func loadRecommended() {
             state.recommendedFeed.customTags = ["recommended_for_post:\(state.post.id)"]
             state.recommendedFeed.reload()
