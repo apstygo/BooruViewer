@@ -30,7 +30,7 @@ private struct PostGridContent: View {
                 }
             }
 
-            if !viewStore.isDoingInitialLoading {
+            if viewStore.isLoading {
                 ProgressView()
             }
         }
@@ -106,12 +106,12 @@ struct PostGridView_Previews: PreviewProvider {
 
 extension PostGridFeature.State {
 
-    fileprivate var isDoingInitialLoading: Bool {
-        switch (posts.isEmpty, feedPhase) {
-        case (true, .idle), (true, .loading):
+    fileprivate var isLoading: Bool {
+        switch feedPhase {
+        case .idle, .loading:
             return true
 
-        default:
+        case .error, .finished:
             return false
         }
     }
