@@ -10,11 +10,12 @@ struct PostDetailFeature: ReducerProtocol {
         }
 
         let post: Post
+        fileprivate let recommendedFeed: Feed
 
         var didAppear = false
         var recommended = Recommended()
 
-        fileprivate let recommendedFeed: Feed
+        @Indirect var postDetailState: PostDetailFeature.State?
 
         init(post: Post) {
             self.post = post
@@ -24,12 +25,15 @@ struct PostDetailFeature: ReducerProtocol {
         }
     }
 
-    enum Action: Equatable {
+    indirect enum Action: Equatable {
         case appear
         case recommendedPostAppeared(Post)
         case openRecommendedPost(Post)
+        case dismissPost
 
         case updateRecommendedFeedState(FeedState)
+
+        case postDetail(PostDetailFeature.Action)
     }
 
     func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
@@ -58,18 +62,27 @@ struct PostDetailFeature: ReducerProtocol {
                 return .none
             }
 
-            print("🔴 \(postIndex)")
             state.recommendedFeed.loadPage(forItemAt: postIndex)
 
             return .none
 
         case let .openRecommendedPost(post):
-            // TODO: Implement
+            state.postDetailState = .init(post: post)
+
+            return .none
+
+        case .dismissPost:
+            state.postDetailState = nil
+
             return .none
 
         case let .updateRecommendedFeedState(feedState):
             state.recommended.feedPhase = feedState.phase
             state.recommended.posts = .init(uniqueElements: feedState.posts)
+            return .none
+
+        case .postDetail:
+            // Do nothing
             return .none
         }
     }

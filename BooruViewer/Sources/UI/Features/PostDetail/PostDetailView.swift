@@ -50,6 +50,9 @@ struct PostDetailView: View {
         .onAppear {
             viewStore.send(.appear)
         }
+        .navigationDestination(isPresented: isPostDetailPresented(for: viewStore)) {
+            postDetail
+        }
     }
 
     func sectionHeader(_ title: String) -> some View {
@@ -74,6 +77,28 @@ struct PostDetailView: View {
         }
 
         return PostGridView(store: store, availableWidth: availableWidth)
+    }
+
+    var postDetail: some View {
+        let store = store.scope { state in
+            state.postDetailState
+        } action: { childAction in
+            .postDetail(childAction)
+        }
+
+        return IfLetStore(store) { store in
+            PostDetailView(store: store)
+        }
+    }
+
+    // MARK: - Bindings
+
+    func isPostDetailPresented(for viewStore: ViewStore) -> Binding<Bool> {
+        viewStore.binding { state in
+            state.isPostDetailPresented
+        } send: { _ in
+            .dismissPost
+        }
     }
 
 }
@@ -125,9 +150,11 @@ extension PostDetailView {
 
     struct State: Equatable {
         let post: Post
+        let isPostDetailPresented: Bool
 
         init(featureState: PostDetailFeature.State) {
             self.post = featureState.post
+            self.isPostDetailPresented = featureState.postDetailState != nil
         }
     }
 
