@@ -13,6 +13,15 @@ struct PostDetailFeature: ReducerProtocol {
 
         var didAppear = false
         var recommended = Recommended()
+
+        fileprivate let recommendedFeed: Feed
+
+        init(post: Post) {
+            self.post = post
+
+            @Dependency(\.sankakuAPI) var api
+            self.recommendedFeed = FeedImpl(sankakuAPI: api)
+        }
     }
 
     enum Action: Equatable {
@@ -23,17 +32,10 @@ struct PostDetailFeature: ReducerProtocol {
         case updateRecommendedFeedState(FeedState)
     }
 
-    private let recommendedFeed: Feed
-
-    init() {
-        @Dependency(\.sankakuAPI) var api
-        self.recommendedFeed = FeedImpl(sankakuAPI: api)
-    }
-
     func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
         func loadRecommended() {
-            recommendedFeed.customTags = ["recommended_for_post:\(state.post.id)"]
-            recommendedFeed.reload()
+            state.recommendedFeed.customTags = ["recommended_for_post:\(state.post.id)"]
+            state.recommendedFeed.reload()
         }
 
         switch action {
@@ -45,8 +47,8 @@ struct PostDetailFeature: ReducerProtocol {
             state.didAppear = true
             loadRecommended()
 
-            return .run { send in
-                for await feedState in recommendedFeed.stateStream {
+            return .run { [feed = state.recommendedFeed] send in
+                for await feedState in feed.stateStream {
                     await send(.updateRecommendedFeedState(feedState))
                 }
             }
@@ -56,7 +58,8 @@ struct PostDetailFeature: ReducerProtocol {
                 return .none
             }
 
-            recommendedFeed.loadPage(forItemAt: postIndex)
+            print("🔴 \(postIndex)")
+            state.recommendedFeed.loadPage(forItemAt: postIndex)
 
             return .none
 
