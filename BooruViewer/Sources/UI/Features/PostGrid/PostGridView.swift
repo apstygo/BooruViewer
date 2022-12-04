@@ -46,12 +46,12 @@ private struct PostGridContent: View {
                     Label("Open post", systemImage: "photo")
                 }
 
-                Button {
-                    // Do nothing
-                } label: {
-                    Label("Favorite", systemImage: "heart")
-                }
-                .disabled(true)
+//                Button {
+//                    // Do nothing
+//                } label: {
+//                    Label("Favorite", systemImage: "heart")
+//                }
+//                .disabled(true)
 
                 if let sourceURL = post.sourceURL {
                     Link(destination: sourceURL) {
