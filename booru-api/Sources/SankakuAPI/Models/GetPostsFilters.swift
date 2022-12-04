@@ -10,9 +10,9 @@ public struct GetPostsFilters: Hashable {
     public var mediaSize: MediaSize
     public var mediaType: MediaType
 
-    public init(gRatingIncluded: Bool = true,
-                r15RatingIncluded: Bool = true,
-                r18RatingIncluded: Bool = true,
+    public init(gRatingIncluded: Bool = false,
+                r15RatingIncluded: Bool = false,
+                r18RatingIncluded: Bool = false,
                 sortOrder: SortOrder = .date,
                 threshold: Threshold = .zero,
                 hidePostsInBooks: HidePostsInBooks = .never,
