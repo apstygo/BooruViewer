@@ -25,7 +25,7 @@ struct MainFeedView: View {
     // MARK: - Layout
 
     var body: some View {
-        WithViewStore(store, observe: { State(featureState: $0) }) { viewStore in
+        WithViewStore(store, observe: State.init) { viewStore in
             body(viewStore: viewStore)
         }
     }

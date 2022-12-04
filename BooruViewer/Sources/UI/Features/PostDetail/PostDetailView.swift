@@ -9,7 +9,7 @@ struct PostDetailView: View {
 
     // MARK: - Internal Types
 
-    typealias ViewStore = ViewStoreOf<PostDetailFeature>
+    typealias ViewStore = ComposableArchitecture.ViewStore<PostDetailView.State, PostDetailFeature.Action>
 
     // MARK: - Internal Properties
 
@@ -18,7 +18,7 @@ struct PostDetailView: View {
     // MARK: - Layout
 
     var body: some View {
-        WithViewStore(store, observe: { $0 }) { viewStore in
+        WithViewStore(store, observe: State.init) { viewStore in
             body(for: viewStore)
         }
     }
@@ -113,6 +113,34 @@ private struct PostImageView: View {
 
 }
 
+// MARK: - State
+
+extension PostDetailView {
+
+    struct State: Equatable {
+        let post: Post
+
+        init(featureState: PostDetailFeature.State) {
+            self.post = featureState.post
+        }
+    }
+
+}
+
+// MARK: - Helpers
+
+extension Post {
+
+    fileprivate var aspectRatio: CGFloat? {
+        guard let sampleWidth, let sampleHeight else {
+            return nil
+        }
+
+        return sampleWidth / sampleHeight
+    }
+
+}
+
 // MARK: - Previews
 
 struct PostDetailView_Previews: PreviewProvider {
@@ -135,20 +163,6 @@ struct PostDetailView_Previews: PreviewProvider {
                 )
             )
         }
-    }
-
-}
-
-// MARK: - Helpers
-
-extension Post {
-
-    fileprivate var aspectRatio: CGFloat? {
-        guard let sampleWidth, let sampleHeight else {
-            return nil
-        }
-
-        return sampleWidth / sampleHeight
     }
 
 }
