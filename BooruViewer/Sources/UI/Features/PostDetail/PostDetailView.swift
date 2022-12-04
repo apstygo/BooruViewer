@@ -11,7 +11,7 @@ struct PostDetailView: View {
 
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
-            PostDetailContent(viewStore: viewStore)
+            PostDetailContent(store: store, viewStore: viewStore)
         }
     }
 
@@ -19,27 +19,54 @@ struct PostDetailView: View {
 
 private struct PostDetailContent: View {
 
+    let store: StoreOf<PostDetailFeature>
     @ObservedObject var viewStore: ViewStoreOf<PostDetailFeature>
 
     var body: some View {
-        ScrollView {
-            LazyVStack(alignment: .leading) {
-                PostImageView(viewModel: viewStore.post)
+        GeometryReader { gr in
+            ScrollView {
+                VStack(alignment: .leading) {
+                    PostImageView(viewModel: viewStore.post)
 
-                Group {
-                    Text("Tags")
-                        .font(.title)
+                    Group {
+                        Text("Tags")
+                            .font(.title)
 
-                    VFlow(alignment: .leading, spacing: 8) {
-                        ForEach(viewStore.post.tags) { tag in
-                            TagView(tag: tag)
+                        VFlow(alignment: .leading, spacing: 8) {
+                            ForEach(viewStore.post.tags) { tag in
+                                TagView(tag: tag)
+                            }
                         }
                     }
+                    .padding(.horizontal, 12)
+
+                    recommendedPosts(availableWidth: gr.size.width)
                 }
-                .padding(.horizontal, 12)
             }
         }
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            viewStore.send(.appear)
+        }
+    }
+
+    func recommendedPosts(availableWidth: CGFloat) -> some View {
+        let store = store.scope { parentState in
+            PostGridFeature.State(
+                posts: parentState.recommended.posts,
+                feedPhase: parentState.recommended.feedPhase
+            )
+        } action: { (childAction: PostGridFeature.Action) in
+            switch childAction {
+            case let .postAppeared(post):
+                return .recommendedPostAppeared(post)
+
+            case let .openPost(post):
+                return .openRecommendedPost(post)
+            }
+        }
+
+        return PostGridView(store: store, availableWidth: availableWidth)
     }
 
 }

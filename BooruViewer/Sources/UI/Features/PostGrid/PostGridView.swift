@@ -6,10 +6,11 @@ import SankakuAPI
 struct PostGridView: View {
 
     let store: StoreOf<PostGridFeature>
+    let availableWidth: CGFloat
 
     var body: some View {
         WithViewStore(store) { viewStore in
-            PostGridContent(viewStore: viewStore)
+            PostGridContent(viewStore: viewStore, availableWidth: availableWidth)
         }
     }
 
@@ -18,22 +19,19 @@ struct PostGridView: View {
 private struct PostGridContent: View {
 
     @ObservedObject var viewStore: ViewStoreOf<PostGridFeature>
+    let availableWidth: CGFloat
     let spacing: CGFloat = 2
 
     var body: some View {
-        GeometryReader { gr in
-            ScrollView {
-                VStack {
-                    LazyVGrid(columns: .dynamic(availableWidth: gr.size.width, spacing: spacing), spacing: spacing) {
-                        ForEach(viewStore.posts) { post in
-                            item(for: post)
-                        }
-                    }
-
-                    if !viewStore.isDoingInitialLoading {
-                        ProgressView()
-                    }
+        VStack {
+            LazyVGrid(columns: .dynamic(availableWidth: availableWidth, spacing: spacing), spacing: spacing) {
+                ForEach(viewStore.posts) { post in
+                    item(for: post)
                 }
+            }
+
+            if !viewStore.isDoingInitialLoading {
+                ProgressView()
             }
         }
     }
@@ -79,12 +77,17 @@ private struct PostGridContent: View {
 struct PostGridView_Previews: PreviewProvider {
 
     static func preview(for posts: [Post]) -> some View {
-        PostGridView(
-            store: Store(
-                initialState: PostGridFeature.State(posts: .init(uniqueElements: posts)),
-                reducer: PostGridFeature()
-            )
-        )
+        GeometryReader { gr in
+            ScrollView {
+                PostGridView(
+                    store: Store(
+                        initialState: PostGridFeature.State(posts: .init(uniqueElements: posts)),
+                        reducer: PostGridFeature()
+                    ),
+                    availableWidth: gr.size.width
+                )
+            }
+        }
     }
 
     static var previews: some View {
