@@ -181,14 +181,9 @@ struct PostDetailView_Previews: PreviewProvider {
 
     static let api = SankakuAPI()
 
-    static func getTopPost() async throws -> Post {
-        let response = try await api.getPosts()
-        return response.data[0]
-    }
-
     static var previews: some View {
         AsyncView {
-            try await getTopPost()
+            try await SankakuAPI.getTopPost()
         } content: { post in
             PostDetailView(
                 store: Store(

@@ -36,38 +36,54 @@ private struct PostGridContent: View {
         }
     }
 
-    @ViewBuilder
     func item(for post: Post) -> some View {
-        PostPreview(post: post)
-            .contextMenu {
-                Button {
-                    viewStore.send(.openPost(post))
-                } label: {
-                    Label("Open post", systemImage: "photo")
-                }
-
-//                Button {
-//                    // Do nothing
-//                } label: {
-//                    Label("Favorite", systemImage: "heart")
-//                }
-//                .disabled(true)
-
-                if let sourceURL = post.sourceURL {
-                    Link(destination: sourceURL) {
-                        Label("Go to source", systemImage: "link")
-                    }
-                }
-
-            } preview: {
-                ContextMenuPostPreview(post: post)
-            }
+        let preview = PostPreview(post: post)
             .onAppear {
                 viewStore.send(.postAppeared(post))
             }
             .onTapGesture {
                 viewStore.send(.openPost(post))
             }
+
+        return wrapInContextMenu(preview, for: post)
+    }
+
+    @ViewBuilder func wrapInContextMenu<V: View>(_ view: V, for post: Post) -> some View {
+        if post.sampleURL != nil {
+            view
+                .contextMenu {
+                    contextMenuItems(for: post)
+                } preview: {
+                    ContextMenuPostPreview(post: post)
+                }
+        }
+        else {
+            view
+                .contextMenu {
+                    contextMenuItems(for: post)
+                }
+        }
+    }
+
+    @ViewBuilder func contextMenuItems(for post: Post) -> some View {
+        Button {
+            viewStore.send(.openPost(post))
+        } label: {
+            Label("Open post", systemImage: "photo")
+        }
+
+//        Button {
+//            // Do nothing
+//        } label: {
+//            Label("Favorite", systemImage: "heart")
+//        }
+//        .disabled(true)
+
+        if let sourceURL = post.sourceURL {
+            Link(destination: sourceURL) {
+                Label("Go to source", systemImage: "link")
+            }
+        }
     }
 
 }
