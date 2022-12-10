@@ -1,4 +1,5 @@
 import SwiftUI
+import AVKit
 import ComposableArchitecture
 import SDWebImageSwiftUI
 import AsyncView
@@ -27,7 +28,7 @@ struct PostDetailView: View {
         GeometryReader { gr in
             ScrollView {
                 VStack(alignment: .leading) {
-                    PostImageView(viewModel: viewStore.post)
+                    PostView(post: viewStore.post)
 
                     Group {
                         sectionHeader("Tags")
@@ -104,7 +105,23 @@ struct PostDetailView: View {
 
 }
 
-// MARK: - PostImageView
+// MARK: - Subviews
+
+private struct PostView: View {
+
+    let post: Post
+
+    var body: some View {
+        switch post.fileType {
+        case .image:
+            PostImageView(viewModel: post)
+
+        case .video:
+            PostVideoView(post: post)
+        }
+    }
+
+}
 
 private struct PostImageView: View {
 
@@ -141,6 +158,43 @@ private struct PostImageView: View {
             .tint(.white)
             .opacity(progressValue == progressTotal ? 0 : 1)
             .animation(.default, value: progressValue)
+    }
+
+}
+
+private struct PostVideoView: View {
+
+    let post: Post
+    let player: AVQueuePlayer?
+    let looper: AVPlayerLooper?
+
+    init(post: Post) {
+        self.post = post
+
+        if let url = post.sampleURL {
+            let item = AVPlayerItem(url: url)
+            let player = AVQueuePlayer(playerItem: item)
+            self.player = player
+            self.looper = AVPlayerLooper(player: player, templateItem: item)
+        }
+        else {
+            self.player = nil
+            self.looper = nil
+        }
+    }
+
+    var body: some View {
+        GeometryReader { gr in
+            VideoPlayer(player: player)
+                .frame(width: gr.size.width, height: gr.size.width / (post.aspectRatio ?? 1))
+                .onAppear {
+                    player?.play()
+                }
+                .onDisappear {
+                    player?.pause()
+                }
+        }
+        .aspectRatio(post.aspectRatio, contentMode: .fit)
     }
 
 }

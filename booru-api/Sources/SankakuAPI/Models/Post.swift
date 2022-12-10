@@ -58,7 +58,7 @@ extension Post {
         return URL(string: source)
     }
 
-    var previewSize: CGSize? {
+    public var previewSize: CGSize? {
         guard let previewWidth, let previewHeight else {
             return nil
         }
@@ -66,7 +66,7 @@ extension Post {
         return CGSize(width: previewWidth, height: previewHeight)
     }
 
-    var sampleSize: CGSize? {
+    public var sampleSize: CGSize? {
         guard let sampleWidth, let sampleHeight else {
             return nil
         }
