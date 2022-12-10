@@ -1,6 +1,22 @@
 import Foundation
 
-public struct Post: Decodable, Hashable, Equatable, Identifiable {
+public struct Post: Decodable, Hashable, Identifiable {
+    public enum FileType: Decodable, Hashable {
+        public enum ImageFormat: String {
+            case jpeg
+            case png
+            case gif
+        }
+
+        public enum VideoFormat: String {
+            case mp4
+            case webm
+        }
+
+        case image(ImageFormat)
+        case video(VideoFormat)
+    }
+
     public enum CodingKeys: String, CodingKey {
         case id
         case previewURL = "preview_url"
@@ -14,6 +30,7 @@ public struct Post: Decodable, Hashable, Equatable, Identifiable {
         case height
         case tags
         case source
+        case fileType = "file_type"
     }
 
     public let id: Int
@@ -28,6 +45,7 @@ public struct Post: Decodable, Hashable, Equatable, Identifiable {
     public let height: CGFloat?
     public let tags: [Tag]
     public let source: String?
+    public let fileType: FileType
 }
 
 extension Post {
@@ -54,6 +72,47 @@ extension Post {
         }
 
         return CGSize(width: sampleWidth, height: sampleHeight)
+    }
+
+}
+
+extension Post.FileType: RawRepresentable {
+
+    public var rawValue: String {
+        switch self {
+        case let .image(format):
+            return "image/\(format.rawValue)"
+
+        case let .video(format):
+            return "video/\(format.rawValue)"
+        }
+    }
+
+    public init?(rawValue: String) {
+        let components = rawValue.components(separatedBy: "/")
+
+        guard components.count == 2 else {
+            return nil
+        }
+
+        switch components[0] {
+        case "image":
+            guard let format = ImageFormat(rawValue: components[1]) else {
+                return nil
+            }
+
+            self = .image(format)
+
+        case "video":
+            guard let format = VideoFormat(rawValue: components[1]) else {
+                return nil
+            }
+
+            self = .video(format)
+
+        default:
+            return nil
+        }
     }
 
 }
