@@ -2,7 +2,7 @@ import ComposableArchitecture
 import SankakuAPI
 
 private enum SankakuAPIKey: DependencyKey {
-    static let liveValue = SankakuAPI(urlSession: .patient)
+    static let liveValue = SankakuAPI(sessionConfiguration: .patient)
 }
 
 extension DependencyValues {

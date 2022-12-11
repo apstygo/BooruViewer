@@ -8,10 +8,10 @@ let package = Package(
     products: [
         .library(name: "SankakuAPI", targets: ["SankakuAPI"])
     ],
-    dependencies: [],
+    dependencies: [
+        .package(url: "https://github.com/Moya/Moya", from: "15.0.3")
+    ],
     targets: [
-        .target(
-            name: "SankakuAPI"
-        )
+        .target(name: "SankakuAPI", dependencies: ["Moya"])
     ]
 )

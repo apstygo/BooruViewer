@@ -97,14 +97,7 @@ final class AccessTokenProviderImpl: AccessTokenProvider {
 extension Error {
 
     fileprivate var isClientError: Bool {
-        guard let requestError = self as? URLSession.RequestError else {
-            return false
-        }
-
-        switch requestError {
-        case let .badResponseCode(code):
-            return (400..<500).contains(code)
-        }
+        fatalError("Not implemented")
     }
 
 }

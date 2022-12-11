@@ -1,14 +1,13 @@
 import Foundation
 
-extension URLSession {
+extension URLSessionConfiguration {
 
-    static var patient: URLSession {
+    static var patient: URLSessionConfiguration {
         let configuration: URLSessionConfiguration = .default
         configuration.waitsForConnectivity = true
         configuration.timeoutIntervalForRequest = .infinity
         configuration.timeoutIntervalForResource = .infinity
-
-        return URLSession(configuration: configuration)
+        return configuration
     }
 
 }
