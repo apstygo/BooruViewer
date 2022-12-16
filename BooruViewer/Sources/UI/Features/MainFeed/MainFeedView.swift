@@ -1,6 +1,5 @@
 import SwiftUI
 import ComposableArchitecture
-import SwiftUINavigation
 import SankakuAPI
 
 struct MainFeedView: View {
