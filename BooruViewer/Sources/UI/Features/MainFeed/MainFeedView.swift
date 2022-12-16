@@ -98,7 +98,9 @@ struct MainFeedView: View {
                 }
             }
             .refreshable {
-                viewStore.send(.refresh)
+                await MainActor.run {
+                    _ = viewStore.send(.refresh)
+                }
             }
 
             if viewStore.isDoingInitialLoading {
