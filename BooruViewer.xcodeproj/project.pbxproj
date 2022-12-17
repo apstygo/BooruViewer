@@ -38,6 +38,8 @@
 		2ECB9D13293C9F6400CA5EA1 /* Indirect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECB9D12293C9F6400CA5EA1 /* Indirect.swift */; };
 		2ECB9D1D2944E6CE00CA5EA1 /* SankakuAPI+PreviewHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECB9D1C2944E6CE00CA5EA1 /* SankakuAPI+PreviewHelpers.swift */; };
 		2ECB9D1F2944E9CB00CA5EA1 /* UnavailableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECB9D1E2944E9CB00CA5EA1 /* UnavailableView.swift */; };
+		2ECB9D22294CBD1100CA5EA1 /* LoginFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECB9D21294CBD1100CA5EA1 /* LoginFeature.swift */; };
+		2ECB9D24294CBD7000CA5EA1 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECB9D23294CBD7000CA5EA1 /* LoginView.swift */; };
 		2ED2CD9728F56C36001CA186 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2ED2CD9628F56C36001CA186 /* Assets.xcassets */; };
 		2EE9B30C28FEF8C1005C22CD /* AnyPublisher+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE9B30B28FEF8C1005C22CD /* AnyPublisher+Extension.swift */; };
 /* End PBXBuildFile section */
@@ -67,6 +69,8 @@
 		2ECB9D12293C9F6400CA5EA1 /* Indirect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Indirect.swift; sourceTree = "<group>"; };
 		2ECB9D1C2944E6CE00CA5EA1 /* SankakuAPI+PreviewHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SankakuAPI+PreviewHelpers.swift"; sourceTree = "<group>"; };
 		2ECB9D1E2944E9CB00CA5EA1 /* UnavailableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnavailableView.swift; sourceTree = "<group>"; };
+		2ECB9D21294CBD1100CA5EA1 /* LoginFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFeature.swift; sourceTree = "<group>"; };
+		2ECB9D23294CBD7000CA5EA1 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		2ED2CD8F28F56C36001CA186 /* BooruViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BooruViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2ED2CD9628F56C36001CA186 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2ED2CD9828F56C36001CA186 /* BooruViewer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BooruViewer.entitlements; sourceTree = "<group>"; };
@@ -172,6 +176,7 @@
 			isa = PBXGroup;
 			children = (
 				2EA09EF9292F37D00075F503 /* FilterEditor */,
+				2ECB9D20294CBCFB00CA5EA1 /* Login */,
 				2EA09EF8292F37A50075F503 /* MainFeed */,
 				2EA09EFE292FAE450075F503 /* PostDetail */,
 				2ECB9D0F2939B9B600CA5EA1 /* PostGrid */,
@@ -202,6 +207,15 @@
 				2ECB9D12293C9F6400CA5EA1 /* Indirect.swift */,
 			);
 			path = PropertyWrappers;
+			sourceTree = "<group>";
+		};
+		2ECB9D20294CBCFB00CA5EA1 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				2ECB9D21294CBD1100CA5EA1 /* LoginFeature.swift */,
+				2ECB9D23294CBD7000CA5EA1 /* LoginView.swift */,
+			);
+			path = Login;
 			sourceTree = "<group>";
 		};
 		2ED2CD8628F56C36001CA186 = {
@@ -371,12 +385,14 @@
 				2EA09F00292FAE540075F503 /* PostDetailFeature.swift in Sources */,
 				2EA09EFB292F37E40075F503 /* FilterEditorView.swift in Sources */,
 				2ECB9D0E2939B7EA00CA5EA1 /* PostGridView.swift in Sources */,
+				2ECB9D22294CBD1100CA5EA1 /* LoginFeature.swift in Sources */,
 				2ECB9D13293C9F6400CA5EA1 /* Indirect.swift in Sources */,
 				2EE9B30C28FEF8C1005C22CD /* AnyPublisher+Extension.swift in Sources */,
 				2E37DA022905672100C916CC /* AuthInfoStorage.swift in Sources */,
 				2ECB9D1F2944E9CB00CA5EA1 /* UnavailableView.swift in Sources */,
 				2ECB9CDD293662B900CA5EA1 /* URLSession+Extension.swift in Sources */,
 				2E76825D2907202D00ECC68C /* AccessTokenProvider.swift in Sources */,
+				2ECB9D24294CBD7000CA5EA1 /* LoginView.swift in Sources */,
 				2EA09EFD292F38470075F503 /* FilterEditorFeature.swift in Sources */,
 				2EA878BA292DD45300AC197F /* MainFeedView.swift in Sources */,
 				2EA09F04292FB2880075F503 /* PostDetailView.swift in Sources */,
