@@ -2,7 +2,9 @@ import SwiftUI
 import AVKit
 import ComposableArchitecture
 import SDWebImageSwiftUI
+#if !os(macOS)
 import AsyncView
+#endif
 import SwiftUIFlow
 import SankakuAPI
 
@@ -47,7 +49,9 @@ struct PostDetailView: View {
                 }
             }
         }
+        #if !os(macOS)
         .navigationBarTitleDisplayMode(.inline)
+        #endif
         .navigationTitle(String(describing: viewStore.post.id))
         .onAppear {
             viewStore.send(.appear)
@@ -231,6 +235,7 @@ extension Post {
 
 // MARK: - Previews
 
+#if !os(macOS)
 struct PostDetailView_Previews: PreviewProvider {
 
     static let api = SankakuAPI()
@@ -249,3 +254,4 @@ struct PostDetailView_Previews: PreviewProvider {
     }
 
 }
+#endif

@@ -1,6 +1,8 @@
 import SwiftUI
 import SDWebImageSwiftUI
+#if !os(macOS)
 import AsyncView
+#endif
 import SankakuAPI
 
 struct PostPreview: View {
@@ -9,7 +11,11 @@ struct PostPreview: View {
 
     var body: some View {
         ZStack {
+            #if canImport(UIKit)
             Color(uiColor: .systemBackground)
+            #elseif canImport(AppKit)
+            Color(nsColor: .windowBackgroundColor)
+            #endif
 
             GeometryReader { gr in
                 mainContent
@@ -57,6 +63,7 @@ struct PostPreviewPlaceholder: View {
 
 }
 
+#if !os(macOS)
 struct PostPreview_Previews: PreviewProvider {
 
     static var previews: some View {
@@ -68,3 +75,4 @@ struct PostPreview_Previews: PreviewProvider {
     }
 
 }
+#endif

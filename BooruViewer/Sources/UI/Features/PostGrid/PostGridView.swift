@@ -1,6 +1,8 @@
 import SwiftUI
 import ComposableArchitecture
+#if !os(macOS)
 import AsyncView
+#endif
 import SankakuAPI
 
 struct PostGridView: View {
@@ -90,6 +92,7 @@ private struct PostGridContent: View {
 
 // MARK: - Previews
 
+#if !os(macOS)
 struct PostGridView_Previews: PreviewProvider {
 
     static func preview(for posts: [Post]) -> some View {
@@ -117,6 +120,7 @@ struct PostGridView_Previews: PreviewProvider {
     }
 
 }
+#endif
 
 // MARK: - Helpers
 

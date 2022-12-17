@@ -33,9 +33,11 @@ struct LoginView: View {
             .textContentType(.password)
         }
         .textFieldStyle(.roundedBorder)
-        .textInputAutocapitalization(.never)
         .autocorrectionDisabled()
         .disabled(!viewStore.areTextFieldsEnabled)
+        #if !os(macOS)
+        .textInputAutocapitalization(.never)
+        #endif
     }
 
     func loginButton(for viewStore: ViewStore) -> some View {
@@ -46,7 +48,7 @@ struct LoginView: View {
         }
         .disabled(!viewStore.isLoginButtonEnabled)
         .buttonStyle(.borderedProminent)
-        .buttonBorderShape(.roundedRectangle(radius: 8))
+        .buttonBorderShape(.roundedRectangle)
     }
 
     @ViewBuilder func loginButtonLabel(for viewStore: ViewStore) -> some View {

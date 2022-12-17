@@ -23,7 +23,7 @@
 		2EA09EFD292F38470075F503 /* FilterEditorFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA09EFC292F38470075F503 /* FilterEditorFeature.swift */; };
 		2EA09F00292FAE540075F503 /* PostDetailFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA09EFF292FAE540075F503 /* PostDetailFeature.swift */; };
 		2EA09F04292FB2880075F503 /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA09F03292FB2880075F503 /* PostDetailView.swift */; };
-		2EA09F0C292FBC080075F503 /* AsyncView in Frameworks */ = {isa = PBXBuildFile; productRef = 2EA09F0B292FBC080075F503 /* AsyncView */; };
+		2EA09F0C292FBC080075F503 /* AsyncView in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = 2EA09F0B292FBC080075F503 /* AsyncView */; };
 		2EA878B0292D3EAA00AC197F /* BooruViewerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA878AF292D3EAA00AC197F /* BooruViewerApp.swift */; };
 		2EA878B3292DD34100AC197F /* MainFeedFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA878B2292DD34100AC197F /* MainFeedFeature.swift */; };
 		2EA878B6292DD3A000AC197F /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 2EA878B5292DD3A000AC197F /* ComposableArchitecture */; };
