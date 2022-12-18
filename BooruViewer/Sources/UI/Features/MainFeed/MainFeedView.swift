@@ -48,6 +48,14 @@ struct MainFeedView: View {
             .textInputAutocapitalization(.never)
             #endif
             .toolbar {
+                ToolbarItem {
+                    Button {
+                        viewStore.send(.openLogin)
+                    } label: {
+                        Text("Sign In")
+                    }
+                }
+
                 #if os(macOS)
                 ToolbarItem {
                     Button {
@@ -76,6 +84,13 @@ struct MainFeedView: View {
             .navigationDestination(isPresented: isPostDetailPresented(viewStore: viewStore)) {
                 IfLetStore(store.scope(state: { $0.postDetailState }, action: { .postDetail($0) })) { store in
                     PostDetailView(store: store)
+                }
+            }
+            .sheet(isPresented: isLoginPresented(for: viewStore)) {
+                let store = store.scope(state: { $0.loginState }, action: { .login($0) })
+
+                return IfLetStore(store) { store in
+                    LoginView(store: store)
                 }
             }
     }
@@ -185,6 +200,14 @@ struct MainFeedView: View {
         }
     }
 
+    func isLoginPresented(for viewStore: ViewStore) -> Binding<Bool> {
+        viewStore.binding { state in
+            state.isLoginPresented
+        } send: { newValue in
+            newValue ? .openLogin : .dismissLogin
+        }
+    }
+
 }
 
 // MARK: - Previews
@@ -216,6 +239,7 @@ extension MainFeedView {
         let suggestedTags: IdentifiedArrayOf<TagToken>
         let isFilterEditorPresented: Bool
         let isPostDetailPresented: Bool
+        let isLoginPresented: Bool
 
         init(featureState: MainFeedFeature.State) {
             self.posts = featureState.posts
@@ -225,6 +249,7 @@ extension MainFeedView {
             self.suggestedTags = featureState.suggestedTags
             self.isFilterEditorPresented = featureState.filterEditorState != nil
             self.isPostDetailPresented = featureState.postDetailState != nil
+            self.isLoginPresented = featureState.loginState != nil
         }
     }
 

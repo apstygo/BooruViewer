@@ -16,7 +16,7 @@ struct MainFeedFeature: ReducerProtocol {
         var destination: Destination?
     }
 
-    enum Action: Equatable {
+    enum Action {
         case appear
         case refresh
         case presentFilters
@@ -26,17 +26,21 @@ struct MainFeedFeature: ReducerProtocol {
         case dismissPost
         case updateSearchText(String)
         case updateTags(IdentifiedArrayOf<TagToken>)
+        case openLogin
+        case dismissLogin
 
         case updateFeedState(FeedState)
         case tagsResponse([Tag])
 
         case filterEditor(FilterEditorFeature.Action)
         case postDetail(PostDetailFeature.Action)
+        case login(LoginFeature.Action)
     }
 
     enum Destination {
         case filterEditor(FilterEditorFeature.State)
         case postDetail(PostDetailFeature.State)
+        case login(LoginFeature.State)
     }
 
     private enum Operation: Hashable {
@@ -60,6 +64,9 @@ struct MainFeedFeature: ReducerProtocol {
             }
             .ifLet(\.postDetailState, action: /Action.postDetail) {
                 PostDetailFeature()
+            }
+            .ifLet(\.loginState, action: /Action.login) {
+                LoginFeature()
             }
     }
 
@@ -152,6 +159,16 @@ struct MainFeedFeature: ReducerProtocol {
 
             return .none
 
+        case .openLogin:
+            state.destination = .login(.init())
+
+            return .none
+
+        case .dismissLogin:
+            state.destination = nil
+
+            return .none
+
         case let .updateFeedState(newFeedState):
             state.feedPhase = newFeedState.phase
             state.posts = IdentifiedArray(uniqueElements: newFeedState.posts)
@@ -192,6 +209,10 @@ struct MainFeedFeature: ReducerProtocol {
             return .none
 
         case .postDetail:
+            // Do nothing
+            return .none
+
+        case .login:
             // Do nothing
             return .none
         }
@@ -252,6 +273,21 @@ extension MainFeedFeature.State {
         }
         set {
             destination = newValue.map { .postDetail($0) }
+        }
+    }
+
+    var loginState: LoginFeature.State? {
+        get {
+            switch destination {
+            case let .login(state):
+                return state
+
+            default:
+                return nil
+            }
+        }
+        set {
+            destination = newValue.map { .login($0) }
         }
     }
 
