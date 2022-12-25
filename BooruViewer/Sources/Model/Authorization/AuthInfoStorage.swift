@@ -73,7 +73,6 @@ final class AuthInfoSecureStorage: AuthInfoStorage {
     }
 
     private struct SensitiveData: Codable {
-        let password: String
         let accessToken: String
         let refreshToken: String
     }
@@ -113,7 +112,6 @@ final class AuthInfoSecureStorage: AuthInfoStorage {
 
         return AuthInfo(
             login: login,
-            password: sensitiveData.password,
             accessToken: sensitiveData.accessToken,
             refreshToken: sensitiveData.refreshToken
         )
@@ -126,7 +124,6 @@ final class AuthInfoSecureStorage: AuthInfoStorage {
         }
 
         let sensitiveData = SensitiveData(
-            password: authInfo.password,
             accessToken: authInfo.accessToken,
             refreshToken: authInfo.refreshToken
         )

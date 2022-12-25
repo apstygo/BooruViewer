@@ -67,7 +67,6 @@ final class AccessTokenProviderImpl: AccessTokenProvider {
             case let .success(authResponse):
                 let newAuthInfo = AuthInfo(
                     login: authInfo.login,
-                    password: authInfo.password,
                     accessToken: authResponse.accessToken,
                     refreshToken: authResponse.refreshToken
                 )
