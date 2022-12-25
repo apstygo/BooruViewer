@@ -14,12 +14,23 @@ struct LoginView: View {
     }
 
     func content(for viewStore: ViewStore) -> some View {
-        VStack {
-            textFields(for: viewStore)
-            loginButton(for: viewStore)
+        NavigationStack {
+            VStack {
+                textFields(for: viewStore)
+                loginButton(for: viewStore)
+            }
+            .frame(maxWidth: 300)
+            .animation(.default, value: viewStore.phase)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(role: .cancel) {
+                        viewStore.send(.cancel)
+                    } label: {
+                        Text("Cancel")
+                    }
+                }
+            }
         }
-        .frame(maxWidth: 300)
-        .animation(.default, value: viewStore.phase)
     }
 
     func textFields(for viewStore: ViewStore) -> some View {

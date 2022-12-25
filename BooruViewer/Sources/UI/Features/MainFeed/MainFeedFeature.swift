@@ -205,6 +205,11 @@ struct MainFeedFeature: ReducerProtocol {
             // Do nothing
             return .none
 
+        case .login(.cancel):
+            state.destination = nil
+
+            return .none
+
         case .login:
             // Do nothing
             return .none

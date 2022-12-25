@@ -25,6 +25,7 @@ struct LoginFeature: ReducerProtocol {
         case login
         case setLogin(String)
         case setPassword(String)
+        case cancel
 
         case handleLoginResult(Bool)
     }
@@ -47,6 +48,10 @@ struct LoginFeature: ReducerProtocol {
         case let .setPassword(newPassword):
             state.password = newPassword
 
+            return .none
+
+        case .cancel:
+            // Handled by parent
             return .none
 
         case let .handleLoginResult(result):
