@@ -57,6 +57,8 @@
 		2EF524E1295849AD003D734D /* AuthorizationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF524C5295848C8003D734D /* AuthorizationResponse.swift */; };
 		2EF524E2295849B0003D734D /* SankakuAPITarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF524D4295848C8003D734D /* SankakuAPITarget.swift */; };
 		2EF524E3295849B0003D734D /* SankakuAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF524C3295848C8003D734D /* SankakuAPI.swift */; };
+		2EF524E529586AF6003D734D /* SankakuClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF524E429586AF6003D734D /* SankakuClient.swift */; };
+		2EF524E729586B5B003D734D /* SankakuRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF524E629586B5B003D734D /* SankakuRequest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -105,6 +107,8 @@
 		2EF524D1295848C8003D734D /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		2EF524D3295848C8003D734D /* MoyaProvider+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MoyaProvider+Extensions.swift"; sourceTree = "<group>"; };
 		2EF524D4295848C8003D734D /* SankakuAPITarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SankakuAPITarget.swift; sourceTree = "<group>"; };
+		2EF524E429586AF6003D734D /* SankakuClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SankakuClient.swift; sourceTree = "<group>"; };
+		2EF524E629586B5B003D734D /* SankakuRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SankakuRequest.swift; sourceTree = "<group>"; };
 		2EFBA92D28FB37090053DCEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -171,6 +175,7 @@
 				2EE9B30B28FEF8C1005C22CD /* AnyPublisher+Extension.swift */,
 				2ECB9CDC293662B900CA5EA1 /* URLSession+Extension.swift */,
 				2ECB9CE029366FE800CA5EA1 /* GridItem+Extension.swift */,
+				2EF524D3295848C8003D734D /* MoyaProvider+Extensions.swift */,
 				2ECB9D1C2944E6CE00CA5EA1 /* SankakuAPI+PreviewHelpers.swift */,
 			);
 			path = Extensions;
@@ -311,11 +316,12 @@
 		2EF524C2295848C8003D734D /* SankakuAPI */ = {
 			isa = PBXGroup;
 			children = (
-				2EF524D2295848C8003D734D /* Extensions */,
 				2EF524C7295848C8003D734D /* Models */,
 				2EF524C4295848C8003D734D /* Responses */,
 				2EF524C3295848C8003D734D /* SankakuAPI.swift */,
 				2EF524D4295848C8003D734D /* SankakuAPITarget.swift */,
+				2EF524E429586AF6003D734D /* SankakuClient.swift */,
+				2EF524E629586B5B003D734D /* SankakuRequest.swift */,
 			);
 			path = SankakuAPI;
 			sourceTree = "<group>";
@@ -344,14 +350,6 @@
 				2EF524D1295848C8003D734D /* Tag.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		2EF524D2295848C8003D734D /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				2EF524D3295848C8003D734D /* MoyaProvider+Extensions.swift */,
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 		2EFBA92828FB36320053DCEC /* Lifecycle */ = {
@@ -471,6 +469,7 @@
 				2EF524D7295849A8003D734D /* Tag.swift in Sources */,
 				2EF524D5295849A3003D734D /* MoyaProvider+Extensions.swift in Sources */,
 				2EF524E3295849B0003D734D /* SankakuAPI.swift in Sources */,
+				2EF524E529586AF6003D734D /* SankakuClient.swift in Sources */,
 				2EA09EFB292F37E40075F503 /* FilterEditorView.swift in Sources */,
 				2EF524E1295849AD003D734D /* AuthorizationResponse.swift in Sources */,
 				2ECB9D0E2939B7EA00CA5EA1 /* PostGridView.swift in Sources */,
@@ -490,6 +489,7 @@
 				2EA878BA292DD45300AC197F /* MainFeedView.swift in Sources */,
 				2EA09F04292FB2880075F503 /* PostDetailView.swift in Sources */,
 				2EA878B0292D3EAA00AC197F /* BooruViewerApp.swift in Sources */,
+				2EF524E729586B5B003D734D /* SankakuRequest.swift in Sources */,
 				2E7A1DD128FDAB320009304D /* PostPreview.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
