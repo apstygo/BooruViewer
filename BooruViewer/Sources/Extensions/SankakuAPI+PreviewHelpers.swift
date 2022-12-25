@@ -1,4 +1,3 @@
-import SankakuAPI
 
 extension SankakuAPI {
 

@@ -1,6 +1,5 @@
 import Combine
 import CombineExt
-import SankakuAPI
 
 enum FeedPhase: Hashable {
     case idle

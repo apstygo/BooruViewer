@@ -1,4 +1,3 @@
-import SankakuAPI
 
 enum TagToken: Hashable, Identifiable {
 

@@ -1,6 +1,5 @@
 import SwiftUI
 import SDWebImageSwiftUI
-import SankakuAPI
 
 struct ContextMenuPostPreview: View {
 

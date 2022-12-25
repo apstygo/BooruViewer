@@ -1,5 +1,4 @@
 import Foundation
-import SankakuAPI
 
 enum AccessTokenProviderError: Error {
     case missingAuthorization
@@ -7,6 +6,18 @@ enum AccessTokenProviderError: Error {
 
 protocol AccessTokenProvider {
     func getValidAccessToken(completion: @escaping (Result<String, Error>) -> Void)
+}
+
+extension AccessTokenProvider {
+
+    func getValidAccessToken() async throws -> String {
+        try await withCheckedThrowingContinuation { continuation in
+            getValidAccessToken { result in
+                continuation.resume(with: result)
+            }
+        }
+    }
+
 }
 
 final class AccessTokenProviderImpl: AccessTokenProvider {

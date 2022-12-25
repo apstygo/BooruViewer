@@ -6,7 +6,6 @@ import SDWebImageSwiftUI
 import AsyncView
 #endif
 import SwiftUIFlow
-import SankakuAPI
 
 struct PostDetailView: View {
 

@@ -1,11 +1,5 @@
 import SwiftUI
 import ComposableArchitecture
-import enum SankakuAPI.SortOrder
-import enum SankakuAPI.Threshold
-import enum SankakuAPI.HidePostsInBooks
-import enum SankakuAPI.MediaSize
-import enum SankakuAPI.MediaType
-import struct SankakuAPI.GetPostsFilters
 
 struct FilterEditorView: View {
 

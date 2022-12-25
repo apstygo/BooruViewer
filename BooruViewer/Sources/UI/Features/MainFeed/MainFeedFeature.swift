@@ -1,6 +1,5 @@
 import Foundation
 import ComposableArchitecture
-import SankakuAPI
 
 struct MainFeedFeature: ReducerProtocol {
 

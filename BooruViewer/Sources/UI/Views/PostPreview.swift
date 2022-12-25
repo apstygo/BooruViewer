@@ -3,7 +3,6 @@ import SDWebImageSwiftUI
 #if !os(macOS)
 import AsyncView
 #endif
-import SankakuAPI
 
 struct PostPreview: View {
 

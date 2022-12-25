@@ -1,5 +1,4 @@
 import ComposableArchitecture
-import SankakuAPI
 
 private enum SankakuAPIKey: DependencyKey {
     static let liveValue = SankakuAPI(sessionConfiguration: .patient)

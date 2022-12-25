@@ -3,7 +3,6 @@ import ComposableArchitecture
 #if !os(macOS)
 import AsyncView
 #endif
-import SankakuAPI
 
 struct PostGridView: View {
 

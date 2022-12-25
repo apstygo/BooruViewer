@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2E02815028F57883001A2ED4 /* SankakuAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 2E02814F28F57883001A2ED4 /* SankakuAPI */; };
 		2E34452928F6025C004C4188 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = 2E34452828F6025C004C4188 /* Collections */; };
 		2E37DA00290566A700C916CC /* AuthInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E37D9FF290566A700C916CC /* AuthInfo.swift */; };
 		2E37DA022905672100C916CC /* AuthInfoStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E37DA012905672100C916CC /* AuthInfoStorage.swift */; };
@@ -42,6 +41,22 @@
 		2ECB9D24294CBD7000CA5EA1 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECB9D23294CBD7000CA5EA1 /* LoginView.swift */; };
 		2ED2CD9728F56C36001CA186 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2ED2CD9628F56C36001CA186 /* Assets.xcassets */; };
 		2EE9B30C28FEF8C1005C22CD /* AnyPublisher+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE9B30B28FEF8C1005C22CD /* AnyPublisher+Extension.swift */; };
+		2EF524C1295848AE003D734D /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 2EF524C0295848AE003D734D /* Moya */; };
+		2EF524D5295849A3003D734D /* MoyaProvider+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF524D3295848C8003D734D /* MoyaProvider+Extensions.swift */; };
+		2EF524D6295849A8003D734D /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF524CF295848C8003D734D /* Post.swift */; };
+		2EF524D7295849A8003D734D /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF524D1295848C8003D734D /* Tag.swift */; };
+		2EF524D8295849A8003D734D /* Threshold.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF524CE295848C8003D734D /* Threshold.swift */; };
+		2EF524D9295849A8003D734D /* GetPostsFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF524C9295848C8003D734D /* GetPostsFilters.swift */; };
+		2EF524DA295849A8003D734D /* MediaType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF524CC295848C8003D734D /* MediaType.swift */; };
+		2EF524DB295849A8003D734D /* HidePostsInBooks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF524C8295848C8003D734D /* HidePostsInBooks.swift */; };
+		2EF524DC295849A8003D734D /* GetPostsConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF524CA295848C8003D734D /* GetPostsConfiguration.swift */; };
+		2EF524DD295849A8003D734D /* SortOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF524CD295848C8003D734D /* SortOrder.swift */; };
+		2EF524DE295849A8003D734D /* MediaSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF524D0295848C8003D734D /* MediaSize.swift */; };
+		2EF524DF295849A8003D734D /* Rating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF524CB295848C8003D734D /* Rating.swift */; };
+		2EF524E0295849AD003D734D /* PostsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF524C6295848C8003D734D /* PostsResponse.swift */; };
+		2EF524E1295849AD003D734D /* AuthorizationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF524C5295848C8003D734D /* AuthorizationResponse.swift */; };
+		2EF524E2295849B0003D734D /* SankakuAPITarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF524D4295848C8003D734D /* SankakuAPITarget.swift */; };
+		2EF524E3295849B0003D734D /* SankakuAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF524C3295848C8003D734D /* SankakuAPI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -75,6 +90,21 @@
 		2ED2CD9628F56C36001CA186 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2ED2CD9828F56C36001CA186 /* BooruViewer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BooruViewer.entitlements; sourceTree = "<group>"; };
 		2EE9B30B28FEF8C1005C22CD /* AnyPublisher+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnyPublisher+Extension.swift"; sourceTree = "<group>"; };
+		2EF524C3295848C8003D734D /* SankakuAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SankakuAPI.swift; sourceTree = "<group>"; };
+		2EF524C5295848C8003D734D /* AuthorizationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationResponse.swift; sourceTree = "<group>"; };
+		2EF524C6295848C8003D734D /* PostsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsResponse.swift; sourceTree = "<group>"; };
+		2EF524C8295848C8003D734D /* HidePostsInBooks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HidePostsInBooks.swift; sourceTree = "<group>"; };
+		2EF524C9295848C8003D734D /* GetPostsFilters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPostsFilters.swift; sourceTree = "<group>"; };
+		2EF524CA295848C8003D734D /* GetPostsConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPostsConfiguration.swift; sourceTree = "<group>"; };
+		2EF524CB295848C8003D734D /* Rating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rating.swift; sourceTree = "<group>"; };
+		2EF524CC295848C8003D734D /* MediaType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaType.swift; sourceTree = "<group>"; };
+		2EF524CD295848C8003D734D /* SortOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortOrder.swift; sourceTree = "<group>"; };
+		2EF524CE295848C8003D734D /* Threshold.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Threshold.swift; sourceTree = "<group>"; };
+		2EF524CF295848C8003D734D /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		2EF524D0295848C8003D734D /* MediaSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaSize.swift; sourceTree = "<group>"; };
+		2EF524D1295848C8003D734D /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
+		2EF524D3295848C8003D734D /* MoyaProvider+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MoyaProvider+Extensions.swift"; sourceTree = "<group>"; };
+		2EF524D4295848C8003D734D /* SankakuAPITarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SankakuAPITarget.swift; sourceTree = "<group>"; };
 		2EFBA92D28FB37090053DCEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -85,10 +115,10 @@
 			files = (
 				2EA878B6292DD3A000AC197F /* ComposableArchitecture in Frameworks */,
 				2ECB9CD329348DF100CA5EA1 /* SwiftUIFlow in Frameworks */,
+				2EF524C1295848AE003D734D /* Moya in Frameworks */,
 				2E6A433828F9AA3900F89556 /* SDWebImageSwiftUI in Frameworks */,
 				2EA09F0C292FBC080075F503 /* AsyncView in Frameworks */,
 				2E34452928F6025C004C4188 /* Collections in Frameworks */,
-				2E02815028F57883001A2ED4 /* SankakuAPI in Frameworks */,
 				2E6A431728F6289200F89556 /* CombineExt in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -126,6 +156,7 @@
 		2E6A433128F89ADA00F89556 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				2EF524C2295848C8003D734D /* SankakuAPI */,
 				2E37D9FE2905667F00C916CC /* Authorization */,
 				2E76825C2907202D00ECC68C /* AccessTokenProvider.swift */,
 				2E7A1DAD28FC17470009304D /* Feed.swift */,
@@ -277,6 +308,52 @@
 			path = UI;
 			sourceTree = "<group>";
 		};
+		2EF524C2295848C8003D734D /* SankakuAPI */ = {
+			isa = PBXGroup;
+			children = (
+				2EF524D2295848C8003D734D /* Extensions */,
+				2EF524C7295848C8003D734D /* Models */,
+				2EF524C4295848C8003D734D /* Responses */,
+				2EF524C3295848C8003D734D /* SankakuAPI.swift */,
+				2EF524D4295848C8003D734D /* SankakuAPITarget.swift */,
+			);
+			path = SankakuAPI;
+			sourceTree = "<group>";
+		};
+		2EF524C4295848C8003D734D /* Responses */ = {
+			isa = PBXGroup;
+			children = (
+				2EF524C5295848C8003D734D /* AuthorizationResponse.swift */,
+				2EF524C6295848C8003D734D /* PostsResponse.swift */,
+			);
+			path = Responses;
+			sourceTree = "<group>";
+		};
+		2EF524C7295848C8003D734D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2EF524C8295848C8003D734D /* HidePostsInBooks.swift */,
+				2EF524C9295848C8003D734D /* GetPostsFilters.swift */,
+				2EF524CA295848C8003D734D /* GetPostsConfiguration.swift */,
+				2EF524CB295848C8003D734D /* Rating.swift */,
+				2EF524CC295848C8003D734D /* MediaType.swift */,
+				2EF524CD295848C8003D734D /* SortOrder.swift */,
+				2EF524CE295848C8003D734D /* Threshold.swift */,
+				2EF524CF295848C8003D734D /* Post.swift */,
+				2EF524D0295848C8003D734D /* MediaSize.swift */,
+				2EF524D1295848C8003D734D /* Tag.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		2EF524D2295848C8003D734D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				2EF524D3295848C8003D734D /* MoyaProvider+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		2EFBA92828FB36320053DCEC /* Lifecycle */ = {
 			isa = PBXGroup;
 			children = (
@@ -302,13 +379,13 @@
 			);
 			name = BooruViewer;
 			packageProductDependencies = (
-				2E02814F28F57883001A2ED4 /* SankakuAPI */,
 				2E34452828F6025C004C4188 /* Collections */,
 				2E6A431628F6289200F89556 /* CombineExt */,
 				2E6A433728F9AA3900F89556 /* SDWebImageSwiftUI */,
 				2EA878B5292DD3A000AC197F /* ComposableArchitecture */,
 				2EA09F0B292FBC080075F503 /* AsyncView */,
 				2ECB9CD229348DF100CA5EA1 /* SwiftUIFlow */,
+				2EF524C0295848AE003D734D /* Moya */,
 			);
 			productName = BooruViewer;
 			productReference = 2ED2CD8F28F56C36001CA186 /* BooruViewer.app */;
@@ -345,6 +422,7 @@
 				2EA878B4292DD3A000AC197F /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 				2EA09F0A292FBC080075F503 /* XCRemoteSwiftPackageReference "AsyncView" */,
 				2ECB9CD129348DF100CA5EA1 /* XCRemoteSwiftPackageReference "SwiftUIFlow" */,
+				2EF524BF295848AE003D734D /* XCRemoteSwiftPackageReference "Moya" */,
 			);
 			productRefGroup = 2ED2CD9028F56C36001CA186 /* Products */;
 			projectDirPath = "";
@@ -373,25 +451,40 @@
 			files = (
 				2E7A1DAE28FC17470009304D /* Feed.swift in Sources */,
 				2E7A1DD328FE11F10009304D /* ContextMenuPostPreview.swift in Sources */,
+				2EF524DC295849A8003D734D /* GetPostsConfiguration.swift in Sources */,
+				2EF524D9295849A8003D734D /* GetPostsFilters.swift in Sources */,
+				2EF524DE295849A8003D734D /* MediaSize.swift in Sources */,
 				2ECB9D1D2944E6CE00CA5EA1 /* SankakuAPI+PreviewHelpers.swift in Sources */,
 				2E37DA00290566A700C916CC /* AuthInfo.swift in Sources */,
+				2EF524DB295849A8003D734D /* HidePostsInBooks.swift in Sources */,
+				2EF524D8295849A8003D734D /* Threshold.swift in Sources */,
 				2ECB9CD929365FF300CA5EA1 /* SankakuAPIDependency.swift in Sources */,
 				2ECB9D112939B9D500CA5EA1 /* PostGridFeature.swift in Sources */,
 				2ECB9CE129366FE800CA5EA1 /* GridItem+Extension.swift in Sources */,
+				2EF524DA295849A8003D734D /* MediaType.swift in Sources */,
 				2EA878B3292DD34100AC197F /* MainFeedFeature.swift in Sources */,
 				2E6A432328F70B4D00F89556 /* TagView.swift in Sources */,
 				2EA09EF7292E6C660075F503 /* TagToken.swift in Sources */,
 				2EBCD1E72905ADF60087D2D4 /* SecureStore.swift in Sources */,
 				2EA09F00292FAE540075F503 /* PostDetailFeature.swift in Sources */,
+				2EF524E0295849AD003D734D /* PostsResponse.swift in Sources */,
+				2EF524D7295849A8003D734D /* Tag.swift in Sources */,
+				2EF524D5295849A3003D734D /* MoyaProvider+Extensions.swift in Sources */,
+				2EF524E3295849B0003D734D /* SankakuAPI.swift in Sources */,
 				2EA09EFB292F37E40075F503 /* FilterEditorView.swift in Sources */,
+				2EF524E1295849AD003D734D /* AuthorizationResponse.swift in Sources */,
 				2ECB9D0E2939B7EA00CA5EA1 /* PostGridView.swift in Sources */,
 				2ECB9D22294CBD1100CA5EA1 /* LoginFeature.swift in Sources */,
+				2EF524DD295849A8003D734D /* SortOrder.swift in Sources */,
 				2ECB9D13293C9F6400CA5EA1 /* Indirect.swift in Sources */,
 				2EE9B30C28FEF8C1005C22CD /* AnyPublisher+Extension.swift in Sources */,
 				2E37DA022905672100C916CC /* AuthInfoStorage.swift in Sources */,
 				2ECB9D1F2944E9CB00CA5EA1 /* UnavailableView.swift in Sources */,
 				2ECB9CDD293662B900CA5EA1 /* URLSession+Extension.swift in Sources */,
 				2E76825D2907202D00ECC68C /* AccessTokenProvider.swift in Sources */,
+				2EF524DF295849A8003D734D /* Rating.swift in Sources */,
+				2EF524D6295849A8003D734D /* Post.swift in Sources */,
+				2EF524E2295849B0003D734D /* SankakuAPITarget.swift in Sources */,
 				2ECB9D24294CBD7000CA5EA1 /* LoginView.swift in Sources */,
 				2EA09EFD292F38470075F503 /* FilterEditorFeature.swift in Sources */,
 				2EA878BA292DD45300AC197F /* MainFeedView.swift in Sources */,
@@ -667,13 +760,17 @@
 				kind = branch;
 			};
 		};
+		2EF524BF295848AE003D734D /* XCRemoteSwiftPackageReference "Moya" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Moya/Moya";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		2E02814F28F57883001A2ED4 /* SankakuAPI */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = SankakuAPI;
-		};
 		2E34452828F6025C004C4188 /* Collections */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 2E34452728F6025C004C4188 /* XCRemoteSwiftPackageReference "swift-collections" */;
@@ -703,6 +800,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2ECB9CD129348DF100CA5EA1 /* XCRemoteSwiftPackageReference "SwiftUIFlow" */;
 			productName = SwiftUIFlow;
+		};
+		2EF524C0295848AE003D734D /* Moya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2EF524BF295848AE003D734D /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = Moya;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

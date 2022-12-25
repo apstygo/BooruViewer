@@ -1,5 +1,4 @@
 import ComposableArchitecture
-import SankakuAPI
 
 struct PostGridFeature: ReducerProtocol {
 
