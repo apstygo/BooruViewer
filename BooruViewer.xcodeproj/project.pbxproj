@@ -59,6 +59,7 @@
 		2EF524E3295849B0003D734D /* SankakuAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF524C3295848C8003D734D /* SankakuAPI.swift */; };
 		2EF524E529586AF6003D734D /* SankakuClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF524E429586AF6003D734D /* SankakuClient.swift */; };
 		2EF524E729586B5B003D734D /* SankakuRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF524E629586B5B003D734D /* SankakuRequest.swift */; };
+		2EF524ED295876A5003D734D /* SankakuAuthEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF524EC295876A4003D734D /* SankakuAuthEndpoint.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -109,6 +110,7 @@
 		2EF524D4295848C8003D734D /* SankakuAPITarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SankakuAPITarget.swift; sourceTree = "<group>"; };
 		2EF524E429586AF6003D734D /* SankakuClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SankakuClient.swift; sourceTree = "<group>"; };
 		2EF524E629586B5B003D734D /* SankakuRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SankakuRequest.swift; sourceTree = "<group>"; };
+		2EF524EC295876A4003D734D /* SankakuAuthEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SankakuAuthEndpoint.swift; sourceTree = "<group>"; };
 		2EFBA92D28FB37090053DCEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -322,6 +324,7 @@
 				2EF524D4295848C8003D734D /* SankakuAPITarget.swift */,
 				2EF524E429586AF6003D734D /* SankakuClient.swift */,
 				2EF524E629586B5B003D734D /* SankakuRequest.swift */,
+				2EF524EC295876A4003D734D /* SankakuAuthEndpoint.swift */,
 			);
 			path = SankakuAPI;
 			sourceTree = "<group>";
@@ -474,6 +477,7 @@
 				2EF524E1295849AD003D734D /* AuthorizationResponse.swift in Sources */,
 				2ECB9D0E2939B7EA00CA5EA1 /* PostGridView.swift in Sources */,
 				2ECB9D22294CBD1100CA5EA1 /* LoginFeature.swift in Sources */,
+				2EF524ED295876A5003D734D /* SankakuAuthEndpoint.swift in Sources */,
 				2EF524DD295849A8003D734D /* SortOrder.swift in Sources */,
 				2ECB9D13293C9F6400CA5EA1 /* Indirect.swift in Sources */,
 				2EE9B30C28FEF8C1005C22CD /* AnyPublisher+Extension.swift in Sources */,

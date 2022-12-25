@@ -2,6 +2,8 @@ import Foundation
 import Moya
 
 enum SankakuEndpoint {
+    static let baseURL = URL(string: "https://capi-v2.sankakucomplex.com")!
+
     case getPosts(GetPostsConfiguration)
     case autoSuggestTags(query: String)
 }
@@ -14,7 +16,7 @@ struct SankakuRequest {
 extension SankakuRequest: TargetType {
 
     var baseURL: URL {
-        URL(string: "https://capi-v2.sankakucomplex.com")!
+        SankakuEndpoint.baseURL
     }
 
     var path: String {
