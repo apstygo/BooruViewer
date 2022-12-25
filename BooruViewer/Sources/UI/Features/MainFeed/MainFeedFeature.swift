@@ -5,6 +5,9 @@ import SankakuAPI
 struct MainFeedFeature: ReducerProtocol {
 
     struct State {
+        let feed = FeedImpl(sankakuAPI: SankakuAPI(sessionConfiguration: .patient))
+        let sankakuAPI = SankakuAPI(sessionConfiguration: .patient)
+
         var didAppear = false
         var feedPhase: FeedPhase = .idle
         var posts: IdentifiedArrayOf<Post> = []
@@ -47,16 +50,6 @@ struct MainFeedFeature: ReducerProtocol {
         case loadTagSuggestions
     }
 
-    private let sankakuAPI: SankakuAPI
-    private let feed: Feed
-
-    init() {
-        @Dependency(\.sankakuAPI) var sharedAPI
-
-        self.sankakuAPI = sharedAPI
-        self.feed = FeedImpl(sankakuAPI: sharedAPI)
-    }
-
     var body: some ReducerProtocol<State, Action> {
         Reduce(core)
             .ifLet(\.filterEditorState, action: /Action.filterEditor) {
@@ -72,9 +65,9 @@ struct MainFeedFeature: ReducerProtocol {
 
     func core(state: inout State, action: Action) -> EffectTask<Action> {
         func reload() {
-            feed.filters = state.filters
-            feed.setTagTokens(state.tags)
-            feed.reload()
+            state.feed.filters = state.filters
+            state.feed.setTagTokens(state.tags)
+            state.feed.reload()
         }
 
         switch action {
@@ -85,9 +78,9 @@ struct MainFeedFeature: ReducerProtocol {
 
             state.didAppear = true
 
-            feed.reload()
+            reload()
 
-            return .run { send in
+            return .run { [feed = state.feed] send in
                 for await feedState in feed.stateStream {
                     await send(.updateFeedState(feedState))
                 }
@@ -108,7 +101,7 @@ struct MainFeedFeature: ReducerProtocol {
                 return .none
             }
 
-            feed.loadPage(forItemAt: index)
+            state.feed.loadPage(forItemAt: index)
 
             return .none
 
@@ -142,7 +135,7 @@ struct MainFeedFeature: ReducerProtocol {
             }
 
             // FIXME: Debounce tag search
-            return .task {
+            return .task { [sankakuAPI = state.sankakuAPI] in
                 let tags = try await sankakuAPI.autoSuggestTags(for: newSearchText)
                 return .tagsResponse(tags)
             }
@@ -245,6 +238,10 @@ extension Feed {
 }
 
 extension MainFeedFeature.State {
+
+    init(tag: Tag) {
+        self.init(tags: [.tag(tag)])
+    }
 
     var filterEditorState: FilterEditorFeature.State? {
         get {

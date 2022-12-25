@@ -16,6 +16,7 @@ struct PostDetailFeature: ReducerProtocol {
         var recommended = Recommended()
 
         @Indirect var postDetailState: PostDetailFeature.State?
+        @Indirect var mainFeedState: MainFeedFeature.State?
 
         init(post: Post) {
             self.post = post
@@ -25,21 +26,27 @@ struct PostDetailFeature: ReducerProtocol {
         }
     }
 
-    indirect enum Action: Equatable {
+    indirect enum Action {
         case appear
         case recommendedPostAppeared(Post)
         case openRecommendedPost(Post)
         case dismissPost
+        case openMainFeedWithTag(Tag)
+        case dismissMainFeed
 
         case updateRecommendedFeedState(FeedState)
 
         case postDetail(PostDetailFeature.Action)
+        case mainFeed(MainFeedFeature.Action)
     }
 
     var body: some ReducerProtocol<State, Action> {
         Reduce(core)
             .ifLet(\.postDetailState, action: /Action.postDetail) {
                 PostDetailFeature()
+            }
+            .ifLet(\.mainFeedState, action: /Action.mainFeed) {
+                MainFeedFeature()
             }
     }
 
@@ -83,12 +90,26 @@ struct PostDetailFeature: ReducerProtocol {
 
             return .none
 
+        case let .openMainFeedWithTag(tag):
+            state.mainFeedState = .init(tag: tag)
+
+            return .none
+
+        case .dismissMainFeed:
+            state.mainFeedState = nil
+
+            return .none
+
         case let .updateRecommendedFeedState(feedState):
             state.recommended.feedPhase = feedState.phase
             state.recommended.posts = .init(uniqueElements: feedState.posts)
             return .none
 
         case .postDetail:
+            // Do nothing
+            return .none
+
+        case .mainFeed:
             // Do nothing
             return .none
         }

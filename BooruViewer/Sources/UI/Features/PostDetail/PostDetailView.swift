@@ -38,6 +38,9 @@ struct PostDetailView: View {
                         VFlow(alignment: .leading, spacing: 8) {
                             ForEach(viewStore.post.tags) { tag in
                                 TagView(tag: tag)
+                                    .onTapGesture {
+                                        viewStore.send(.openMainFeedWithTag(tag))
+                                    }
                             }
                         }
 
@@ -58,6 +61,9 @@ struct PostDetailView: View {
         }
         .navigationDestination(isPresented: isPostDetailPresented(for: viewStore)) {
             postDetail
+        }
+        .navigationDestination(isPresented: isMainFeedPresented(for: viewStore)) {
+            mainFeed
         }
     }
 
@@ -97,6 +103,18 @@ struct PostDetailView: View {
         }
     }
 
+    var mainFeed: some View {
+        let store = store.scope { state in
+            state.mainFeedState
+        } action: { childAction in
+            .mainFeed(childAction)
+        }
+
+        return IfLetStore(store) { store in
+            MainFeedView(store: store)
+        }
+    }
+
     // MARK: - Bindings
 
     func isPostDetailPresented(for viewStore: ViewStore) -> Binding<Bool> {
@@ -104,6 +122,14 @@ struct PostDetailView: View {
             state.isPostDetailPresented
         } send: { _ in
             .dismissPost
+        }
+    }
+
+    func isMainFeedPresented(for viewStore: ViewStore) -> Binding<Bool> {
+        viewStore.binding { state in
+            state.isMainFeedPresented
+        } send: { _ in
+            .dismissMainFeed
         }
     }
 
@@ -210,10 +236,12 @@ extension PostDetailView {
     struct State: Equatable {
         let post: Post
         let isPostDetailPresented: Bool
+        let isMainFeedPresented: Bool
 
         init(featureState: PostDetailFeature.State) {
             self.post = featureState.post
             self.isPostDetailPresented = featureState.postDetailState != nil
+            self.isMainFeedPresented = featureState.mainFeedState != nil
         }
     }
 
