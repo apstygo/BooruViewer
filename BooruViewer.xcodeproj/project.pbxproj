@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E133EDD29595DCF006225DD /* Error+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E133EDC29595DCF006225DD /* Error+Extension.swift */; };
 		2E34452928F6025C004C4188 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = 2E34452828F6025C004C4188 /* Collections */; };
 		2E37DA00290566A700C916CC /* AuthInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E37D9FF290566A700C916CC /* AuthInfo.swift */; };
 		2E37DA022905672100C916CC /* AuthInfoStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E37DA012905672100C916CC /* AuthInfoStorage.swift */; };
@@ -59,10 +60,12 @@
 		2EF524E3295849B0003D734D /* SankakuAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF524C3295848C8003D734D /* SankakuAPI.swift */; };
 		2EF524E529586AF6003D734D /* SankakuClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF524E429586AF6003D734D /* SankakuClient.swift */; };
 		2EF524E729586B5B003D734D /* SankakuRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF524E629586B5B003D734D /* SankakuRequest.swift */; };
+		2EF524EB29587640003D734D /* SankakuAuthClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF524EA29587640003D734D /* SankakuAuthClient.swift */; };
 		2EF524ED295876A5003D734D /* SankakuAuthEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF524EC295876A4003D734D /* SankakuAuthEndpoint.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2E133EDC29595DCF006225DD /* Error+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+Extension.swift"; sourceTree = "<group>"; };
 		2E37D9FF290566A700C916CC /* AuthInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInfo.swift; sourceTree = "<group>"; };
 		2E37DA012905672100C916CC /* AuthInfoStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInfoStorage.swift; sourceTree = "<group>"; };
 		2E6A432228F70B4D00F89556 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
@@ -110,6 +113,7 @@
 		2EF524D4295848C8003D734D /* SankakuAPITarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SankakuAPITarget.swift; sourceTree = "<group>"; };
 		2EF524E429586AF6003D734D /* SankakuClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SankakuClient.swift; sourceTree = "<group>"; };
 		2EF524E629586B5B003D734D /* SankakuRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SankakuRequest.swift; sourceTree = "<group>"; };
+		2EF524EA29587640003D734D /* SankakuAuthClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SankakuAuthClient.swift; sourceTree = "<group>"; };
 		2EF524EC295876A4003D734D /* SankakuAuthEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SankakuAuthEndpoint.swift; sourceTree = "<group>"; };
 		2EFBA92D28FB37090053DCEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -175,6 +179,7 @@
 			isa = PBXGroup;
 			children = (
 				2EE9B30B28FEF8C1005C22CD /* AnyPublisher+Extension.swift */,
+				2E133EDC29595DCF006225DD /* Error+Extension.swift */,
 				2ECB9CDC293662B900CA5EA1 /* URLSession+Extension.swift */,
 				2ECB9CE029366FE800CA5EA1 /* GridItem+Extension.swift */,
 				2EF524D3295848C8003D734D /* MoyaProvider+Extensions.swift */,
@@ -324,6 +329,7 @@
 				2EF524D4295848C8003D734D /* SankakuAPITarget.swift */,
 				2EF524E429586AF6003D734D /* SankakuClient.swift */,
 				2EF524E629586B5B003D734D /* SankakuRequest.swift */,
+				2EF524EA29587640003D734D /* SankakuAuthClient.swift */,
 				2EF524EC295876A4003D734D /* SankakuAuthEndpoint.swift */,
 			);
 			path = SankakuAPI;
@@ -459,6 +465,7 @@
 				2E37DA00290566A700C916CC /* AuthInfo.swift in Sources */,
 				2EF524DB295849A8003D734D /* HidePostsInBooks.swift in Sources */,
 				2EF524D8295849A8003D734D /* Threshold.swift in Sources */,
+				2E133EDD29595DCF006225DD /* Error+Extension.swift in Sources */,
 				2ECB9CD929365FF300CA5EA1 /* SankakuAPIDependency.swift in Sources */,
 				2ECB9D112939B9D500CA5EA1 /* PostGridFeature.swift in Sources */,
 				2ECB9CE129366FE800CA5EA1 /* GridItem+Extension.swift in Sources */,
@@ -486,6 +493,7 @@
 				2ECB9CDD293662B900CA5EA1 /* URLSession+Extension.swift in Sources */,
 				2E76825D2907202D00ECC68C /* AccessTokenProvider.swift in Sources */,
 				2EF524DF295849A8003D734D /* Rating.swift in Sources */,
+				2EF524EB29587640003D734D /* SankakuAuthClient.swift in Sources */,
 				2EF524D6295849A8003D734D /* Post.swift in Sources */,
 				2EF524E2295849B0003D734D /* SankakuAPITarget.swift in Sources */,
 				2ECB9D24294CBD7000CA5EA1 /* LoginView.swift in Sources */,

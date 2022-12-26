@@ -24,7 +24,7 @@ final class AccessTokenProviderImpl: AccessTokenProvider {
 
     // MARK: - Private Properties
 
-    private let sankakuAPI: SankakuAPI
+    private let sankakuAuthClient: SankakuAuthClient
     private let authInfoStorage: AuthInfoStorage
 
     private let queue = DispatchQueue(label: "AccessTokenProviderImpl", qos: .userInteractive)
@@ -32,8 +32,8 @@ final class AccessTokenProviderImpl: AccessTokenProvider {
 
     // MARK: - Init
 
-    init(sankakuAPI: SankakuAPI, authInfoStorage: AuthInfoStorage) {
-        self.sankakuAPI = sankakuAPI
+    init(sankakuAuthClient: SankakuAuthClient, authInfoStorage: AuthInfoStorage) {
+        self.sankakuAuthClient = sankakuAuthClient
         self.authInfoStorage = authInfoStorage
     }
 
@@ -77,7 +77,7 @@ final class AccessTokenProviderImpl: AccessTokenProvider {
                 completion(.success(authResponse.accessToken))
 
             case let .failure(error):
-                if error.isClientError {
+                if error.isHTTPClientError {
                     authInfoStorage.authInfo = nil
                 }
 
@@ -87,27 +87,12 @@ final class AccessTokenProviderImpl: AccessTokenProvider {
         }
     }
 
-    private func refreshAccessToken(withRefreshToken refreshToken: String,
-                                    completion: @escaping (Result<AuthorizationResponse, Error>) -> Void) {
-        Task(priority: .userInitiated) {
-            do {
-                let authResponse = try await sankakuAPI.refreshAccessToken(withRefreshToken: refreshToken)
-                completion(.success(authResponse))
-            }
-            catch {
-                completion(.failure(error))
-            }
-        }
-    }
-
-}
-
-// MARK: - Helpers
-
-extension Error {
-
-    fileprivate var isClientError: Bool {
-        fatalError("Not implemented")
+    private func refreshAccessToken(
+        withRefreshToken refreshToken: String,
+        completion: @escaping (Result<AuthorizationResponse, Error>) -> Void
+    ) {
+        let endpoint: SankakuAuthEndpoint = .refreshAccessToken(refreshToken: refreshToken)
+        sankakuAuthClient.request(endpoint, completion: completion)
     }
 
 }
