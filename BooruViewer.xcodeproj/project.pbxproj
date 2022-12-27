@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		2E133EDD29595DCF006225DD /* Error+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E133EDC29595DCF006225DD /* Error+Extension.swift */; };
+		2E133EE0295AE409006225DD /* NeedleGenerated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E133EDF295AE409006225DD /* NeedleGenerated.swift */; };
+		2E133EE3295AE4D9006225DD /* NeedleFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 2E133EE2295AE4D9006225DD /* NeedleFoundation */; };
+		2E133EE5295AE525006225DD /* RootComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E133EE4295AE525006225DD /* RootComponent.swift */; };
 		2E34452928F6025C004C4188 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = 2E34452828F6025C004C4188 /* Collections */; };
 		2E37DA00290566A700C916CC /* AuthInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E37D9FF290566A700C916CC /* AuthInfo.swift */; };
 		2E37DA022905672100C916CC /* AuthInfoStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E37DA012905672100C916CC /* AuthInfoStorage.swift */; };
@@ -66,6 +69,8 @@
 
 /* Begin PBXFileReference section */
 		2E133EDC29595DCF006225DD /* Error+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+Extension.swift"; sourceTree = "<group>"; };
+		2E133EDF295AE409006225DD /* NeedleGenerated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeedleGenerated.swift; sourceTree = "<group>"; };
+		2E133EE4295AE525006225DD /* RootComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootComponent.swift; sourceTree = "<group>"; };
 		2E37D9FF290566A700C916CC /* AuthInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInfo.swift; sourceTree = "<group>"; };
 		2E37DA012905672100C916CC /* AuthInfoStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInfoStorage.swift; sourceTree = "<group>"; };
 		2E6A432228F70B4D00F89556 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
@@ -127,6 +132,7 @@
 				2ECB9CD329348DF100CA5EA1 /* SwiftUIFlow in Frameworks */,
 				2EF524C1295848AE003D734D /* Moya in Frameworks */,
 				2E6A433828F9AA3900F89556 /* SDWebImageSwiftUI in Frameworks */,
+				2E133EE3295AE4D9006225DD /* NeedleFoundation in Frameworks */,
 				2EA09F0C292FBC080075F503 /* AsyncView in Frameworks */,
 				2E34452928F6025C004C4188 /* Collections in Frameworks */,
 				2E6A431728F6289200F89556 /* CombineExt in Frameworks */,
@@ -231,6 +237,7 @@
 			isa = PBXGroup;
 			children = (
 				2ECB9CD829365FF300CA5EA1 /* SankakuAPIDependency.swift */,
+				2E133EE4295AE525006225DD /* RootComponent.swift */,
 			);
 			path = DI;
 			sourceTree = "<group>";
@@ -295,6 +302,7 @@
 				2E6A433128F89ADA00F89556 /* Model */,
 				2ECB9D14293C9F8000CA5EA1 /* PropertyWrappers */,
 				2EE9B2FF28FEAD04005C22CD /* UI */,
+				2E133EDF295AE409006225DD /* NeedleGenerated.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -376,6 +384,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2ED2CD9E28F56C36001CA186 /* Build configuration list for PBXNativeTarget "BooruViewer" */;
 			buildPhases = (
+				2E133EDE295AE3CA006225DD /* Needle Code Generation */,
 				2ED2CD8B28F56C36001CA186 /* Sources */,
 				2ED2CD8C28F56C36001CA186 /* Frameworks */,
 				2ED2CD8D28F56C36001CA186 /* Resources */,
@@ -393,6 +402,7 @@
 				2EA09F0B292FBC080075F503 /* AsyncView */,
 				2ECB9CD229348DF100CA5EA1 /* SwiftUIFlow */,
 				2EF524C0295848AE003D734D /* Moya */,
+				2E133EE2295AE4D9006225DD /* NeedleFoundation */,
 			);
 			productName = BooruViewer;
 			productReference = 2ED2CD8F28F56C36001CA186 /* BooruViewer.app */;
@@ -430,6 +440,7 @@
 				2EA09F0A292FBC080075F503 /* XCRemoteSwiftPackageReference "AsyncView" */,
 				2ECB9CD129348DF100CA5EA1 /* XCRemoteSwiftPackageReference "SwiftUIFlow" */,
 				2EF524BF295848AE003D734D /* XCRemoteSwiftPackageReference "Moya" */,
+				2E133EE1295AE4D9006225DD /* XCRemoteSwiftPackageReference "needle" */,
 			);
 			productRefGroup = 2ED2CD9028F56C36001CA186 /* Products */;
 			projectDirPath = "";
@@ -450,6 +461,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2E133EDE295AE3CA006225DD /* Needle Code Generation */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Needle Code Generation";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export SOURCEKIT_LOGGING=0 && /opt/homebrew/bin/needle generate BooruViewer/Sources/NeedleGenerated.swift BooruViewer/Sources/\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		2ED2CD8B28F56C36001CA186 /* Sources */ = {
@@ -477,6 +509,7 @@
 				2EA09F00292FAE540075F503 /* PostDetailFeature.swift in Sources */,
 				2EF524E0295849AD003D734D /* PostsResponse.swift in Sources */,
 				2EF524D7295849A8003D734D /* Tag.swift in Sources */,
+				2E133EE5295AE525006225DD /* RootComponent.swift in Sources */,
 				2EF524D5295849A3003D734D /* MoyaProvider+Extensions.swift in Sources */,
 				2EF524E3295849B0003D734D /* SankakuAPI.swift in Sources */,
 				2EF524E529586AF6003D734D /* SankakuClient.swift in Sources */,
@@ -500,6 +533,7 @@
 				2EA09EFD292F38470075F503 /* FilterEditorFeature.swift in Sources */,
 				2EA878BA292DD45300AC197F /* MainFeedView.swift in Sources */,
 				2EA09F04292FB2880075F503 /* PostDetailView.swift in Sources */,
+				2E133EE0295AE409006225DD /* NeedleGenerated.swift in Sources */,
 				2EA878B0292D3EAA00AC197F /* BooruViewerApp.swift in Sources */,
 				2EF524E729586B5B003D734D /* SankakuRequest.swift in Sources */,
 				2E7A1DD128FDAB320009304D /* PostPreview.swift in Sources */,
@@ -724,6 +758,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		2E133EE1295AE4D9006225DD /* XCRemoteSwiftPackageReference "needle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/uber/needle";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		2E34452728F6025C004C4188 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-collections.git";
@@ -783,6 +825,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		2E133EE2295AE4D9006225DD /* NeedleFoundation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2E133EE1295AE4D9006225DD /* XCRemoteSwiftPackageReference "needle" */;
+			productName = NeedleFoundation;
+		};
 		2E34452828F6025C004C4188 /* Collections */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 2E34452728F6025C004C4188 /* XCRemoteSwiftPackageReference "swift-collections" */;

@@ -46,6 +46,15 @@
       }
     },
     {
+      "identity" : "needle",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/uber/needle",
+      "state" : {
+        "branch" : "master",
+        "revision" : "e2ad104ba2f6fec81b1c4497e1b84cda123a94c6"
+      }
+    },
+    {
       "identity" : "reactiveswift",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ReactiveCocoa/ReactiveSwift.git",
