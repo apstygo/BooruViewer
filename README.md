@@ -2,7 +2,7 @@
 
 A basic image viewer app for a popular image board Sankaku (NSFW) that I made as an exploration of SwiftUI and [TCA](https://github.com/pointfreeco/swift-composable-architecture).
 
-https://github.com/apstygo/BooruViewer/assets/10431330/4fec7c74-c9a2-4db1-986e-5199c4614c0f
+https://github.com/apstygo/BooruViewer/assets/10431330/89a208e7-1e1b-42d4-860d-13cee76e579c
 
 ## Features
 
