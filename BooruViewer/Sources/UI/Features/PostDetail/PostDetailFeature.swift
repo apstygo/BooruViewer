@@ -40,13 +40,17 @@ struct PostDetailFeature: ReducerProtocol {
     }
 
     var body: some ReducerProtocol<State, Action> {
-        Reduce(core)
-            .ifLet(\.postDetailState, action: /Action.postDetail) {
-                PostDetailFeature()
-            }
-            .ifLet(\.mainFeedState, action: /Action.mainFeed) {
-                MainFeedFeature()
-            }
+        let postDetailWrapped: () -> PostDetailFeature = {
+            PostDetailFeature()
+        }
+
+        let mainFeedWrapped: () -> MainFeedFeature = {
+            MainFeedFeature()
+        }
+
+        return Reduce(core)
+            .ifLet(\.postDetailState, action: /Action.postDetail, then: postDetailWrapped)
+            .ifLet(\.mainFeedState, action: /Action.mainFeed, then: mainFeedWrapped)
     }
 
     func core(state: inout State, action: Action) -> EffectTask<Action> {

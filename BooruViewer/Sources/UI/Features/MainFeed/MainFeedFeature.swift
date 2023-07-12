@@ -50,16 +50,22 @@ struct MainFeedFeature: ReducerProtocol {
     }
 
     var body: some ReducerProtocol<State, Action> {
-        Reduce(core)
-            .ifLet(\.filterEditorState, action: /Action.filterEditor) {
-                FilterEditorFeature()
-            }
-            .ifLet(\.postDetailState, action: /Action.postDetail) {
-                PostDetailFeature()
-            }
-            .ifLet(\.loginState, action: /Action.login) {
-                LoginFeature()
-            }
+        let filterEditorWrapped: () -> FilterEditorFeature = {
+            FilterEditorFeature()
+        }
+
+        let postDetailWrapped: () -> PostDetailFeature = {
+            PostDetailFeature()
+        }
+
+        let loginWrapped: () -> LoginFeature = {
+            LoginFeature()
+        }
+
+        return Reduce(core)
+            .ifLet(\.filterEditorState, action: /Action.filterEditor, then: filterEditorWrapped)
+            .ifLet(\.postDetailState, action: /Action.postDetail, then: postDetailWrapped)
+            .ifLet(\.loginState, action: /Action.login, then: loginWrapped)
     }
 
     func core(state: inout State, action: Action) -> EffectTask<Action> {
