@@ -70,11 +70,45 @@ public final class SankakuAPI {
     }
 
     public func getPosts(_ configuration: GetPostsConfiguration) async throws -> PostsResponse {
-        try await provider.request(.getPosts(configuration))
+        var response: PostsResponse = try await provider.request(.getPosts(configuration))
+
+        #if SAFE_MODE
+        response = adjustResponse(response)
+        #endif
+
+        return response
     }
 
     public func autoSuggestTags(for query: String) async throws -> [Tag] {
         try await provider.request(.autoSuggestTags(query: query))
     }
+
+    #if SAFE_MODE
+    private func adjustResponse(_ response: PostsResponse) -> PostsResponse {
+        let adjustedPosts = response.data.map { post in
+            Post(
+                id: post.id,
+                previewURL: flickrURL(id: post.id, size: (320, 180)),
+                previewWidth: 320,
+                previewHeight: 180,
+                sampleURL: flickrURL(id: post.id, size: (1280, 720)),
+                sampleWidth: 1280,
+                sampleHeight: 720,
+                fileURL: flickrURL(id: post.id, size: (1920, 1080)),
+                width: 1920,
+                height: 1080,
+                tags: post.tags,
+                source: post.source,
+                fileType: .image(.jpeg)
+            )
+        }
+
+        return PostsResponse(meta: response.meta, data: adjustedPosts)
+    }
+
+    private func flickrURL(id: Int, size: (Int, Int)) -> URL? {
+        URL(string: "https://loremflickr.com/\(size.0)/\(size.1)?lock=\(id)")
+    }
+    #endif
 
 }
