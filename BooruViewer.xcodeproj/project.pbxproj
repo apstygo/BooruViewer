@@ -802,8 +802,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = upToNextMinorVersion;
+				minimumVersion = 0.47.0;
 			};
 		};
 		2ECB9CD129348DF100CA5EA1 /* XCRemoteSwiftPackageReference "SwiftUIFlow" */ = {
